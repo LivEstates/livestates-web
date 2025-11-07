@@ -21,13 +21,20 @@ export type FeatureHighlight = {
   accent: string;
 };
 
+export type StoryFeatureMedia = {
+  type: 'image' | 'video';
+  src: string;
+  poster?: string;
+  alt?: string;
+};
+
 export type StoryFeature = {
   id: string;
   eyebrow: string;
   title: string;
   emphasis: string;
   description: string;
-  image: string;
+  media: StoryFeatureMedia;
   accent: string;
 };
 
@@ -114,7 +121,12 @@ export const storyFeatures: StoryFeature[] = [
     emphasis: 'Show everything with dual camera chat.',
     description:
       'Stream with both the front and back camera at the same time. Capture any conversation while keeping the world in view.',
-    image: '/assets/images/asset_020.avif',
+    media: {
+      type: 'video',
+      src: 'https://framerusercontent.com/assets/0FGSD86SaSYrRrMa7Uz7O8hahI.mp4',
+      poster: '/assets/images/asset_020.avif',
+      alt: 'Dual camera video demo',
+    },
     accent: '#6a5cff',
   },
   {
@@ -124,7 +136,11 @@ export const storyFeatures: StoryFeature[] = [
     emphasis: 'End-to-end encryption keeps conversations just between you and the people you choose.',
     description:
       'We use modern encryption across messaging, calls, and shared media so what you send stays protected at every turn.',
-    image: '/assets/images/asset_021.avif',
+    media: {
+      type: 'image',
+      src: '/assets/images/asset_021.avif',
+      alt: 'Privacy controls on mobile screen',
+    },
     accent: '#00c6ff',
   },
   {
@@ -134,7 +150,12 @@ export const storyFeatures: StoryFeature[] = [
     emphasis: 'Feel like you are in the same room with crisp voice and video calls.',
     description:
       'Host group calls, drop into a quick chat, and switch devices without losing the thread — Sticky keeps the connection alive.',
-    image: '/assets/images/asset_022.avif',
+    media: {
+      type: 'video',
+      src: 'https://framerusercontent.com/assets/bRxg7wvQXgvosvftm5MtHJTWsc.mp4',
+      poster: '/assets/images/asset_022.avif',
+      alt: 'Group call interface demo video',
+    },
     accent: '#ff7a18',
   },
   {
@@ -144,7 +165,11 @@ export const storyFeatures: StoryFeature[] = [
     emphasis: 'Share high-resolution media, react in real-time, and keep conversations flowing everywhere.',
     description:
       'Bring chats to life with immersive media, status cues, and seamless handoff between phone and desktop experiences.',
-    image: '/assets/images/asset_019.avif',
+    media: {
+      type: 'image',
+      src: '/assets/images/asset_019.avif',
+      alt: 'Expressive messaging interface artwork',
+    },
     accent: '#a4e600',
   },
 ];
