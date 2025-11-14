@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b0f15;
+  --fg: #f1f5f9;
+}
+
+html, body {
+  @apply bg-[#0b0f15] text-slate-100 antialiased;
+}
+
+.gradient {
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(56,189,248,0.12), transparent 60%),
+              radial-gradient(900px 600px at 80% -10%, rgba(250,204,21,0.12), transparent 60%),
+              radial-gradient(1200px 500px at 50% 120%, rgba(16,185,129,0.1), transparent 60%);
+}
+
+.section {
+  @apply max-w-6xl mx-auto px-6;
+}
+
+.btn {
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 bg-white/10 hover:bg-white/20 text-white backdrop-blur transition;
+}
+
+.kbd {
+  @apply px-2 py-0.5 rounded border border-white/20 text-xs;
+}
+
+/* Phone shell aesthetic */
+.phone {
+  width: 300px;
+  height: 620px;
+  border-radius: 36px;
+  background: linear-gradient(135deg, #0e131b, #151c27);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 60px rgba(0,0,0,.4);
+  position: relative;
+}
+
+.phone::before {
+  content: "";
+  position: absolute;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 110px; height: 20px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  filter: blur(0.2px);
+}
+
+.screen {
+  position: absolute;
+  inset: 14px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0f1520, #0b0f15);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.screen-grid {
+  display: grid;
+  grid-template-rows: 60px 1fr 70px;
+  height: 100%;
+  color: #e5e7eb;
+}
