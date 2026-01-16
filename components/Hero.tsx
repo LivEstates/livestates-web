@@ -3,30 +3,17 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Phone, { MockChat } from "./Phone";
 
-export default function Hero({
-  videos = ["/videos/clip1.mp4", "/videos/clip2.mp4", "/videos/clip3.mp4"],
-  hintText = "向下滚动以平滑切换视频",
-}: {
-  videos?: string[];
-  hintText?: string;
-}) {
+export default function Hero({ items }: { items: [string, string][] }) {
   return (
     <section className="w-full px-4">
-      {/* 新增：滚动切换视频区块（使用传入参数） */}
-      <VideoScrollGallery videos={videos} hintText={hintText} />
+      <VideoScrollGallery items={items} />
     </section>
   );
 }
 
 // 新增：滚动切换视频组件
 // 新增：支持传入视频数组和提示文字
-function VideoScrollGallery({
-  videos,
-  hintText = "向下滚动以平滑切换视频",
-}: {
-  videos: string[];
-  hintText?: string;
-}) {
+function VideoScrollGallery({ items }: { items: [string, string][] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -46,8 +33,8 @@ function VideoScrollGallery({
   );
 
   // 为每个视频生成对应的透明度与缩放映射（均匀分段）
-  const items = videos.map((src, i) => {
-    const n = videos.length || 1;
+  const galleryItems = items.map(([src, text], i) => {
+    const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
     const w = end - start;
@@ -68,11 +55,14 @@ function VideoScrollGallery({
       [i === 0 ? 1 : 0.98, 1, 1, i === n - 1 ? 1 : 0.98]
     );
 
-    return { src, opacity, scale };
+    // 文字位移：每段都在该段内从中心(0%)向上滚动(-50%)
+    const textY = useTransform(scrollYProgress, [start, end], ["30%", "-50%"]);
+
+    return { src, text, opacity, scale, textY };
   });
 
-  // 每段约 80vh 的滚动空间（至少 160vh）
-  const containerHeightVh = Math.max(80 * (videos.length || 1), 160);
+  // 每段约 180vh 的滚动空间（至少 160vh）
+  const containerHeightVh = Math.max(180 * (items.length || 1), 160);
 
   return (
     <div
@@ -81,27 +71,47 @@ function VideoScrollGallery({
       style={{ height: `${containerHeightVh}vh` }}
     >
       <motion.div
-        className="sticky top-20 md:top-24 h-[420px] md:h-[720px] w-full overflow-hidden bg-amber-600 rounded-2xl shadow-2xl"
+        className="sticky top-20 md:top-24 h-[420px] md:h-[720px] w-full overflow-hidden rounded-2xl shadow-2xl z-10"
         style={{ scale: containerScale, borderRadius: containerRadius }}
       >
-        {items.map(({ src, opacity, scale }, idx) => (
-          <motion.video
+        {/* 视频层 */}
+        {galleryItems.map(({ src, opacity, scale }, idx) => (
+          <motion.div
             key={idx}
-            playsInline
-            muted
-            autoPlay
-            loop
-            preload="metadata"
             style={{ opacity, scale }}
-            className="absolute inset-0 h-full w-full object-cover"
-            src={src}
-          />
+            className="absolute inset-0 h-full w-full"
+          >
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              src={src}
+              playsInline
+              muted
+              autoPlay
+              loop
+              preload="metadata"
+            />
+          </motion.div>
         ))}
-      </motion.div>
 
-      <div className="pointer-events-none sticky top-6 md:top-10 text-center text-sm text-slate-400">
-        {hintText}
-      </div>
+        {/* 滚动文字层 - 位于视频上方，在容器内部滚动 */}
+        <div className="absolute inset-0 z-20 pointer-events-none">
+          {galleryItems.map(({ text, opacity, scale, textY }, idx) => (
+            <motion.div
+              key={idx}
+              className="absolute inset-0 flex items-center justify-center"
+              style={{
+                opacity,
+                scale,
+                y: textY,
+              }}
+            >
+              <h2 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md text-center px-4 whitespace-pre-line">
+                {text}
+              </h2>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 }
