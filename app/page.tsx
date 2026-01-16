@@ -8,6 +8,7 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import { MockChat } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
+import { getAssetPath } from "@/utils/path";
 
 export default function Page() {
   // print pwd
@@ -18,15 +19,15 @@ export default function Page() {
       <Hero
         items={[
           [
-            "/videos/istockphoto-1500066456-640_adpp_is.mp4",
+            getAssetPath("/videos/istockphoto-1500066456-640_adpp_is.mp4"),
             "See. Feel. Connect. \n LivE your way home.",
           ],
           [
-            "/videos/istockphoto-2181426678-640_adpp_is.mp4",
+            getAssetPath("/videos/istockphoto-2181426678-640_adpp_is.mp4"),
             "Explore every corner. \n Live, detailed, and interactive.",
           ],
           [
-            "/videos/istockphoto-2188682308-640_adpp_is.mp4",
+            getAssetPath("/videos/istockphoto-2188682308-640_adpp_is.mp4"),
             "Join the open house\nLive, anytime you want, anywhere you are.",
           ],
         ]}
@@ -38,7 +39,7 @@ export default function Page() {
         description2="Meet LivE, your virtual home agent."
       >
         <video
-          src="/videos/istockphoto-2181426678-640_adpp_is.mp4"
+          src={getAssetPath("/videos/istockphoto-2181426678-640_adpp_is.mp4")}
           autoPlay
           loop
           muted
@@ -82,7 +83,7 @@ export default function Page() {
         description2="More ways to see more than ever"
       >
         <video
-          src="videos/istockphoto-2162287699-640_adpp_is.mp4"
+          src={getAssetPath("videos/istockphoto-2162287699-640_adpp_is.mp4")}
           autoPlay
           loop
           muted
@@ -92,16 +93,19 @@ export default function Page() {
       <Hero
         items={[
           [
-            "videos/istockphoto-2238470429-640_adpp_is.mp4",
+            getAssetPath("videos/istockphoto-2238470429-640_adpp_is.mp4"),
             "And so much more.",
           ],
           [
-            "videos/istockphoto-2167574847-640_adpp_is.mp4",
+            getAssetPath("videos/istockphoto-2167574847-640_adpp_is.mp4"),
             "More than Agents.",
           ],
-          ["videos/istockphoto-2183311834-640_adpp_is.mp4", "One platform."],
           [
-            "/videos/istockphoto-2188682308-640_adpp_is.mp4",
+            getAssetPath("videos/istockphoto-2183311834-640_adpp_is.mp4"),
+            "One platform.",
+          ],
+          [
+            getAssetPath("/videos/istockphoto-2188682308-640_adpp_is.mp4"),
             "Every Real Estate Professional.",
           ],
         ]}
