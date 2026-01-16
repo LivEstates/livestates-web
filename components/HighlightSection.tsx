@@ -14,7 +14,9 @@ export default function HighlightSection({
       <div className="grid md:grid-cols-2 gap-10 items-center">
         <div>
           <h2 className="text-3xl md:text-5xl font-semibold">{title}</h2>
-          <p className="text-slate-300 mt-4 max-w-prose">{description}</p>
+          <p className="text-slate-600 dark:text-slate-300 mt-4 max-w-prose">
+            {description}
+          </p>
         </div>
 
         <div className="relative flex items-center justify-center gap-6">

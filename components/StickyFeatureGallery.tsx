@@ -149,7 +149,7 @@ export default function StickyFeatureGallery({
           <div className="relative w-full">
             <motion.div
               style={{ scale: rowScale, filter: rowBlur }}
-              className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-8 text-[clamp(2.4rem,7vw,5.6rem)] font-semibold leading-tight text-slate-100 text-center"
+              className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-8 text-[clamp(2.4rem,7vw,5.6rem)] font-semibold leading-tight text-slate-900 dark:text-slate-100 text-center"
             >
               <span>{description}</span>
             </motion.div>
