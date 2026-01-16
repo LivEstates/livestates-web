@@ -8,13 +8,18 @@
 }
 
 html, body {
-  @apply bg-[#0b0f15] text-slate-100 antialiased;
+  @apply bg-white text-slate-900 antialiased dark:bg-[#0b0f15] dark:text-slate-100 transition-colors duration-300;
 }
 
-.gradient {
+body.gradient {
+  background-color: transparent;
+}
+
+html.dark body.gradient {
   background: radial-gradient(1200px 600px at 20% -10%, rgba(56,189,248,0.12), transparent 60%),
               radial-gradient(900px 600px at 80% -10%, rgba(250,204,21,0.12), transparent 60%),
               radial-gradient(1200px 500px at 50% 120%, rgba(16,185,129,0.1), transparent 60%);
+  background-color: #0b0f15;
 }
 
 .section {
@@ -22,11 +27,11 @@ html, body {
 }
 
 .btn {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 bg-white/10 hover:bg-white/20 text-white backdrop-blur transition;
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 bg-black/10 hover:bg-black/20 text-black backdrop-blur transition dark:bg-white/10 dark:hover:bg-white/20 dark:text-white;
 }
 
 .kbd {
-  @apply px-2 py-0.5 rounded border border-white/20 text-xs;
+  @apply px-2 py-0.5 rounded border border-black/20 text-xs dark:border-white/20;
 }
 
 /* Phone shell aesthetic */

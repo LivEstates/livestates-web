@@ -49,7 +49,15 @@ const FEATURES: Feature[] = [
   },
 ];
 
-export default function StickyFeatureGallery() {
+export default function StickyFeatureGallery({
+  description = "LivE transforms property showings into interactive, social, real-time experences.",
+  description2,
+  children,
+}: {
+  description?: string;
+  description2?: string;
+  children?: React.ReactNode;
+}) {
   const [active, setActive] = useState(0);
   const refs = useRef<(HTMLElement | null)[]>([]);
 
@@ -114,12 +122,12 @@ export default function StickyFeatureGallery() {
   // 手机：把出现区间拉长（更慢淡入、更长距离上滑）
   const phoneY = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.75, 1],
-    ["40%", "16%", "0%", "-6%"]
+    [0, 0.1, 0.2, 1],
+    ["60%", "30%", "15%", "0%"]
   );
   const phoneOpacity = useTransform(
     scrollYProgress,
-    [0.06, 0.5, 0.9],
+    [0.06, 0.5, 0.6],
     [0, 0.7, 1]
   );
   const phoneScale = useTransform(
@@ -129,19 +137,11 @@ export default function StickyFeatureGallery() {
   );
 
   return (
-    <section id="features" className="section py-24 md:py-32">
-      <div className="text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-lg md:text-xl text-slate-400"
-        >
-          Meet Sticky
-        </motion.h2>
-      </div>
-
-      <div ref={progressRef} className="relative mt-8 h-[220vh]">
+    <section id="features" className="section py-22 md:py-32">
+      <div ref={progressRef} className="relative mt-8 h-[300vh]">
+        <p className="justify-center text-center text-3xl md:text-5xl font-semibold">
+          {description2}
+        </p>
         <div
           ref={stickyRef}
           className="sticky top-20 md:top-24 h-[70vh] flex items-center justify-center"
@@ -149,17 +149,9 @@ export default function StickyFeatureGallery() {
           <div className="relative w-full">
             <motion.div
               style={{ scale: rowScale, filter: rowBlur }}
-              className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-8 text-[clamp(2.4rem,7vw,5.6rem)] font-semibold leading-tight text-slate-100 text-center"
+              className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-8 text-[clamp(2.4rem,7vw,5.6rem)] font-semibold leading-tight text-slate-900 dark:text-slate-100 text-center"
             >
-              <span>Privacy</span>
-              <Sticker src={stickers[0]} badge="🔒" />
-              <span>Channels</span>
-              <Sticker src={stickers[1]} badge="📣" />
-              <span>Stories</span>
-              <Sticker src={stickers[2]} badge="🎞️" />
-              <span>AI Assistant</span>
-              <Sticker src={stickers[3]} badge="🤖" />
-              <span>Payments</span>
+              <span>{description}</span>
             </motion.div>
 
             <motion.div
@@ -167,17 +159,15 @@ export default function StickyFeatureGallery() {
               className="pointer-events-none absolute inset-0 flex items-center justify-center"
             >
               <Phone>
-                <MockChat title="Sticky" accent={"violet" as any} />
+                {children || <MockChat title="LivE" accent={"violet" as any} />}
               </Phone>
             </motion.div>
           </div>
         </div>
       </div>
 
-      <div className="mt-10 text-center">
-        <p className="text-slate-300">
-          “The best way to build an App Showcase.”
-        </p>
+      {/* <div className="mt-10 text-center">
+        <p className="text-slate-300">{description2}</p>
         <p className="mt-1 text-sm text-slate-500">
           Yegor Trukhin — Template Creator
         </p>
@@ -187,7 +177,7 @@ export default function StickyFeatureGallery() {
             22 Reviews
           </a>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
