@@ -5,7 +5,7 @@ import Phone, { MockChat } from "./Phone";
 
 export default function Hero({ items }: { items: [string, string][] }) {
   return (
-    <section className="w-full px-4">
+    <section className="w-full">
       <VideoScrollGallery items={items} />
     </section>
   );
@@ -17,19 +17,18 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"],
+    offset: ["start start", "end start"],
   });
 
-  // 容器的对称缩放与圆角（靠近边缘缩小，中心放大）
   const containerScale = useTransform(
     scrollYProgress,
-    [0, 0.1, 0.5, 0.9, 1],
-    [0.84, 0.96, 1.0, 0.96, 0.84]
+    [0, 0.8, 1],
+    [1, 1, 0.9]
   );
   const containerRadius = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    [32, 16, 32]
+    [0, 0.8, 1],
+    [0, 0, 24]
   );
 
   // 为每个视频生成对应的透明度与缩放映射（均匀分段）
@@ -49,14 +48,13 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
       [b0, b1, b2, b3],
       [i === 0 ? 1 : 0, 1, 1, i === n - 1 ? 1 : 0]
     );
-    const scale = useTransform(
-      scrollYProgress,
-      [b0, b1, b2, b3],
-      [i === 0 ? 1 : 0.98, 1, 1, i === n - 1 ? 1 : 0.98]
-    );
+    const scale = useTransform(scrollYProgress, [b0, b1, b2, b3], [1, 1, 1, 1]);
 
-    // 文字位移：每段都在该段内从中心(0%)向上滚动(-50%)
-    const textY = useTransform(scrollYProgress, [start, end], ["30%", "-50%"]);
+    const textY = useTransform(
+      scrollYProgress,
+      [start, end],
+      [i === 0 ? "0%" : "30%", i === 0 ? "-50%" : "-50%"]
+    );
 
     return { src, text, opacity, scale, textY };
   });
@@ -67,11 +65,11 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
   return (
     <div
       ref={containerRef}
-      className="relative mt-1"
+      className="relative"
       style={{ height: `${containerHeightVh}vh` }}
     >
       <motion.div
-        className="sticky top-20 md:top-24 h-[420px] md:h-[720px] w-full overflow-hidden rounded-2xl shadow-2xl z-10"
+        className="sticky top-0 h-screen w-full overflow-hidden shadow-2xl z-10"
         style={{ scale: containerScale, borderRadius: containerRadius }}
       >
         {/* 视频层 */}

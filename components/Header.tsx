@@ -16,7 +16,7 @@ export default function Header() {
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/40 dark:supports-[backdrop-filter]:bg-[#0b0f15]/40 border-b border-black/10 dark:border-white/10"
+      className="fixed top-0 left-0 right-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/40 dark:supports-[backdrop-filter]:bg-[#0b0f15]/40 border-b border-black/10 dark:border-white/10"
     >
       <div className="section flex items-center justify-between py-3">
         <a href="#" className="font-medium tracking-wide">
