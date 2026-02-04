@@ -19,7 +19,7 @@ export default function HighlightSection({
           </p>
         </div>
 
-        <div className="relative flex items-center justify-center gap-6">
+        {/* <div className="relative flex items-center justify-center gap-6">
           <motion.div
             initial={{ rotate: -8, y: 20, opacity: 0 }}
             whileInView={{ rotate: -4, y: 0, opacity: 1 }}
@@ -45,7 +45,7 @@ export default function HighlightSection({
               <MockChat title="Camera" />
             </Phone>
           </motion.div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
