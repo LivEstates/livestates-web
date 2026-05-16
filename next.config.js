@@ -1,17 +1,18 @@
 /** @type {import('next').Config} */
-const isProd = process.env.NODE_ENV === 'production';
-const repoName = 'livestates-web'; 
+const isGithubPages = process.env.GITHUB_ACTIONS === 'true';
+const repoName = 'livestates-web';
+const basePath = isGithubPages ? `/${repoName}` : '';
 
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
-  basePath: isProd ? `/${repoName}` : '',
-  assetPrefix: isProd ? `/${repoName}/` : '',
+  basePath,
+  assetPrefix: basePath ? `${basePath}/` : '',
   images: {
     unoptimized: true,
   },
   env: {
-    NEXT_PUBLIC_BASE_PATH: isProd ? `/${repoName}` : '',
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
 };
 

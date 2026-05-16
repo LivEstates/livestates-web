@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import StickyFeatureGallery from "@/components/StickyFeatureGallery";
 import HighlightSection from "@/components/HighlightSection";
@@ -11,12 +10,10 @@ import AnimatedTitle from "@/components/AnimatedTitle";
 import { getAssetPath } from "@/utils/path";
 
 export default function Page() {
-  // print pwd
-  console.log(process.cwd());
   return (
     <main>
-      <Header />
       <Hero
+        variant="intro"
         items={[
           [
             getAssetPath("/videos/01.mp4"),

@@ -1,19 +1,34 @@
 "use client";
+import type { ReactNode } from "react";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Phone, { MockChat } from "./Phone";
 
-export default function Hero({ items }: { items: [string, string][] }) {
+type HeroVariant = "plain" | "intro";
+
+export default function Hero({
+  items,
+  variant = "plain",
+}: {
+  items: [string, string][];
+  variant?: HeroVariant;
+}) {
   return (
-    <section className="w-full">
-      <VideoScrollGallery items={items} />
+    <section
+      className={variant === "intro" ? "w-full bg-white p-1 md:p-2" : "w-full"}
+    >
+      <VideoScrollGallery items={items} variant={variant} />
     </section>
   );
 }
 
-// 新增：滚动切换视频组件
-// 新增：支持传入视频数组和提示文字
-function VideoScrollGallery({ items }: { items: [string, string][] }) {
+function VideoScrollGallery({
+  items,
+  variant,
+}: {
+  items: [string, string][];
+  variant: HeroVariant;
+}) {
+  const isIntro = variant === "intro";
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -31,7 +46,6 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
     [0, 0, 24]
   );
 
-  // 为每个视频生成对应的透明度与缩放映射（均匀分段）
   const galleryItems = items.map(([src, text], i) => {
     const n = items.length || 1;
     const start = i / n;
@@ -42,7 +56,6 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
     const b2 = start + w * 0.75;
     const b3 = end;
 
-    // 首段一开始就可见；末段结束仍保持可见；中间段淡入→停留→淡出
     const opacity = useTransform(
       scrollYProgress,
       [b0, b1, b2, b3],
@@ -59,7 +72,6 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
     return { src, text, opacity, scale, textY };
   });
 
-  // 每段约 180vh 的滚动空间（至少 160vh）
   const containerHeightVh = Math.max(180 * (items.length || 1), 160);
 
   return (
@@ -69,10 +81,17 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
       style={{ height: `${containerHeightVh}vh` }}
     >
       <motion.div
-        className="sticky top-0 h-screen w-full overflow-hidden shadow-2xl z-10"
-        style={{ scale: containerScale, borderRadius: containerRadius }}
+        className={
+          isIntro
+            ? "sticky top-1 md:top-2 h-[calc(100vh-0.5rem)] md:h-[calc(100vh-1rem)] w-full overflow-hidden rounded-[28px] md:rounded-[32px] shadow-2xl z-10"
+            : "sticky top-0 h-screen w-full overflow-hidden shadow-2xl z-10"
+        }
+        style={
+          isIntro
+            ? { scale: containerScale }
+            : { scale: containerScale, borderRadius: containerRadius }
+        }
       >
-        {/* 视频层 */}
         {galleryItems.map(({ src, opacity, scale }, idx) => (
           <motion.div
             key={idx}
@@ -91,7 +110,9 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
           </motion.div>
         ))}
 
-        {/* 滚动文字层 - 位于视频上方，在容器内部滚动 */}
+        {isIntro && <div className="absolute inset-0 z-10 bg-black/45" />}
+        {isIntro && <IntroChrome />}
+
         <div className="absolute inset-0 z-20 pointer-events-none">
           {galleryItems.map(({ text, opacity, scale, textY }, idx) => (
             <motion.div
@@ -103,13 +124,142 @@ function VideoScrollGallery({ items }: { items: [string, string][] }) {
                 y: textY,
               }}
             >
-              <h2 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md text-center px-4 whitespace-pre-line">
+              <h2
+                className={
+                  isIntro
+                    ? "max-w-[min(90vw,1380px)] px-4 text-center text-[clamp(2.5rem,6.2vw,5.9rem)] font-extrabold leading-[1] tracking-normal text-white drop-shadow-lg whitespace-pre-wrap"
+                    : "text-2xl md:text-4xl font-bold text-white drop-shadow-md text-center px-4 whitespace-pre-wrap"
+                }
+              >
                 {text}
               </h2>
             </motion.div>
           ))}
         </div>
+
+        {isIntro && <CallOverlay previewSrc={items[0]?.[0]} />}
       </motion.div>
     </div>
+  );
+}
+
+function IntroChrome() {
+  return (
+    <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-5 text-white md:px-9 md:py-7">
+      <nav className="hidden flex-1 items-center gap-8 text-sm font-semibold md:flex lg:text-base">
+        <a href="#features" className="transition hover:text-white/75">
+          Features
+        </a>
+        <a href="#faq" className="transition hover:text-white/75">
+          FAQs
+        </a>
+        <a
+          href="https://twitter.com"
+          target="_blank"
+          rel="noreferrer"
+          className="transition hover:text-white/75"
+        >
+          Support
+        </a>
+      </nav>
+
+      <a
+        href="#"
+        className="absolute left-1/2 -translate-x-1/2 text-xl font-bold tracking-normal md:text-3xl"
+      >
+        LivEstates
+      </a>
+
+      <div className="flex flex-1 justify-end">
+        <a
+          href="#download"
+          className="inline-flex items-center rounded-full bg-white px-5 py-3 text-sm font-extrabold text-black shadow-lg transition hover:bg-white/90 md:px-7 md:text-base"
+        >
+          Get the App
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function CallOverlay({ previewSrc }: { previewSrc?: string }) {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-5 z-30 flex items-end justify-center px-5 md:bottom-7 md:px-9">
+      <div className="flex items-center gap-3">
+        <CallButton label="Mic">
+          <path d="M12 4a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V7a3 3 0 0 0-3-3Z" />
+          <path d="M19 11a7 7 0 0 1-14 0" />
+          <path d="M12 18v3" />
+          <path d="M8 21h8" />
+        </CallButton>
+        <CallButton label="Audio">
+          <path d="M4 10v4h4l5 4V6L8 10H4Z" />
+          <path d="M16 9a4 4 0 0 1 0 6" />
+        </CallButton>
+        <CallButton label="Video">
+          <path d="M4 7h10v10H4z" />
+          <path d="m14 11 5-3v8l-5-3" />
+        </CallButton>
+        <CallButton label="Chat" tone="blue">
+          <path d="M5 6h14v10H8l-3 3V6Z" />
+          <path d="M9 10h6" />
+          <path d="M9 13h4" />
+        </CallButton>
+        <CallButton label="End" tone="red">
+          <path d="M8 8l8 8" />
+          <path d="M16 8l-8 8" />
+        </CallButton>
+      </div>
+
+      {previewSrc && (
+        <div className="absolute right-5 bottom-0 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:block lg:right-20 lg:w-44">
+          <video
+            src={previewSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-full object-cover"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CallButton({
+  children,
+  label,
+  tone = "dark",
+}: {
+  children: ReactNode;
+  label: string;
+  tone?: "dark" | "blue" | "red";
+}) {
+  const toneClass =
+    tone === "blue"
+      ? "bg-blue-600"
+      : tone === "red"
+      ? "bg-red-500"
+      : "bg-black/60";
+
+  return (
+    <span
+      aria-label={label}
+      className={`${toneClass} inline-flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg backdrop-blur md:h-14 md:w-14`}
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        className="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      >
+        {children}
+      </svg>
+    </span>
   );
 }
