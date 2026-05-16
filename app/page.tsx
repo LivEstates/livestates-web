@@ -19,16 +19,16 @@ export default function Page() {
       <Hero
         items={[
           [
-            getAssetPath("/videos/istockphoto-1500066456-640_adpp_is.mp4"),
-            "See. Feel. Connect. \n LivE your way home.",
+            getAssetPath("/videos/01.mp4"),
+            "SEE. FEEL. CONNECT.\nLivE YOUR WAY HOME.",
           ],
           [
-            getAssetPath("/videos/istockphoto-2181426678-640_adpp_is.mp4"),
-            "Explore every corner. \n Live, detailed, and interactive.",
+            getAssetPath("/videos/02.mp4"),
+            "EXPLORE  EVERY CORNER.\n\nLivE, DETAILED, AND INTERACTIVE.",
           ],
           [
-            getAssetPath("/videos/istockphoto-2188682308-640_adpp_is.mp4"),
-            "Join the open house\nLive, anytime you want, anywhere you are.",
+            getAssetPath("/videos/03.mp4"),
+            "LivE, ANYTIME YOU WANT, ANYWHERE YOU ARE.",
           ],
         ]}
       />
