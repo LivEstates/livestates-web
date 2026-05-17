@@ -23,7 +23,7 @@ html.dark body.gradient {
 }
 
 .section {
-  @apply max-w-6xl mx-auto px-6;
+  @apply max-w-7xl mx-auto px-6;
 }
 
 .btn {

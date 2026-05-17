@@ -21,7 +21,7 @@ export default function Header() {
       <div className="section flex items-center justify-between py-3">
         <a href="#" className="font-medium tracking-wide">
           <span className="inline-block mr-2 h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-          Sticky
+          LivEstates
         </a>
 
         <nav className="hidden md:flex gap-8 text-sm text-slate-600 dark:text-slate-300">
@@ -34,7 +34,7 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <a href="#download" className="btn text-sm">Get the App</a>
-          <button onClick={toggle} className="btn text-sm">{theme === 'dark' ? '切换到白色' : '切换到黑色'}</button>
+          <button onClick={toggle} className="btn text-sm">{theme === 'dark' ? 'Light' : 'Dark'}</button>
         </div>
       </div>
     </motion.header>

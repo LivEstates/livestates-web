@@ -110,7 +110,7 @@ function VideoScrollGallery({
           </motion.div>
         ))}
 
-        {isIntro && <div className="absolute inset-0 z-10 bg-black/45" />}
+        <div className="absolute inset-0 z-10 bg-black/45" />
         {isIntro && <IntroChrome />}
 
         <div className="absolute inset-0 z-20 pointer-events-none">
@@ -127,8 +127,8 @@ function VideoScrollGallery({
               <h2
                 className={
                   isIntro
-                    ? "max-w-[min(90vw,1380px)] px-4 text-center text-[clamp(2.5rem,6.2vw,5.9rem)] font-extrabold leading-[1] tracking-normal text-white drop-shadow-lg whitespace-pre-wrap"
-                    : "text-2xl md:text-4xl font-bold text-white drop-shadow-md text-center px-4 whitespace-pre-wrap"
+                    ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                    : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
                 }
               >
                 {text}

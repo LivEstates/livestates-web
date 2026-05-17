@@ -4,9 +4,9 @@ import SmoothScroll from "@/components/SmoothScroll";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Sticky – Framer Motion Clone",
+  title: "LivEstates – Live Real Estate Showings",
   description:
-    "A React + Framer Motion recreation of a sticky-scrolling app showcase.",
+    "LivEstates brings live property tours, verified agents, and saved showing replays into one real estate platform.",
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh">
+    <html lang="en">
       <body className="gradient">
         <ThemeProvider>
           <SmoothScroll />

@@ -5,7 +5,7 @@ import FeatureGrid from "@/components/FeatureGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import { MockChat } from "@/components/Phone";
+import { LiveShowingScreen, MockChat, VideoTourScreen } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
 import { getAssetPath } from "@/utils/path";
 
@@ -21,7 +21,7 @@ export default function Page() {
           ],
           [
             getAssetPath("/videos/02.mp4"),
-            "EXPLORE  EVERY CORNER.\n\nLivE, DETAILED, AND INTERACTIVE.",
+            "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
           ],
           [
             getAssetPath("/videos/03.mp4"),
@@ -30,86 +30,53 @@ export default function Page() {
         ]}
       />
 
-      <AnimatedTitle>Meet LivE</AnimatedTitle>
+      <AnimatedTitle>Meet LivEstates</AnimatedTitle>
       <StickyFeatureGallery
-        description="LivE transforms property showings into interactive, social, real-time experences."
-        description2="Meet LivE, your virtual home agent."
+        id="features"
+        description="MEET LivE, YOUR VIRTUAL HOME AGENT"
       >
-        <video
-          src={getAssetPath("/videos/istockphoto-2181426678-640_adpp_is.mp4")}
-          autoPlay
-          loop
-          muted
-          className="w-full h-full object-cover"
-        />
+        <LiveShowingScreen videoSrc={getAssetPath("/videos/02.mp4")} />
       </StickyFeatureGallery>
 
       <StickyFeatureGallery
-        description="No more waiting. Real homes, real agents, real conversations."
-        description2="Chat live with Verified Agents.
-"
+        description="Chat LivE, with Verified Real Estate Agents"
       >
         <MockChat
-          title="LivE"
+          title="Verified Agent"
           accent={"violet" as any}
           messages={[
             {
               id: "1",
               role: "user",
-              text: "Is this apartment still available?",
+              text: "Can you show me the kitchen storage?",
             },
             {
               id: "2",
               role: "assistant",
-              text: "Yes, it is! Would you like a virtual tour?",
+              text: "Absolutely. I’ll walk closer and open the pantry.",
             },
-            { id: "3", role: "user", text: "That would be great, thanks." },
+            {
+              id: "3",
+              role: "user",
+              text: "Great. Is there natural light in the afternoon?",
+            },
           ]}
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
-        description="With LivE, you can join it live. See every details, ask questions, and feel like you're there. "
-        description2="Can't make it to the open house?"
+        description={"From LivE to library.\nContent that lasts."}
       >
-        <p>直播间截图来一个</p>
-      </StickyFeatureGallery>
-
-      <StickyFeatureGallery
-        description="From Live to library. Content that lasts.
-"
-        description2="More ways to see more than ever"
-      >
-        <video
-          src={getAssetPath("videos/istockphoto-2162287699-640_adpp_is.mp4")}
-          autoPlay
-          loop
-          muted
-          className="w-full h-full object-cover"
-        />
+        <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
       </StickyFeatureGallery>
       <Hero
         items={[
-          [
-            getAssetPath("videos/istockphoto-2238470429-640_adpp_is.mp4"),
-            "And so much more.",
-          ],
-          [
-            getAssetPath("videos/istockphoto-2167574847-640_adpp_is.mp4"),
-            "More than Agents.",
-          ],
-          [
-            getAssetPath("videos/istockphoto-2183311834-640_adpp_is.mp4"),
-            "One platform.",
-          ],
-          [
-            getAssetPath("/videos/istockphoto-2188682308-640_adpp_is.mp4"),
-            "Every Real Estate Professional.",
-          ],
+          [getAssetPath("/videos/04.mp4"), "More ways to see more than ever"],
+          [getAssetPath("/videos/05.mp4"), "More than Agents."],
         ]}
       />
       <HighlightSection
-        title="Request a showing. Seamless Agent Response."
-        description="Turning interest into action in just one click."
+        title="Request a showing. Get an agent response."
+        description="Turn interest into action with a single tap, then continue the conversation in the same place."
       />
 
       <FeatureGrid />

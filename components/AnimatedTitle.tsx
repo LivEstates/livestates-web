@@ -13,7 +13,7 @@ export default function AnimatedTitle({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-lg md:text-xl text-slate-400"
+        className="text-sm font-bold uppercase tracking-[0.16em] text-slate-400 md:text-base"
       >
         {children}
       </motion.h2>

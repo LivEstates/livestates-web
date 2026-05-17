@@ -4,22 +4,34 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const QA = [
   {
-    q: "这个模板怎么用？",
-    a: "将它部署到 Vercel 或 Netlify，替换文案与图片即可。",
+    q: "What is LivEstates?",
+    a: "LivEstates is a live real estate showing platform for buyers, renters, agents, and property teams. It brings tours, questions, replays, and follow-ups into one experience.",
   },
   {
-    q: "是不是很容易上手？",
-    a: "是的，所有动画都用 Framer Motion 编写，修改变量就可以。",
+    q: "Do I need to be at the open house in person?",
+    a: "No. You can join live from anywhere, ask the agent to show specific details, and revisit saved content later.",
   },
-  { q: "需要后端吗？", a: "不需要，这是一个静态展示站点。" },
-  { q: "可以自定义域名吗？", a: "可以，在托管平台绑定自己的域名即可。" },
+  {
+    q: "Can I talk to a real agent?",
+    a: "Yes. LivEstates is built around verified agents and real-time conversations, so questions can be answered while the showing is happening.",
+  },
+  {
+    q: "Are live showings saved?",
+    a: "A showing can become a reusable library item, making it easier to compare homes, share details, and keep context after the live session.",
+  },
+  {
+    q: "Who is LivEstates for?",
+    a: "It is designed for buyers and renters who want more access, and for real estate professionals who want live content to keep working after the appointment ends.",
+  },
 ];
 
 export default function FAQ() {
   return (
-    <section id="faq" className="section py-24 md:py-32">
-      <h2 className="text-3xl md:text-5xl font-semibold">常见问题</h2>
-      <div className="mt-6 divide-y divide-black/10 dark:divide-white/10 border-y border-black/10 dark:border-white/10">
+    <section id="faq" className="section py-24 md:py-36">
+      <h2 className="max-w-4xl text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
+        In case you missed anything.
+      </h2>
+      <div className="mt-10 divide-y divide-black/10 border-y border-black/10 dark:divide-white/10 dark:border-white/10">
         {QA.map((item, i) => (
           <Disclosure key={i} question={item.q} answer={item.a} />
         ))}
@@ -37,13 +49,15 @@ function Disclosure({
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="py-4">
+    <div className="py-6">
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between text-left"
       >
-        <span className="text-lg">{question}</span>
-        <span className="text-slate-500 dark:text-slate-400">
+        <span className="pr-6 text-xl font-semibold text-slate-950 dark:text-white md:text-2xl">
+          {question}
+        </span>
+        <span className="text-2xl text-slate-500 dark:text-slate-400">
           {open ? "—" : "+"}
         </span>
       </button>
@@ -56,7 +70,9 @@ function Disclosure({
             transition={{ duration: 0.25 }}
             className="overflow-hidden text-slate-600 dark:text-slate-300"
           >
-            <div className="pt-2 pb-4">{answer}</div>
+            <div className="max-w-3xl pt-4 pb-2 text-base leading-relaxed md:text-lg">
+              {answer}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
