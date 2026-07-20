@@ -5,13 +5,21 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 type HeroVariant = "plain" | "intro";
 
-/**
- * [landscapeSrc, overlayText, portraitSrc?]
- *
- * A 16:9 clip in a portrait viewport gets cropped to a narrow centre strip, so
- * slides whose subject matters can ship a portrait-framed alternate.
- */
-export type HeroItem = [src: string, text: string, portraitSrc?: string];
+export type HeroItem = {
+  /** Landscape clip filling the stage. */
+  src: string;
+  /** Overlay headline. Empty means the clip carries its own type, which also
+   *  suppresses the scrim. */
+  text: string;
+  /** Portrait-framed alternate. A 16:9 clip in a phone viewport is cropped to a
+   *  narrow centre strip, so slides whose subject matters ship one of these. */
+  portraitSrc?: string;
+  /** Clip for the call overlay's picture-in-picture tile. The tile is the other
+   *  end of the call: when the stage shows an agent broadcasting, this is the
+   *  property feed; when the stage shows someone watching, this is what they
+   *  are watching. */
+  previewSrc?: string;
+};
 
 /** Tracks `(orientation: portrait)`, defaulting to false so SSR and the first
  *  client render agree. The effect corrects it immediately after hydration. */
@@ -32,23 +40,15 @@ function useIsPortrait() {
 export default function Hero({
   items,
   variant = "plain",
-  previewSrc,
 }: {
   items: HeroItem[];
   variant?: HeroVariant;
-  /** Clip shown in the call overlay's picture-in-picture tile — the feed the
-   *  on-screen agent is broadcasting. Falls back to the first slide's video. */
-  previewSrc?: string;
 }) {
   return (
     <section
       className={variant === "intro" ? "w-full bg-white p-1 md:p-2" : "w-full"}
     >
-      <VideoScrollGallery
-        items={items}
-        variant={variant}
-        previewSrc={previewSrc}
-      />
+      <VideoScrollGallery items={items} variant={variant} />
     </section>
   );
 }
@@ -56,11 +56,9 @@ export default function Hero({
 function VideoScrollGallery({
   items,
   variant,
-  previewSrc,
 }: {
   items: HeroItem[];
   variant: HeroVariant;
-  previewSrc?: string;
 }) {
   const isIntro = variant === "intro";
   const isPortrait = useIsPortrait();
@@ -81,7 +79,7 @@ function VideoScrollGallery({
     [0, 0, 24]
   );
 
-  const galleryItems = items.map(([src, text, portraitSrc], i) => {
+  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc }, i) => {
     const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
@@ -104,9 +102,14 @@ function VideoScrollGallery({
       [i === 0 ? "0%" : "30%", i === 0 ? "-50%" : "-50%"]
     );
 
+    const resolvedSrc = isPortrait && portraitSrc ? portraitSrc : src;
+
     return {
-      src: isPortrait && portraitSrc ? portraitSrc : src,
+      src: resolvedSrc,
       text,
+      // Never run the same clip in the stage and the tile at once — side by side
+      // at two sizes it reads as a duplication bug, not a picture-in-picture.
+      previewSrc: previewSrc === resolvedSrc ? undefined : previewSrc,
       opacity,
       scale,
       textY,
@@ -182,7 +185,32 @@ function VideoScrollGallery({
           )}
         </div>
 
-        {isIntro && <CallOverlay previewSrc={previewSrc ?? items[0]?.[0]} />}
+        {isIntro && (
+          <>
+            <div className="pointer-events-none absolute inset-0 z-30">
+              {galleryItems.map(({ previewSrc, opacity }, idx) =>
+                previewSrc ? (
+                  <motion.div
+                    key={idx}
+                    style={{ opacity }}
+                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
+                  >
+                    <video
+                      src={previewSrc}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover"
+                    />
+                  </motion.div>
+                ) : null
+              )}
+            </div>
+            <CallControls />
+          </>
+        )}
       </motion.div>
     </div>
   );
@@ -227,7 +255,9 @@ function IntroChrome() {
   );
 }
 
-function CallOverlay({ previewSrc }: { previewSrc?: string }) {
+/** Persistent call chrome. Stays put across slides — the picture-in-picture
+ *  tile is rendered per slide so it can cross-fade with the stage behind it. */
+function CallControls() {
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-5 z-30 flex items-end justify-center px-5 md:bottom-7 md:px-9">
       <div className="flex items-center gap-3">
@@ -255,19 +285,6 @@ function CallOverlay({ previewSrc }: { previewSrc?: string }) {
           <path d="M16 8l-8 8" />
         </CallButton>
       </div>
-
-      {previewSrc && (
-        <div className="absolute right-5 bottom-0 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:block lg:right-20 lg:w-44">
-          <video
-            src={previewSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-full w-full object-cover"
-          />
-        </div>
-      )}
     </div>
   );
 }

@@ -14,21 +14,26 @@ export default function Page() {
     <main>
       <Hero
         variant="intro"
-        previewSrc={getAssetPath("/videos/first-female-agent.mp4")}
         items={[
-          [
-            getAssetPath("/videos/01.mp4"),
-            "SEE. FEEL. CONNECT.\nLivE YOUR WAY HOME.",
-          ],
-          [
-            getAssetPath("/videos/02.mp4"),
-            "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
-          ],
-          [
-            getAssetPath("/videos/03.mp4"),
-            "LivE, ANYTIME YOU WANT, ANYWHERE YOU ARE.",
-            getAssetPath("/videos/user-watch.mp4"),
-          ],
+          {
+            // Agent broadcasting -> the tile carries the feed she is sending.
+            src: getAssetPath("/videos/01.mp4"),
+            text: "SEE. FEEL. CONNECT.\nLivE YOUR WAY HOME.",
+            previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
+          },
+          {
+            // The property itself -> the tile carries the agent walking it.
+            src: getAssetPath("/videos/02.mp4"),
+            text: "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
+            previewSrc: getAssetPath("/videos/01.mp4"),
+          },
+          {
+            // Someone watching -> the tile carries what is on her phone.
+            src: getAssetPath("/videos/03.mp4"),
+            text: "LivE, ANYTIME YOU WANT, ANYWHERE YOU ARE.",
+            portraitSrc: getAssetPath("/videos/user-watch.mp4"),
+            previewSrc: getAssetPath("/videos/user-watch.mp4"),
+          },
         ]}
       />
 
@@ -72,8 +77,11 @@ export default function Page() {
       </StickyFeatureGallery>
       <Hero
         items={[
-          [getAssetPath("/videos/commercial.mp4"), "More Than Residential"],
-          [getAssetPath("/videos/more-than-agents.mp4"), ""],
+          {
+            src: getAssetPath("/videos/commercial.mp4"),
+            text: "More Than Residential",
+          },
+          { src: getAssetPath("/videos/more-than-agents.mp4"), text: "" },
         ]}
       />
       <HighlightSection
