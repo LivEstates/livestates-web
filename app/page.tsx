@@ -71,7 +71,7 @@ export default function Page() {
       <Hero
         items={[
           [getAssetPath("/videos/commercial.mp4"), "More Than Residential"],
-          [getAssetPath("/videos/05.mp4"), "More than Agents."],
+          [getAssetPath("/videos/more-than-agents.mp4"), ""],
         ]}
       />
       <HighlightSection

@@ -92,7 +92,7 @@ function VideoScrollGallery({
             : { scale: containerScale, borderRadius: containerRadius }
         }
       >
-        {galleryItems.map(({ src, opacity, scale }, idx) => (
+        {galleryItems.map(({ src, text, opacity, scale }, idx) => (
           <motion.div
             key={idx}
             style={{ opacity, scale }}
@@ -107,34 +107,38 @@ function VideoScrollGallery({
               loop
               preload="metadata"
             />
+            {/* Scrim only where overlay copy sits on top — slides that carry
+                their own artwork are shown untinted. */}
+            {text ? <div className="absolute inset-0 bg-black/45" /> : null}
           </motion.div>
         ))}
 
-        <div className="absolute inset-0 z-10 bg-black/45" />
         {isIntro && <IntroChrome />}
 
         <div className="absolute inset-0 z-20 pointer-events-none">
-          {galleryItems.map(({ text, opacity, scale, textY }, idx) => (
-            <motion.div
-              key={idx}
-              className="absolute inset-0 flex items-center justify-center"
-              style={{
-                opacity,
-                scale,
-                y: textY,
-              }}
-            >
-              <h2
-                className={
-                  isIntro
-                    ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                    : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                }
+          {galleryItems.map(({ text, opacity, scale, textY }, idx) =>
+            text ? (
+              <motion.div
+                key={idx}
+                className="absolute inset-0 flex items-center justify-center"
+                style={{
+                  opacity,
+                  scale,
+                  y: textY,
+                }}
               >
-                {text}
-              </h2>
-            </motion.div>
-          ))}
+                <h2
+                  className={
+                    isIntro
+                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                  }
+                >
+                  {text}
+                </h2>
+              </motion.div>
+            ) : null
+          )}
         </div>
 
         {isIntro && <CallOverlay previewSrc={items[0]?.[0]} />}
