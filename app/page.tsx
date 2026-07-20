@@ -70,7 +70,7 @@ export default function Page() {
       </StickyFeatureGallery>
       <Hero
         items={[
-          [getAssetPath("/videos/04.mp4"), "More ways to see more than ever"],
+          [getAssetPath("/videos/commercial.mp4"), "More Than Residential"],
           [getAssetPath("/videos/05.mp4"), "More than Agents."],
         ]}
       />
