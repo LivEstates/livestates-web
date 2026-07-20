@@ -14,6 +14,7 @@ export default function Page() {
     <main>
       <Hero
         variant="intro"
+        previewSrc={getAssetPath("/videos/first-female-agent.mp4")}
         items={[
           [
             getAssetPath("/videos/01.mp4"),

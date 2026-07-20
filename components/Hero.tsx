@@ -32,15 +32,23 @@ function useIsPortrait() {
 export default function Hero({
   items,
   variant = "plain",
+  previewSrc,
 }: {
   items: HeroItem[];
   variant?: HeroVariant;
+  /** Clip shown in the call overlay's picture-in-picture tile — the feed the
+   *  on-screen agent is broadcasting. Falls back to the first slide's video. */
+  previewSrc?: string;
 }) {
   return (
     <section
       className={variant === "intro" ? "w-full bg-white p-1 md:p-2" : "w-full"}
     >
-      <VideoScrollGallery items={items} variant={variant} />
+      <VideoScrollGallery
+        items={items}
+        variant={variant}
+        previewSrc={previewSrc}
+      />
     </section>
   );
 }
@@ -48,9 +56,11 @@ export default function Hero({
 function VideoScrollGallery({
   items,
   variant,
+  previewSrc,
 }: {
   items: HeroItem[];
   variant: HeroVariant;
+  previewSrc?: string;
 }) {
   const isIntro = variant === "intro";
   const isPortrait = useIsPortrait();
@@ -172,7 +182,7 @@ function VideoScrollGallery({
           )}
         </div>
 
-        {isIntro && <CallOverlay previewSrc={items[0]?.[0]} />}
+        {isIntro && <CallOverlay previewSrc={previewSrc ?? items[0]?.[0]} />}
       </motion.div>
     </div>
   );
