@@ -15,18 +15,28 @@ export default function Page() {
       <Hero
         variant="intro"
         items={[
-          [
-            getAssetPath("/videos/01.mp4"),
-            "SEE. FEEL. CONNECT.\nLivE YOUR WAY HOME.",
-          ],
-          [
-            getAssetPath("/videos/02.mp4"),
-            "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
-          ],
-          [
-            getAssetPath("/videos/03.mp4"),
-            "LivE, ANYTIME YOU WANT, ANYWHERE YOU ARE.",
-          ],
+          {
+            // Agent broadcasting -> the tile carries the feed she is sending.
+            src: getAssetPath("/videos/01.mp4"),
+            text: "SEE. FEEL. CONNECT.\nLivE YOUR WAY HOME.",
+            previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
+          },
+          {
+            // "Every corner" -> the tile carries a second angle on the property
+            // rather than a person, so the pair reads as two viewpoints at once.
+            // Reversed so it pushes in where slide one's tile pulls back, which
+            // keeps the two tiles distinct without needing another shoot.
+            src: getAssetPath("/videos/02.mp4"),
+            text: "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
+            previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
+          },
+          {
+            // Someone watching -> the tile carries what is on her phone.
+            src: getAssetPath("/videos/03.mp4"),
+            text: "LivE, ANYTIME YOU WANT, ANYWHERE YOU ARE.",
+            portraitSrc: getAssetPath("/videos/user-watch.mp4"),
+            previewSrc: getAssetPath("/videos/user-watch.mp4"),
+          },
         ]}
       />
 
@@ -70,8 +80,11 @@ export default function Page() {
       </StickyFeatureGallery>
       <Hero
         items={[
-          [getAssetPath("/videos/04.mp4"), "More ways to see more than ever"],
-          [getAssetPath("/videos/05.mp4"), "More than Agents."],
+          {
+            src: getAssetPath("/videos/commercial.mp4"),
+            text: "More Than Residential.",
+          },
+          { src: getAssetPath("/videos/more-than-agents.mp4"), text: "" },
         ]}
       />
       <HighlightSection
