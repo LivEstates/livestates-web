@@ -1,15 +1,39 @@
 "use client";
 import type { ReactNode } from "react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 type HeroVariant = "plain" | "intro";
+
+/**
+ * [landscapeSrc, overlayText, portraitSrc?]
+ *
+ * A 16:9 clip in a portrait viewport gets cropped to a narrow centre strip, so
+ * slides whose subject matters can ship a portrait-framed alternate.
+ */
+export type HeroItem = [src: string, text: string, portraitSrc?: string];
+
+/** Tracks `(orientation: portrait)`, defaulting to false so SSR and the first
+ *  client render agree. The effect corrects it immediately after hydration. */
+function useIsPortrait() {
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(orientation: portrait)");
+    const sync = () => setIsPortrait(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  return isPortrait;
+}
 
 export default function Hero({
   items,
   variant = "plain",
 }: {
-  items: [string, string][];
+  items: HeroItem[];
   variant?: HeroVariant;
 }) {
   return (
@@ -25,10 +49,11 @@ function VideoScrollGallery({
   items,
   variant,
 }: {
-  items: [string, string][];
+  items: HeroItem[];
   variant: HeroVariant;
 }) {
   const isIntro = variant === "intro";
+  const isPortrait = useIsPortrait();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -46,7 +71,7 @@ function VideoScrollGallery({
     [0, 0, 24]
   );
 
-  const galleryItems = items.map(([src, text], i) => {
+  const galleryItems = items.map(([src, text, portraitSrc], i) => {
     const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
@@ -69,7 +94,13 @@ function VideoScrollGallery({
       [i === 0 ? "0%" : "30%", i === 0 ? "-50%" : "-50%"]
     );
 
-    return { src, text, opacity, scale, textY };
+    return {
+      src: isPortrait && portraitSrc ? portraitSrc : src,
+      text,
+      opacity,
+      scale,
+      textY,
+    };
   });
 
   const containerHeightVh = Math.max(180 * (items.length || 1), 160);

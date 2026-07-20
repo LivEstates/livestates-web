@@ -26,6 +26,7 @@ export default function Page() {
           [
             getAssetPath("/videos/03.mp4"),
             "LivE, ANYTIME YOU WANT, ANYWHERE YOU ARE.",
+            getAssetPath("/videos/user-watch.mp4"),
           ],
         ]}
       />
