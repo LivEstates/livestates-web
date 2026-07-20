@@ -24,9 +24,11 @@ export default function Page() {
           {
             // "Every corner" -> the tile carries a second angle on the property
             // rather than a person, so the pair reads as two viewpoints at once.
+            // Reversed so it pushes in where slide one's tile pulls back, which
+            // keeps the two tiles distinct without needing another shoot.
             src: getAssetPath("/videos/02.mp4"),
             text: "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
-            previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
+            previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
           },
           {
             // Someone watching -> the tile carries what is on her phone.
