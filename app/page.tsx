@@ -22,10 +22,11 @@ export default function Page() {
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
           },
           {
-            // The property itself -> the tile carries the agent walking it.
+            // "Every corner" -> the tile carries a second angle on the property
+            // rather than a person, so the pair reads as two viewpoints at once.
             src: getAssetPath("/videos/02.mp4"),
             text: "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
-            previewSrc: getAssetPath("/videos/01.mp4"),
+            previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
           },
           {
             // Someone watching -> the tile carries what is on her phone.
@@ -79,7 +80,7 @@ export default function Page() {
         items={[
           {
             src: getAssetPath("/videos/commercial.mp4"),
-            text: "More Than Residential",
+            text: "More Than Residential.",
           },
           { src: getAssetPath("/videos/more-than-agents.mp4"), text: "" },
         ]}
