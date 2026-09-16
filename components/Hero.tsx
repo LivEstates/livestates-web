@@ -1,15 +1,47 @@
 "use client";
 import type { ReactNode } from "react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 type HeroVariant = "plain" | "intro";
+
+export type HeroItem = {
+  /** Landscape clip filling the stage. */
+  src: string;
+  /** Overlay headline. Empty means the clip carries its own type, which also
+   *  suppresses the scrim. */
+  text: string;
+  /** Portrait-framed alternate. A 16:9 clip in a phone viewport is cropped to a
+   *  narrow centre strip, so slides whose subject matters ship one of these. */
+  portraitSrc?: string;
+  /** Clip for the call overlay's picture-in-picture tile. The tile is the other
+   *  end of the call: when the stage shows an agent broadcasting, this is the
+   *  property feed; when the stage shows someone watching, this is what they
+   *  are watching. */
+  previewSrc?: string;
+};
+
+/** Tracks `(orientation: portrait)`, defaulting to false so SSR and the first
+ *  client render agree. The effect corrects it immediately after hydration. */
+function useIsPortrait() {
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(orientation: portrait)");
+    const sync = () => setIsPortrait(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  return isPortrait;
+}
 
 export default function Hero({
   items,
   variant = "plain",
 }: {
-  items: [string, string][];
+  items: HeroItem[];
   variant?: HeroVariant;
 }) {
   return (
@@ -25,10 +57,11 @@ function VideoScrollGallery({
   items,
   variant,
 }: {
-  items: [string, string][];
+  items: HeroItem[];
   variant: HeroVariant;
 }) {
   const isIntro = variant === "intro";
+  const isPortrait = useIsPortrait();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -46,7 +79,7 @@ function VideoScrollGallery({
     [0, 0, 24]
   );
 
-  const galleryItems = items.map(([src, text], i) => {
+  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc }, i) => {
     const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
@@ -69,7 +102,18 @@ function VideoScrollGallery({
       [i === 0 ? "0%" : "30%", i === 0 ? "-50%" : "-50%"]
     );
 
-    return { src, text, opacity, scale, textY };
+    const resolvedSrc = isPortrait && portraitSrc ? portraitSrc : src;
+
+    return {
+      src: resolvedSrc,
+      text,
+      // Never run the same clip in the stage and the tile at once — side by side
+      // at two sizes it reads as a duplication bug, not a picture-in-picture.
+      previewSrc: previewSrc === resolvedSrc ? undefined : previewSrc,
+      opacity,
+      scale,
+      textY,
+    };
   });
 
   const containerHeightVh = Math.max(180 * (items.length || 1), 160);
@@ -92,7 +136,7 @@ function VideoScrollGallery({
             : { scale: containerScale, borderRadius: containerRadius }
         }
       >
-        {galleryItems.map(({ src, opacity, scale }, idx) => (
+        {galleryItems.map(({ src, text, opacity, scale }, idx) => (
           <motion.div
             key={idx}
             style={{ opacity, scale }}
@@ -107,37 +151,66 @@ function VideoScrollGallery({
               loop
               preload="metadata"
             />
+            {/* Scrim only where overlay copy sits on top — slides that carry
+                their own artwork are shown untinted. */}
+            {text ? <div className="absolute inset-0 bg-black/45" /> : null}
           </motion.div>
         ))}
 
-        <div className="absolute inset-0 z-10 bg-black/45" />
         {isIntro && <IntroChrome />}
 
         <div className="absolute inset-0 z-20 pointer-events-none">
-          {galleryItems.map(({ text, opacity, scale, textY }, idx) => (
-            <motion.div
-              key={idx}
-              className="absolute inset-0 flex items-center justify-center"
-              style={{
-                opacity,
-                scale,
-                y: textY,
-              }}
-            >
-              <h2
-                className={
-                  isIntro
-                    ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                    : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                }
+          {galleryItems.map(({ text, opacity, scale, textY }, idx) =>
+            text ? (
+              <motion.div
+                key={idx}
+                className="absolute inset-0 flex items-center justify-center"
+                style={{
+                  opacity,
+                  scale,
+                  y: textY,
+                }}
               >
-                {text}
-              </h2>
-            </motion.div>
-          ))}
+                <h2
+                  className={
+                    isIntro
+                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                  }
+                >
+                  {text}
+                </h2>
+              </motion.div>
+            ) : null
+          )}
         </div>
 
-        {isIntro && <CallOverlay previewSrc={items[0]?.[0]} />}
+        {isIntro && (
+          <>
+            <div className="pointer-events-none absolute inset-0 z-30">
+              {galleryItems.map(({ previewSrc, opacity }, idx) =>
+                previewSrc ? (
+                  <motion.div
+                    key={idx}
+                    style={{ opacity }}
+                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
+                  >
+                    <video
+                      src={previewSrc}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover"
+                    />
+                  </motion.div>
+                ) : null
+              )}
+            </div>
+            <CallControls />
+          </>
+        )}
       </motion.div>
     </div>
   );
@@ -182,7 +255,9 @@ function IntroChrome() {
   );
 }
 
-function CallOverlay({ previewSrc }: { previewSrc?: string }) {
+/** Persistent call chrome. Stays put across slides — the picture-in-picture
+ *  tile is rendered per slide so it can cross-fade with the stage behind it. */
+function CallControls() {
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-5 z-30 flex items-end justify-center px-5 md:bottom-7 md:px-9">
       <div className="flex items-center gap-3">
@@ -210,19 +285,6 @@ function CallOverlay({ previewSrc }: { previewSrc?: string }) {
           <path d="M16 8l-8 8" />
         </CallButton>
       </div>
-
-      {previewSrc && (
-        <div className="absolute right-5 bottom-0 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:block lg:right-20 lg:w-44">
-          <video
-            src={previewSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-full w-full object-cover"
-          />
-        </div>
-      )}
     </div>
   );
 }
