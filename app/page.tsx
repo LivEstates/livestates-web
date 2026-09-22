@@ -18,7 +18,7 @@ export default function Page() {
           {
             // Agent broadcasting -> the tile carries the feed she is sending.
             src: getAssetPath("/videos/01.mp4"),
-            text: "SEE. FEEL. CONNECT.\nLivE YOUR WAY HOME.",
+            text: "SEE\nFEEL\nCONNECT\nLivE YOUR WAY HOME",
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
           },
           {
@@ -27,13 +27,13 @@ export default function Page() {
             // Reversed so it pushes in where slide one's tile pulls back, which
             // keeps the two tiles distinct without needing another shoot.
             src: getAssetPath("/videos/02.mp4"),
-            text: "EXPLORE  EVERY CORNER.\nLivE, DETAILED, AND INTERACTIVE.",
+            text: "LivE\nEXPLORE EVERY CORNER\nDETAILED AND INTERACTIVE",
             previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
           },
           {
             // Someone watching -> the tile carries what is on her phone.
             src: getAssetPath("/videos/03.mp4"),
-            text: "LivE, ANYTIME YOU WANT, ANYWHERE YOU ARE.",
+            text: "LivE\nANYTIME YOU WANT\nANYWHERE YOU ARE",
             portraitSrc: getAssetPath("/videos/user-watch.mp4"),
             previewSrc: getAssetPath("/videos/user-watch.mp4"),
           },
@@ -43,7 +43,7 @@ export default function Page() {
       <AnimatedTitle>Meet LivEstates</AnimatedTitle>
       <StickyFeatureGallery
         id="features"
-        description="MEET LivE, YOUR VIRTUAL HOME AGENT"
+        description={"MEET LivE, YOUR\nVIRTUAL HOME AGENT"}
       >
         <LiveShowingScreen videoSrc={getAssetPath("/videos/02.mp4")} />
       </StickyFeatureGallery>
@@ -74,7 +74,7 @@ export default function Page() {
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
-        description={"From LivE to library.\nContent that lasts."}
+        description={"FROM LivE TO LIBRARY\nCONTENT THAT LASTS"}
       >
         <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
       </StickyFeatureGallery>
@@ -84,7 +84,6 @@ export default function Page() {
             src: getAssetPath("/videos/commercial.mp4"),
             text: "More Than Residential.",
           },
-          { src: getAssetPath("/videos/more-than-agents.mp4"), text: "" },
         ]}
       />
       <HighlightSection
