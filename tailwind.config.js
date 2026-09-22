@@ -8,18 +8,24 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['ui-sans-serif','system-ui','Inter','-apple-system','Segoe UI','Roboto','Noto Sans','Ubuntu','Cantarell'],
-        sans: ['ui-sans-serif','system-ui','Inter','-apple-system','Segoe UI','Roboto','Noto Sans','Ubuntu','Cantarell']
+        display: ['var(--font-display)', 'Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['var(--font-sans)', 'Jost', 'Helvetica Neue', 'sans-serif'],
+        mono: ['var(--font-mono)', 'IBM Plex Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
-        ink: "#0B0F15"
+        ink: "#17140F",
+        paper: "#F3EDE2",
+        bone: "#E9E1D2",
+        bronze: "#8E6B3E",
+        olive: "#4A4A30",
+        clay: "#A9553A",
       },
       boxShadow: {
-        'elev': '0 20px 40px rgba(0,0,0,0.15)'
+        'elev': '0 30px 60px -30px rgba(52,38,20,0.35)'
       },
       borderRadius: {
-        'phone': '36px',
-        'screen': '28px'
+        'phone': '44px',
+        'screen': '34px'
       }
     },
   },

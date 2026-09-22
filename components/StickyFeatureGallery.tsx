@@ -52,7 +52,7 @@ export default function StickyFeatureGallery({
   );
 
   return (
-    <section id={id} className="section py-24 md:py-36">
+    <section id={id} className="chapter section py-16 md:py-28">
       <div ref={progressRef} className="relative h-[300vh]">
         <div
           ref={stickyRef}
@@ -61,9 +61,17 @@ export default function StickyFeatureGallery({
           <div className="relative w-full">
             <motion.div
               style={{ scale: rowScale, filter: rowBlur, opacity: rowOpacity }}
-              className="flex items-center justify-center whitespace-pre-wrap text-center text-[clamp(2.75rem,7vw,6.5rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white"
+              className="flex flex-col items-center justify-center text-center"
             >
-              <span className="max-w-[14ch] md:max-w-[17ch]">
+              <div
+                aria-hidden="true"
+                className="mb-8 flex items-center gap-4 font-mono text-[11px] tracking-[0.3em] text-bronze md:mb-12 md:text-xs"
+              >
+                <span className="h-px w-10 bg-bronze/60 md:w-16" />
+                <span className="chapter-no" />
+                <span className="h-px w-10 bg-bronze/60 md:w-16" />
+              </div>
+              <span className="max-w-[15ch] whitespace-pre-wrap font-display text-[clamp(2.35rem,7.4vw,7.25rem)] font-normal leading-[0.95] tracking-[-0.012em] text-ink md:max-w-[17ch]">
                 {description}
               </span>
             </motion.div>
