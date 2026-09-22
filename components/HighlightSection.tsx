@@ -33,21 +33,28 @@ export default function HighlightSection({
     // The clip only trims what already falls past the viewport edge (the
     // tilted second phone pokes a few px out around 1024px wide).
     <div className="overflow-x-clip">
-      <section className="section py-24 md:py-36">
+      <section className="band my-3 bg-[#dde3d0] md:my-4">
+        {/* Soft organic shapes behind the copy. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="drift-slow absolute -left-24 -top-24 h-72 w-72 rounded-[58%_42%_63%_37%/45%_55%_45%_55%] bg-[#cbd5bb]" />
+          <div className="absolute -bottom-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#f1e6d5]/70 md:right-[4%]" />
+        </div>
+        <div className="section relative py-24 md:py-36">
         <div className="grid items-center gap-12 md:grid-cols-[1fr_0.9fr]">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">
+          <div className="min-w-0">
+            <p className="eyebrow bg-[#fbf5eb] text-[#56654d]">
+              <span className="h-2 w-2 rounded-full bg-[#c4673f]" />
               Dual Camera
             </p>
-            <h2 className="mt-5 whitespace-pre-line text-[clamp(2.75rem,7vw,6.25rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
+            <h2 className="font-display mt-6 whitespace-pre-line text-[clamp(2.75rem,7vw,6.25rem)] font-medium leading-[1] tracking-[-0.015em] text-[#3b2a20]">
               {title}
             </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 md:text-xl">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#5b4636] md:text-xl">
               {description}
             </p>
           </div>
 
-          <div className="highlight-stage relative flex min-h-[520px] items-center justify-center">
+          <div className="highlight-stage relative flex min-h-[520px] min-w-0 items-center justify-center">
             {/* Below lg these two wrappers scale the phone pair down as one
                 unit so it fits narrow screens; at lg and up they are
                 display: contents and the layout is exactly as before. */}
@@ -110,6 +117,7 @@ export default function HighlightSection({
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
     </div>

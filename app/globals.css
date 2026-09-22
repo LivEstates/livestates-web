@@ -3,81 +3,176 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0b0f15;
-  --fg: #f1f5f9;
+  --cream: #fbf5eb;
+  --oat: #f1e6d5;
+  --sand: #e8d5be;
+  --clay: #c4673f;
+  --clay-deep: #9e4a2a;
+  --sage: #a9b69a;
+  --sage-soft: #dde3d0;
+  --sage-deep: #56654d;
+  --ink: #3b2a20;
+  --bg: var(--cream);
+  --fg: var(--ink);
 }
 
 html, body {
-  @apply bg-white text-slate-900 antialiased dark:bg-[#0b0f15] dark:text-slate-100 transition-colors duration-300;
+  @apply antialiased;
+  background-color: var(--cream);
+  color: var(--ink);
 }
 
 body.gradient {
-  background-color: transparent;
+  background:
+    radial-gradient(900px 520px at 8% 12%, rgba(232, 213, 190, 0.55), transparent 60%),
+    radial-gradient(800px 600px at 96% 40%, rgba(221, 227, 208, 0.5), transparent 65%),
+    var(--cream);
 }
 
-html.dark body.gradient {
-  background: radial-gradient(1200px 600px at 20% -10%, rgba(56,189,248,0.12), transparent 60%),
-              radial-gradient(900px 600px at 80% -10%, rgba(250,204,21,0.12), transparent 60%),
-              radial-gradient(1200px 500px at 50% 120%, rgba(16,185,129,0.1), transparent 60%);
-  background-color: #0b0f15;
+/* Paper grain: keeps flat warm fields from feeling digital. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.22  0 0 0 0 0.12  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+::selection {
+  background: var(--clay);
+  color: var(--cream);
+}
+
+.font-display {
+  font-variation-settings: "SOFT" 100, "WONK" 0;
 }
 
 .section {
   @apply max-w-7xl mx-auto px-6;
 }
 
+/* Warm background bands — big soft "rooms" sitting on the cream page. */
+.band {
+  @apply mx-2 rounded-[36px] md:mx-4 md:rounded-[56px];
+  overflow: clip;
+  position: relative;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] md:text-sm;
+}
+
 .btn {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 bg-black/10 hover:bg-black/20 text-black backdrop-blur transition dark:bg-white/10 dark:hover:bg-white/20 dark:text-white;
+  @apply inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-semibold transition duration-300 ease-out;
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset, 0 10px 24px -10px rgba(59, 42, 32, 0.55);
+}
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset, 0 18px 32px -12px rgba(59, 42, 32, 0.6);
+}
+.btn-clay {
+  background: var(--clay);
+  color: #fff8ef;
+}
+.btn-cream {
+  background: #fff8ef;
+  color: var(--clay-deep);
+}
+.btn-ghost {
+  background: transparent;
+  color: #fff8ef;
+  box-shadow: inset 0 0 0 2px rgba(255, 248, 239, 0.7);
+}
+.btn-ghost:hover {
+  background: rgba(255, 248, 239, 0.12);
+  box-shadow: inset 0 0 0 2px rgba(255, 248, 239, 0.95), 0 18px 32px -12px rgba(59, 42, 32, 0.4);
 }
 
 .kbd {
-  @apply px-2 py-0.5 rounded border border-black/20 text-xs dark:border-white/20;
+  @apply px-2 py-0.5 rounded border border-black/20 text-xs;
 }
 
-/* Phone shell aesthetic */
+/* Phone shell: a warm ceramic body instead of black glass. */
 .phone {
   width: 300px;
   height: 620px;
-  border-radius: 36px;
-  background: linear-gradient(135deg, #0e131b, #151c27);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 30px 60px rgba(0,0,0,.4);
+  border-radius: 46px;
+  background: linear-gradient(150deg, #f3e6d4 0%, #e3cdb2 55%, #d5b894 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -3px 6px rgba(120, 78, 45, 0.18),
+    0 2px 4px rgba(91, 58, 36, 0.12),
+    0 40px 70px -24px rgba(107, 58, 30, 0.5);
   position: relative;
 }
 
 @media (max-width: 768px) {
   .phone {
-    width: 90vw;
-    height: 75vh;
-    border-radius: 24px;
+    width: min(78vw, 320px);
+    height: min(68vh, 600px);
+    border-radius: 38px;
   }
 }
 
 .phone::before {
   content: "";
   position: absolute;
-  top: 10px; left: 50%;
+  top: 20px;
+  left: 50%;
+  z-index: 5;
   transform: translateX(-50%);
-  width: 110px; height: 20px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  filter: blur(0.2px);
+  width: 84px;
+  height: 22px;
+  background: #2b1f18;
+  border-radius: 999px;
 }
 
 .screen {
   position: absolute;
-  inset: 14px;
-  border-radius: 28px;
+  inset: 10px;
+  border-radius: 37px;
   overflow: hidden;
-  background: linear-gradient(180deg, #0f1520, #0b0f15);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: #fffaf2;
+  box-shadow: inset 0 0 0 1px rgba(107, 74, 52, 0.12);
+}
+
+@media (max-width: 768px) {
+  .screen {
+    inset: 8px;
+    border-radius: 31px;
+  }
 }
 
 .screen-grid {
   display: grid;
-  grid-template-rows: 60px 1fr 70px;
+  grid-template-rows: 72px 1fr 70px;
   height: 100%;
-  color: #e5e7eb;
+  color: var(--ink);
+}
+
+/* Arch doorway silhouette. */
+.arch {
+  border-radius: 999px 999px 0 0;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -14px, 0) rotate(4deg); }
+}
+.drift {
+  animation: drift 11s ease-in-out infinite;
+}
+.drift-slow {
+  animation: drift 16s ease-in-out infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift, .drift-slow { animation: none; }
 }
 
 /* "Request a showing" phone pair. The pair is ~540px wide once tilted, which
@@ -114,6 +209,6 @@ html.dark body.gradient {
   .highlight-cluster .phone {
     width: 300px;
     height: 620px;
-    border-radius: 36px;
+    border-radius: 46px;
   }
 }

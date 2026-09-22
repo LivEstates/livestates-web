@@ -52,6 +52,7 @@ export default function Page() {
       </StickyFeatureGallery>
 
       <StickyFeatureGallery
+        tone="sage"
         textSizeClassName="text-[clamp(2.25rem,5.6vw,5.25rem)]"
         measureClassName="max-w-full"
         description={
@@ -96,6 +97,7 @@ export default function Page() {
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
+        tone="clay"
         description={"From LivE To Library\nContent That Lasts"}
       >
         <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />

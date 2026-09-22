@@ -24,10 +24,18 @@ const QA = [
 export default function FAQ() {
   return (
     <section id="faq" className="section py-24 md:py-36">
-      <h2 className="max-w-4xl text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
-        In case you missed anything.
-      </h2>
-      <div className="mt-10 divide-y divide-black/10 border-y border-black/10 dark:divide-white/10 dark:border-white/10">
+      <div className="flex items-end justify-between gap-10">
+        <h2 className="font-display max-w-4xl text-[clamp(3rem,8vw,7rem)] font-medium leading-[1] tracking-[-0.015em] text-[#3b2a20]">
+          In case you missed anything.
+        </h2>
+        {/* Arch / sun / hill trio: decorative only, desktop only. */}
+        <div aria-hidden className="pointer-events-none mb-3 hidden shrink-0 gap-3 lg:flex">
+          <span className="arch block h-24 w-16 bg-[#c4673f]" />
+          <span className="block h-16 w-16 self-end rounded-full bg-[#a9b69a]" />
+          <span className="block h-10 w-20 self-end rounded-t-full bg-[#d9a55b]" />
+        </div>
+      </div>
+      <div className="mt-10 space-y-3">
         {QA.map((item, i) => (
           <Disclosure key={i} question={item.q} answer={item.a} />
         ))}
@@ -45,15 +53,23 @@ function Disclosure({
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="py-6">
+    <div
+      className={`rounded-[28px] px-5 py-5 transition duration-300 md:px-7 md:py-6 ${
+        open ? "bg-[#fffaf2] shadow-lift" : "bg-[#f1e6d5] hover:bg-[#ecdcc6]"
+      }`}
+    >
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between text-left"
       >
-        <span className="pr-6 text-xl font-semibold text-slate-950 dark:text-white md:text-2xl">
+        <span className="font-display pr-6 text-xl font-medium leading-snug text-[#3b2a20] md:text-2xl">
           {question}
         </span>
-        <span className="text-2xl text-slate-500 dark:text-slate-400">
+        <span
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xl leading-none transition duration-300 ${
+            open ? "bg-[#c4673f] text-[#fff6ea]" : "bg-[#fffaf2] text-[#9e4a2a]"
+          }`}
+        >
           {open ? "—" : "+"}
         </span>
       </button>
@@ -64,7 +80,7 @@ function Disclosure({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="overflow-hidden text-slate-600 dark:text-slate-300"
+            className="overflow-hidden text-[#5b4636]"
           >
             <div className="max-w-3xl pt-4 pb-2 text-base leading-relaxed md:text-lg">
               {answer}
