@@ -3,52 +3,136 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0b0f15;
-  --fg: #f1f5f9;
+  --ink: #0a0a0a;
+  --lime: #d4ff3a;
+  --navy: #0b1f5c;
+  --tomato: #ff4f2e;
+  --cream: #fff6e3;
+  --bg: var(--cream);
+  --fg: var(--ink);
+  /* Colour of the hard offset shadow behind phones; sections override it. */
+  --phone-shadow: var(--ink);
 }
 
-html, body {
-  @apply bg-white text-slate-900 antialiased dark:bg-[#0b0f15] dark:text-slate-100 transition-colors duration-300;
+html,
+body {
+  @apply bg-cream font-sans text-ink antialiased;
+}
+
+/* Belt and braces against sideways scroll on phones. `clip` (not `hidden`)
+   so it never creates a scroll container that would break position: sticky. */
+html,
+body {
+  overflow-x: clip;
 }
 
 body.gradient {
-  background-color: transparent;
+  background-color: var(--cream);
 }
 
-html.dark body.gradient {
-  background: radial-gradient(1200px 600px at 20% -10%, rgba(56,189,248,0.12), transparent 60%),
-              radial-gradient(900px 600px at 80% -10%, rgba(250,204,21,0.12), transparent 60%),
-              radial-gradient(1200px 500px at 50% 120%, rgba(16,185,129,0.1), transparent 60%);
-  background-color: #0b0f15;
+::selection {
+  background: var(--lime);
+  color: var(--ink);
 }
 
 .section {
-  @apply max-w-7xl mx-auto px-6;
+  @apply max-w-7xl mx-auto px-5 md:px-6;
+}
+
+/* ---------- Neo-brutalist primitives ---------- */
+
+.font-display {
+  letter-spacing: 0.005em;
 }
 
 .btn {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 bg-black/10 hover:bg-black/20 text-black backdrop-blur transition dark:bg-white/10 dark:hover:bg-white/20 dark:text-white;
+  @apply inline-flex items-center gap-2 rounded-full border-[3px] border-ink bg-lime px-6 py-3 font-extrabold text-ink shadow-hard transition-[transform,box-shadow] duration-150;
+}
+.btn:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 0 var(--ink);
+}
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 0 var(--ink);
+}
+.btn-ink {
+  @apply bg-ink text-lime;
+}
+.btn-ink:hover {
+  box-shadow: 9px 9px 0 0 var(--cream);
+}
+.btn-cream {
+  @apply bg-cream text-ink;
+}
+
+.sticker {
+  @apply inline-block rounded-full border-[3px] border-ink px-4 py-1.5 text-xs font-extrabold uppercase tracking-[0.14em] shadow-hard-sm md:text-sm;
+}
+
+.card-brut {
+  @apply rounded-2xl border-[3px] border-ink shadow-hard transition-[transform,box-shadow] duration-150;
+}
+.card-brut:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 0 var(--ink);
+}
+
+/* Hard, stacked text shadow for display type sitting on video. */
+.text-pop {
+  text-shadow: 3px 3px 0 var(--ink), 6px 6px 0 var(--tomato);
+}
+.text-pop-ink {
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Dot-grid paper texture for cream blocks. */
+.bg-dots {
+  background-color: var(--cream);
+  background-image: radial-gradient(rgba(10, 10, 10, 0.14) 1.4px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+.bg-dots-light {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.4px, transparent 1.6px);
+  background-size: 22px 22px;
 }
 
 .kbd {
-  @apply px-2 py-0.5 rounded border border-black/20 text-xs dark:border-white/20;
+  @apply px-2 py-0.5 rounded border-2 border-ink text-xs;
 }
 
-/* Phone shell aesthetic */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-slow {
+    animation: none;
+  }
+}
+
+/* ---------- Phone shell ---------- */
 .phone {
   width: 300px;
   height: 620px;
-  border-radius: 36px;
-  background: linear-gradient(135deg, #0e131b, #151c27);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 30px 60px rgba(0,0,0,.4);
+  border-radius: 40px;
+  background: var(--ink);
+  border: 4px solid var(--ink);
+  box-shadow: 12px 12px 0 0 var(--phone-shadow);
   position: relative;
 }
 
 @media (max-width: 768px) {
   .phone {
-    width: 90vw;
-    height: 75vh;
+    width: min(84vw, 330px);
+    height: min(72vh, 640px);
+    border-radius: 30px;
+    box-shadow: 8px 8px 0 0 var(--phone-shadow);
+  }
+}
+
+/* Two overlapping phones side by side need to shrink on small screens. */
+@media (max-width: 768px) {
+  .phone-pair .phone {
+    width: 56vw;
+    height: 112vw;
     border-radius: 24px;
   }
 }
@@ -56,26 +140,38 @@ html.dark body.gradient {
 .phone::before {
   content: "";
   position: absolute;
-  top: 10px; left: 50%;
+  top: 12px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 110px; height: 20px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  filter: blur(0.2px);
+  width: 96px;
+  height: 22px;
+  background: var(--ink);
+  border: 2px solid #1e1e1e;
+  border-radius: 999px;
+  z-index: 5;
 }
 
 .screen {
   position: absolute;
-  inset: 14px;
-  border-radius: 28px;
+  inset: 6px;
+  border-radius: 34px;
   overflow: hidden;
-  background: linear-gradient(180deg, #0f1520, #0b0f15);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: #0d1a44;
+  border: 2px solid var(--ink);
+}
+
+@media (max-width: 768px) {
+  .screen {
+    border-radius: 24px;
+  }
+  .phone-pair .screen {
+    border-radius: 18px;
+  }
 }
 
 .screen-grid {
   display: grid;
   grid-template-rows: 60px 1fr 70px;
   height: 100%;
-  color: #e5e7eb;
+  color: #f4f4f4;
 }

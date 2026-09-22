@@ -27,14 +27,16 @@ const QA = [
 
 export default function FAQ() {
   return (
-    <section id="faq" className="section py-24 md:py-36">
-      <h2 className="max-w-4xl text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
+    <section id="faq" className="bg-lime border-b-[3px] border-ink">
+      <div className="section py-24 md:py-36">
+      <h2 className="max-w-5xl font-display text-[clamp(3.25rem,15vw,5.5rem)] leading-[1] tracking-normal text-ink md:text-[clamp(5rem,10vw,10rem)] md:leading-[0.98]">
         In case you missed anything.
       </h2>
-      <div className="mt-10 divide-y divide-black/10 border-y border-black/10 dark:divide-white/10 dark:border-white/10">
+      <div className="mt-12 space-y-4 md:mt-16 md:space-y-5">
         {QA.map((item, i) => (
           <Disclosure key={i} question={item.q} answer={item.a} />
         ))}
+      </div>
       </div>
     </section>
   );
@@ -49,16 +51,36 @@ function Disclosure({
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="py-6">
+    <div
+      className={`card-brut px-5 py-4 md:px-7 md:py-5 ${open ? "bg-cream" : "bg-white"}`}
+    >
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between text-left"
+        className="w-full flex items-center justify-between gap-4 text-left"
       >
-        <span className="pr-6 text-xl font-semibold text-slate-950 dark:text-white md:text-2xl">
+        <span className="text-xl font-extrabold leading-tight text-ink md:text-2xl">
           {question}
         </span>
-        <span className="text-2xl text-slate-500 dark:text-slate-400">
-          {open ? "—" : "+"}
+        <span
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-[3px] border-ink text-ink transition-colors duration-200 md:h-12 md:w-12 ${
+            open ? "bg-tomato" : "bg-lime"
+          }`}
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="h-5 w-5 md:h-6 md:w-6"
+            stroke="currentColor"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+          >
+            <path d="M5 12h14" />
+            <path
+              d="M12 5v14"
+              style={{ transformBox: "fill-box" }}
+              className={`origin-center transition-transform duration-200 ${open ? "scale-y-0" : ""}`}
+            />
+          </svg>
         </span>
       </button>
       <AnimatePresence initial={false}>
@@ -68,9 +90,9 @@ function Disclosure({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="overflow-hidden text-slate-600 dark:text-slate-300"
+            className="overflow-hidden text-ink/80"
           >
-            <div className="max-w-3xl pt-4 pb-2 text-base leading-relaxed md:text-lg">
+            <div className="max-w-3xl pt-4 pb-1 text-base font-medium leading-relaxed md:text-lg">
               {answer}
             </div>
           </motion.div>

@@ -13,7 +13,7 @@ export default function Phone({
   return (
     <motion.div
       className={clsx("phone", className)}
-      whileHover={{ translateY: -4 }}
+      whileHover={{ x: -4, y: -4 }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
       <div className="screen">{children}</div>
@@ -38,11 +38,11 @@ export function MockChat({
 }) {
   return (
     <div className="screen-grid">
-      <div className="px-5 flex items-center justify-between border-b border-white/10 bg-white/5">
-        <span className="text-sm text-slate-300">{title}</span>
+      <div className="px-5 pt-3 flex items-center justify-between border-b-[3px] border-ink bg-lime text-ink">
+        <span className="font-display text-lg leading-none tracking-wide">{title}</span>
         <div className="flex items-center gap-2">
-          <span className="w-4 h-4 rounded-full bg-white/20"></span>
-          <span className="w-4 h-4 rounded-full bg-white/20"></span>
+          <span className="w-4 h-4 rounded-full border-2 border-ink bg-tomato"></span>
+          <span className="w-4 h-4 rounded-full border-2 border-ink bg-cream"></span>
         </div>
       </div>
       <div className="px-4 py-3 space-y-4 overflow-hidden overflow-y-auto">
@@ -80,22 +80,22 @@ export function MockChat({
               )}
             >
               {msg.role === "assistant" && (
-                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs text-emerald-300 shrink-0">
+                <div className="w-9 h-9 rounded-full border-2 border-ink bg-tomato flex items-center justify-center text-[10px] font-extrabold text-ink shrink-0">
                   Agent
                 </div>
               )}
               <div
                 className={clsx(
-                  "p-3 rounded-2xl text-sm max-w-[75%] leading-relaxed",
+                  "p-3 rounded-2xl border-2 border-ink text-sm font-medium max-w-[75%] leading-snug shadow-[3px_3px_0_0_#0A0A0A]",
                   msg.role === "user"
-                    ? "bg-blue-500/20 text-blue-100 rounded-tr-sm"
-                    : "bg-white/10 text-slate-200 rounded-tl-sm"
+                    ? "bg-lime text-ink rounded-tr-sm"
+                    : "bg-cream text-ink rounded-tl-sm"
                 )}
               >
                 {msg.text}
               </div>
               {msg.role === "user" && (
-                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-xs text-blue-300 shrink-0">
+                <div className="w-9 h-9 rounded-full border-2 border-ink bg-lime flex items-center justify-center text-xs font-extrabold text-ink shrink-0">
                   Me
                 </div>
               )}
@@ -103,18 +103,18 @@ export function MockChat({
           ))
         )}
       </div>
-      <div className="px-5 flex items-center gap-2 border-t border-white/10 bg-white/5">
-        <div className="flex-1 my-3 h-9 rounded-full bg-white/10 flex items-center px-3 text-xs text-slate-500">
+      <div className="px-4 flex items-center gap-2 border-t-[3px] border-ink bg-cream">
+        <div className="flex-1 my-3 h-10 rounded-full border-2 border-ink bg-white flex items-center px-3 text-xs font-medium text-ink/50">
           Message...
         </div>
-        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+        <div className="w-10 h-10 shrink-0 rounded-full border-2 border-ink bg-tomato flex items-center justify-center">
           <svg
             width="20"
             height="20"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            className="text-white/50"
+            className="text-ink"
           >
             <path
               strokeLinecap="round"
@@ -131,7 +131,7 @@ export function MockChat({
 
 export function LiveShowingScreen({ videoSrc }: { videoSrc: string }) {
   return (
-    <div className="relative h-full overflow-hidden bg-slate-950 text-white">
+    <div className="relative h-full overflow-hidden bg-navy text-white">
       <video
         src={videoSrc}
         autoPlay
@@ -142,28 +142,28 @@ export function LiveShowingScreen({ videoSrc }: { videoSrc: string }) {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-black/70" />
       <div className="relative z-10 flex h-full flex-col justify-between p-5">
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-5">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.14em] text-white/65">
+            <div className="text-xs font-extrabold tracking-[0.14em] text-lime">
               LivE Showing
             </div>
-            <div className="mt-1 text-lg font-bold">Modern townhome tour</div>
+            <div className="mt-1 font-display text-2xl leading-none tracking-wide">Modern townhome tour</div>
           </div>
-          <div className="rounded-full bg-red-500 px-3 py-1 text-xs font-bold">
+          <div className="-rotate-6 rounded-full border-2 border-ink bg-tomato px-3 py-1 text-xs font-extrabold text-ink shadow-hard-sm">
             LIVE
           </div>
         </div>
 
         <div className="space-y-3">
-          <div className="rounded-3xl bg-white/14 p-4 backdrop-blur-md">
+          <div className="rounded-2xl border-[3px] border-ink bg-cream p-4 text-ink shadow-hard-sm">
             <div className="flex items-center justify-between text-sm">
-              <span className="font-semibold">Agent camera</span>
-              <span className="text-white/65">1.2k watching</span>
+              <span className="font-extrabold">Agent camera</span>
+              <span className="text-ink/60">1.2k watching</span>
             </div>
-            <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
-              <div className="rounded-2xl bg-white/15 py-3">Kitchen</div>
-              <div className="rounded-2xl bg-white/15 py-3">Light</div>
-              <div className="rounded-2xl bg-white/15 py-3">Storage</div>
+            <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs font-bold">
+              <div className="rounded-xl border-2 border-ink bg-lime py-2.5">Kitchen</div>
+              <div className="rounded-xl border-2 border-ink bg-white py-2.5">Light</div>
+              <div className="rounded-xl border-2 border-ink bg-white py-2.5">Storage</div>
             </div>
           </div>
           <div className="flex justify-center gap-3">
@@ -191,8 +191,8 @@ export function LiveShowingScreen({ videoSrc }: { videoSrc: string }) {
 
 export function VideoTourScreen({ videoSrc }: { videoSrc: string }) {
   return (
-    <div className="flex h-full flex-col bg-[#0b1018] text-white">
-      <div className="relative h-[58%] overflow-hidden">
+    <div className="flex h-full flex-col bg-cream text-ink">
+      <div className="relative h-[58%] overflow-hidden border-b-[3px] border-ink bg-navy text-white">
         <video
           src={videoSrc}
           autoPlay
@@ -202,26 +202,26 @@ export function VideoTourScreen({ videoSrc }: { videoSrc: string }) {
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/65" />
-        <div className="absolute left-4 top-5 rounded-full bg-white/16 px-3 py-1 text-xs font-bold backdrop-blur">
+        <div className="absolute left-4 top-10 -rotate-3 rounded-full border-2 border-ink bg-lime px-3 py-1 text-xs font-extrabold text-ink shadow-hard-sm">
           Saved Tour
         </div>
         <div className="absolute bottom-4 left-4 right-4">
-          <div className="text-2xl font-bold leading-tight">
+          <div className="font-display text-3xl leading-[0.95] tracking-wide">
             Waterfront showing replay
           </div>
-          <div className="mt-2 text-sm text-white/70">12 rooms · 34 clips</div>
+          <div className="mt-2 text-sm font-semibold text-white/80">12 rooms · 34 clips</div>
         </div>
       </div>
 
-      <div className="flex-1 space-y-4 p-5">
+      <div className="flex-1 space-y-3 p-4">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">
+            <div className="text-xs font-extrabold tracking-[0.14em] text-tomato">
               LivE Library
             </div>
-            <div className="mt-1 text-lg font-bold">Highlights</div>
+            <div className="mt-1 font-display text-xl leading-none tracking-wide">Highlights</div>
           </div>
-          <button className="rounded-full bg-white px-4 py-2 text-xs font-bold text-black">
+          <button className="rounded-full border-2 border-ink bg-tomato px-4 py-2 text-xs font-extrabold text-ink shadow-hard-sm">
             Share
           </button>
         </div>
@@ -230,14 +230,14 @@ export function VideoTourScreen({ videoSrc }: { videoSrc: string }) {
           (item, index) => (
             <div
               key={item}
-              className="flex items-center gap-3 rounded-2xl bg-white/[0.07] p-3"
+              className="flex items-center gap-3 rounded-xl border-2 border-ink bg-white p-2.5"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-sm font-bold">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border-2 border-ink bg-lime font-display text-base">
                 {index + 1}
               </div>
               <div>
-                <div className="text-sm font-semibold">{item}</div>
-                <div className="mt-1 text-xs text-white/45">Tap to replay</div>
+                <div className="text-sm font-bold">{item}</div>
+                <div className="mt-0.5 text-xs text-ink/55">Tap to replay</div>
               </div>
             </div>
           )
@@ -258,15 +258,15 @@ function RoundIcon({
 }) {
   const toneClass =
     tone === "blue"
-      ? "bg-blue-600"
+      ? "bg-lime text-ink"
       : tone === "red"
-      ? "bg-red-500"
-      : "bg-black/55";
+      ? "bg-tomato text-ink"
+      : "bg-cream text-ink";
 
   return (
     <span
       aria-label={label}
-      className={`${toneClass} inline-flex h-12 w-12 items-center justify-center rounded-full shadow-lg backdrop-blur`}
+      className={`${toneClass} inline-flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-ink shadow-hard-sm`}
     >
       <svg
         aria-hidden="true"

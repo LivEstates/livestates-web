@@ -40,19 +40,28 @@ const items = [
   },
 ];
 
+// Cards cycle through the palette; each carries a small decorative shape.
+const CARD_TONES = ["bg-lime", "bg-cream", "bg-tomato"];
+const DOT_SHAPES = [
+  "rounded-full bg-tomato",
+  "rotate-45 bg-lime",
+  "rounded-full bg-cream",
+];
+
 export default function FeatureGrid() {
   return (
-    <section className="section py-24 md:py-36">
-      <h2 className="max-w-4xl text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
+    <section className="bg-navy bg-dots-light border-b-[3px] border-ink">
+      <div className="section py-24 md:py-36">
+      <h2 className="text-pop-ink max-w-4xl font-display text-[clamp(3.25rem,15vw,5.5rem)] leading-[1] tracking-normal text-lime md:text-[clamp(5rem,10vw,10rem)] md:leading-[0.98]">
         And so much more.
       </h2>
-      <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 md:text-xl">
+      <p className="mt-6 max-w-2xl text-lg font-medium leading-relaxed text-cream/85 md:text-xl">
         LivEstates is packed with tools for live property discovery, but the
         showing always comes first.
       </p>
 
       <motion.div
-        className="mt-12 grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4"
+        className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-7"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
@@ -61,24 +70,29 @@ export default function FeatureGrid() {
           visible: { transition: { staggerChildren: 0.06 } },
         }}
       >
-        {items.map((item) => (
+        {items.map((item, i) => (
           <motion.div
             key={item.title}
             variants={{
               hidden: { opacity: 0, y: 18 },
               visible: { opacity: 1, y: 0 },
             }}
-            className="min-h-44 rounded-lg border border-black/10 bg-black/[0.03] p-5 dark:border-white/10 dark:bg-white/[0.03]"
+            className={`card-brut relative min-h-44 p-6 text-ink ${CARD_TONES[i % CARD_TONES.length]}`}
           >
-            <div className="text-xl font-bold text-slate-950 dark:text-white">
+            <span
+              aria-hidden="true"
+              className={`absolute right-5 top-5 h-6 w-6 border-[3px] border-ink ${DOT_SHAPES[i % DOT_SHAPES.length]}`}
+            />
+            <div className="pr-10 font-display text-[1.9rem] leading-none tracking-wide">
               {item.title}
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+            <p className="mt-4 text-base font-medium leading-snug text-ink/80">
               {item.description}
             </p>
           </motion.div>
         ))}
       </motion.div>
+      </div>
     </section>
   );
 }

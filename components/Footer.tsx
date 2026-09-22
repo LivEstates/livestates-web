@@ -1,14 +1,14 @@
 export default function Footer() {
   return (
-    <footer className="section py-12 text-sm text-slate-500 dark:text-slate-400">
-      <div className="flex flex-col items-center justify-between gap-4 border-t border-black/10 pt-8 dark:border-white/10 md:flex-row">
+    <footer className="border-t-[3px] border-ink bg-ink text-sm font-semibold text-cream/80">
+      <div className="section flex flex-col items-center justify-between gap-5 py-10 md:flex-row">
         <div>© 2026 LivEstates. All rights reserved.</div>
-        <div className="flex gap-5">
+        <div className="flex flex-wrap justify-center gap-3">
           <a
             href="https://twitter.com"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-black dark:hover:text-white"
+            className="rounded-full border-2 border-cream/30 px-3 py-1 transition hover:border-ink hover:bg-lime hover:text-ink"
           >
             X.com
           </a>
@@ -16,11 +16,11 @@ export default function Footer() {
             href="https://www.instagram.com"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-black dark:hover:text-white"
+            className="rounded-full border-2 border-cream/30 px-3 py-1 transition hover:border-ink hover:bg-lime hover:text-ink"
           >
             Instagram
           </a>
-          <a href="#" className="hover:text-black dark:hover:text-white">
+          <a href="#" className="rounded-full border-2 border-cream/30 px-3 py-1 transition hover:border-ink hover:bg-lime hover:text-ink">
             Terms of Service
           </a>
         </div>

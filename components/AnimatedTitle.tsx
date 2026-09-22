@@ -8,12 +8,12 @@ export default function AnimatedTitle({
   children: React.ReactNode;
 }) {
   return (
-    <div className="text-center">
+    <div className="bg-navy bg-dots-light pt-16 text-center md:pt-24">
       <motion.h2
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 8, rotate: 0 }}
+        animate={{ opacity: 1, y: 0, rotate: -3 }}
         transition={{ duration: 0.5 }}
-        className="text-sm font-bold uppercase tracking-[0.16em] text-slate-400 md:text-base"
+        className="sticker inline-block bg-tomato px-6 py-2 font-display text-2xl font-normal normal-case tracking-normal text-ink md:text-4xl"
       >
         {children}
       </motion.h2>

@@ -7,6 +7,7 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import { LiveShowingScreen, MockChat, VideoTourScreen } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
+import Marquee from "@/components/Marquee";
 import { getAssetPath } from "@/utils/path";
 
 export default function Page() {
@@ -40,6 +41,13 @@ export default function Page() {
         ]}
       />
 
+      {/* Decorative ticker — repeats the hero's own words. */}
+      <Marquee
+        words={["SEE", "FEEL", "CONNECT"]}
+        className="bg-ink text-lime"
+        starClassName="text-tomato"
+      />
+
       <AnimatedTitle>Meet LivEstates</AnimatedTitle>
       <StickyFeatureGallery
         id="features"
@@ -49,6 +57,7 @@ export default function Page() {
       </StickyFeatureGallery>
 
       <StickyFeatureGallery
+        tone="lime"
         description="Chat LivE, with Verified Real Estate Agents"
       >
         <MockChat
@@ -74,6 +83,7 @@ export default function Page() {
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
+        tone="tomato"
         description={"FROM LivE TO LIBRARY\nCONTENT THAT LASTS"}
       >
         <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
@@ -91,6 +101,15 @@ export default function Page() {
         description="Turn interest into action with a single tap, then continue the conversation in the same place."
       />
 
+      {/* Decorative ticker — repeats feature titles from the grid below. */}
+      <Marquee
+        words={["Live Open Houses", "Verified Agents", "Interactive Replays", "Saved Homes"]}
+        className="bg-tomato text-ink"
+        starClassName="text-lime"
+        wrapClassName="bg-navy"
+        tilt={-2}
+        slow
+      />
       <FeatureGrid />
       <FAQ />
       <CTA />

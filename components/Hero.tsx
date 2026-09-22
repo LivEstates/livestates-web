@@ -46,7 +46,11 @@ export default function Hero({
 }) {
   return (
     <section
-      className={variant === "intro" ? "w-full bg-white p-1 md:p-2" : "w-full"}
+      className={
+        variant === "intro"
+          ? "w-full bg-lime p-2 md:p-3"
+          : "w-full border-y-[3px] border-ink bg-ink"
+      }
     >
       <VideoScrollGallery items={items} variant={variant} />
     </section>
@@ -127,8 +131,8 @@ function VideoScrollGallery({
       <motion.div
         className={
           isIntro
-            ? "sticky top-1 md:top-2 h-[calc(100vh-0.5rem)] md:h-[calc(100vh-1rem)] w-full overflow-hidden rounded-[28px] md:rounded-[32px] shadow-2xl z-10"
-            : "sticky top-0 h-screen w-full overflow-hidden shadow-2xl z-10"
+            ? "sticky top-2 md:top-3 h-[calc(100vh-1rem)] md:h-[calc(100vh-1.5rem)] w-full overflow-hidden rounded-[22px] md:rounded-[28px] border-[3px] md:border-4 border-ink bg-navy z-10"
+            : "sticky top-0 h-screen w-full overflow-hidden bg-navy z-10"
         }
         style={
           isIntro
@@ -153,7 +157,9 @@ function VideoScrollGallery({
             />
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
-            {text ? <div className="absolute inset-0 bg-black/45" /> : null}
+            {text ? (
+              <div className="absolute inset-0 bg-gradient-to-b from-navy/55 via-black/35 to-navy/70" />
+            ) : null}
           </motion.div>
         ))}
 
@@ -174,8 +180,8 @@ function VideoScrollGallery({
                 <h2
                   className={
                     isIntro
-                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                      ? "text-pop max-w-[min(94vw,1440px)] px-4 text-center font-display text-[clamp(2.6rem,10.5vw,4rem)] leading-[0.98] tracking-normal text-cream whitespace-pre-wrap md:text-[clamp(4rem,7.2vw,7.5rem)] md:leading-[0.95]"
+                      : "text-pop max-w-[min(94vw,1440px)] px-4 text-center font-display text-[clamp(3rem,13vw,5rem)] leading-[0.95] tracking-normal text-lime whitespace-pre-wrap md:text-[clamp(5rem,10vw,10rem)]"
                   }
                 >
                   {text}
@@ -193,7 +199,7 @@ function VideoScrollGallery({
                   <motion.div
                     key={idx}
                     style={{ opacity }}
-                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
+                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 rotate-3 overflow-hidden rounded-2xl border-[3px] border-ink bg-navy shadow-hard-tomato md:bottom-7 md:block lg:right-20 lg:w-44"
                   >
                     <video
                       src={previewSrc}
@@ -219,18 +225,18 @@ function VideoScrollGallery({
 function IntroChrome() {
   return (
     <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-5 text-white md:px-9 md:py-7">
-      <nav className="hidden flex-1 items-center gap-8 text-sm font-semibold md:flex lg:text-base">
-        <a href="#features" className="transition hover:text-white/75">
+      <nav className="hidden flex-1 items-center gap-2 text-sm font-extrabold md:flex lg:text-base">
+        <a href="#features" className="rounded-full border-2 border-transparent px-3 py-1.5 transition hover:border-ink hover:bg-lime hover:text-ink">
           Features
         </a>
-        <a href="#faq" className="transition hover:text-white/75">
+        <a href="#faq" className="rounded-full border-2 border-transparent px-3 py-1.5 transition hover:border-ink hover:bg-lime hover:text-ink">
           FAQs
         </a>
         <a
           href="https://twitter.com"
           target="_blank"
           rel="noreferrer"
-          className="transition hover:text-white/75"
+          className="rounded-full border-2 border-transparent px-3 py-1.5 transition hover:border-ink hover:bg-lime hover:text-ink"
         >
           Support
         </a>
@@ -238,7 +244,7 @@ function IntroChrome() {
 
       <a
         href="#"
-        className="absolute left-1/2 -translate-x-1/2 text-xl font-bold tracking-normal md:text-3xl"
+        className="absolute left-5 -rotate-2 md:left-1/2 md:-translate-x-1/2 rounded-lg border-[3px] border-ink bg-lime px-3 py-1 font-display text-xl leading-none tracking-normal text-ink shadow-hard-sm md:px-4 md:py-1.5 md:text-3xl"
       >
         LivEstates
       </a>
@@ -246,7 +252,7 @@ function IntroChrome() {
       <div className="flex flex-1 justify-end">
         <a
           href="#download"
-          className="inline-flex items-center rounded-full bg-white px-5 py-3 text-sm font-extrabold text-black shadow-lg transition hover:bg-white/90 md:px-7 md:text-base"
+          className="btn btn-cream px-4 py-2 text-sm md:px-7 md:py-3 md:text-base"
         >
           Get the App
         </a>
@@ -300,15 +306,15 @@ function CallButton({
 }) {
   const toneClass =
     tone === "blue"
-      ? "bg-blue-600"
+      ? "bg-lime text-ink"
       : tone === "red"
-      ? "bg-red-500"
-      : "bg-black/60";
+      ? "bg-tomato text-ink"
+      : "bg-cream text-ink";
 
   return (
     <span
       aria-label={label}
-      className={`${toneClass} inline-flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg backdrop-blur md:h-14 md:w-14`}
+      className={`${toneClass} inline-flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-ink shadow-hard-sm md:h-14 md:w-14`}
     >
       <svg
         aria-hidden="true"
@@ -318,7 +324,7 @@ function CallButton({
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
+        strokeWidth="2.5"
       >
         {children}
       </svg>

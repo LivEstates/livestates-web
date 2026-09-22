@@ -3,12 +3,36 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Phone, { MockChat } from "./Phone";
 
+type Tone = "navy" | "lime" | "tomato";
+
+// Each gallery is a full-bleed block of flat colour; the phone's hard shadow
+// is picked to contrast with the block behind it.
+const TONES: Record<Tone, { section: string; title: string; shadow: string }> = {
+  navy: {
+    section: "bg-navy bg-dots-light",
+    title: "text-lime text-pop-ink",
+    shadow: "var(--lime)",
+  },
+  lime: {
+    section: "bg-lime",
+    title: "text-ink",
+    shadow: "var(--ink)",
+  },
+  tomato: {
+    section: "bg-tomato",
+    title: "text-cream text-pop-ink",
+    shadow: "var(--ink)",
+  },
+};
+
 export default function StickyFeatureGallery({
   id,
   description = "MEET LivE, YOUR VIRTUAL HOME AGENT",
   children,
+  tone = "navy",
 }: {
   id?: string;
+  tone?: Tone;
   description?: string;
   children?: React.ReactNode;
 }) {
@@ -51,8 +75,15 @@ export default function StickyFeatureGallery({
     [0.95, 1, 1.05]
   );
 
+  const t = TONES[tone];
+
   return (
-    <section id={id} className="section py-24 md:py-36">
+    <section
+      id={id}
+      className={`border-b-[3px] border-ink ${t.section}`}
+      style={{ ["--phone-shadow" as string]: t.shadow } as React.CSSProperties}
+    >
+      <div className="section py-24 md:py-36">
       <div ref={progressRef} className="relative h-[300vh]">
         <div
           ref={stickyRef}
@@ -61,9 +92,9 @@ export default function StickyFeatureGallery({
           <div className="relative w-full">
             <motion.div
               style={{ scale: rowScale, filter: rowBlur, opacity: rowOpacity }}
-              className="flex items-center justify-center whitespace-pre-wrap text-center text-[clamp(2.75rem,7vw,6.5rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white"
+              className={`flex items-center justify-center whitespace-pre-wrap text-center font-display text-[clamp(2.4rem,10.5vw,4.5rem)] leading-[0.98] tracking-normal md:text-[clamp(4.5rem,8.4vw,8.5rem)] md:leading-[0.94] ${t.title}`}
             >
-              <span className="max-w-[14ch] md:max-w-[17ch]">
+              <span className="max-w-[18ch] md:max-w-[20ch]">
                 {description}
               </span>
             </motion.div>
@@ -80,6 +111,7 @@ export default function StickyFeatureGallery({
             </motion.div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
