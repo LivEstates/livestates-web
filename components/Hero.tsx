@@ -46,7 +46,7 @@ export default function Hero({
 }) {
   return (
     <section
-      className={variant === "intro" ? "w-full bg-white p-1 md:p-2" : "w-full"}
+      className={variant === "intro" ? "w-full p-2 md:p-4" : "w-full px-2 md:px-4"}
     >
       <VideoScrollGallery items={items} variant={variant} />
     </section>
@@ -76,7 +76,7 @@ function VideoScrollGallery({
   const containerRadius = useTransform(
     scrollYProgress,
     [0, 0.8, 1],
-    [0, 0, 24]
+    [40, 40, 72]
   );
 
   const galleryItems = items.map(({ src, text, portraitSrc, previewSrc }, i) => {
@@ -127,8 +127,8 @@ function VideoScrollGallery({
       <motion.div
         className={
           isIntro
-            ? "sticky top-1 md:top-2 h-[calc(100vh-0.5rem)] md:h-[calc(100vh-1rem)] w-full overflow-hidden rounded-[28px] md:rounded-[32px] shadow-2xl z-10"
-            : "sticky top-0 h-screen w-full overflow-hidden shadow-2xl z-10"
+            ? "sticky top-2 md:top-4 h-[calc(100svh-1rem)] md:h-[calc(100vh-2rem)] w-full overflow-hidden rounded-[32px] md:rounded-[52px] shadow-warm z-10"
+            : "sticky top-2 md:top-4 h-[calc(100svh-1rem)] md:h-[calc(100vh-2rem)] w-full overflow-hidden shadow-warm z-10"
         }
         style={
           isIntro
@@ -153,7 +153,7 @@ function VideoScrollGallery({
             />
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
-            {text ? <div className="absolute inset-0 bg-black/45" /> : null}
+            {text ? <div className="absolute inset-0 bg-gradient-to-b from-[#3b2a20]/55 via-[#5c3a24]/30 to-[#2e1f16]/65" /> : null}
           </motion.div>
         ))}
 
@@ -174,8 +174,8 @@ function VideoScrollGallery({
                 <h2
                   className={
                     isIntro
-                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                      ? "font-display max-w-[min(94vw,1440px)] px-5 text-center text-[clamp(2rem,5vw,5.25rem)] font-medium leading-[1.04] tracking-[-0.01em] text-[#fff6ea] [text-shadow:0_2px_24px_rgba(59,42,32,0.45)] whitespace-pre-wrap"
+                      : "font-display max-w-[min(94vw,1440px)] px-5 text-center text-[clamp(2.75rem,8vw,8rem)] font-medium italic leading-[1] tracking-[-0.02em] text-[#fff6ea] [text-shadow:0_2px_24px_rgba(59,42,32,0.45)] whitespace-pre-wrap"
                   }
                 >
                   {text}
@@ -193,7 +193,7 @@ function VideoScrollGallery({
                   <motion.div
                     key={idx}
                     style={{ opacity }}
-                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
+                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-t-full rounded-b-[28px] bg-[#e8d5be] shadow-warm ring-[5px] ring-[#fbf5eb] md:bottom-8 md:block lg:right-16 lg:w-44"
                   >
                     <video
                       src={previewSrc}
@@ -218,19 +218,19 @@ function VideoScrollGallery({
 
 function IntroChrome() {
   return (
-    <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-5 text-white md:px-9 md:py-7">
-      <nav className="hidden flex-1 items-center gap-8 text-sm font-semibold md:flex lg:text-base">
-        <a href="#features" className="transition hover:text-white/75">
+    <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between bg-gradient-to-b from-[#2e1f16]/45 to-transparent px-5 pb-10 pt-5 text-[#fff6ea] md:px-10 md:pb-12 md:pt-8">
+      <nav className="hidden flex-1 items-center gap-1 text-sm font-medium md:flex lg:text-base">
+        <a href="#features" className="rounded-full px-4 py-2 transition hover:bg-[#fff6ea]/15">
           Features
         </a>
-        <a href="#faq" className="transition hover:text-white/75">
+        <a href="#faq" className="rounded-full px-4 py-2 transition hover:bg-[#fff6ea]/15">
           FAQs
         </a>
         <a
           href="https://twitter.com"
           target="_blank"
           rel="noreferrer"
-          className="transition hover:text-white/75"
+          className="rounded-full px-4 py-2 transition hover:bg-[#fff6ea]/15"
         >
           Support
         </a>
@@ -238,7 +238,7 @@ function IntroChrome() {
 
       <a
         href="#"
-        className="absolute left-1/2 -translate-x-1/2 text-xl font-bold tracking-normal md:text-3xl"
+        className="font-display absolute left-5 text-2xl font-semibold tracking-[-0.01em] md:left-1/2 md:-translate-x-1/2 md:text-[2rem]"
       >
         LivEstates
       </a>
@@ -246,7 +246,7 @@ function IntroChrome() {
       <div className="flex flex-1 justify-end">
         <a
           href="#download"
-          className="inline-flex items-center rounded-full bg-white px-5 py-3 text-sm font-extrabold text-black shadow-lg transition hover:bg-white/90 md:px-7 md:text-base"
+          className="btn btn-cream px-5 py-2.5 text-sm md:px-7 md:py-3.5 md:text-base"
         >
           Get the App
         </a>
@@ -300,15 +300,15 @@ function CallButton({
 }) {
   const toneClass =
     tone === "blue"
-      ? "bg-blue-600"
+      ? "bg-[#56654d] text-[#fff6ea]"
       : tone === "red"
-      ? "bg-red-500"
-      : "bg-black/60";
+      ? "bg-[#c4673f] text-[#fff6ea]"
+      : "bg-[#fbf5eb]/85 text-[#3b2a20]";
 
   return (
     <span
       aria-label={label}
-      className={`${toneClass} inline-flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg backdrop-blur md:h-14 md:w-14`}
+      className={`${toneClass} inline-flex h-12 w-12 items-center justify-center rounded-full shadow-[0_10px_24px_-8px_rgba(46,31,22,0.6)] backdrop-blur md:h-14 md:w-14`}
     >
       <svg
         aria-hidden="true"

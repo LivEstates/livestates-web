@@ -49,6 +49,7 @@ export default function Page() {
       </StickyFeatureGallery>
 
       <StickyFeatureGallery
+        tone="sage"
         description="Chat LivE, with Verified Real Estate Agents"
       >
         <MockChat
@@ -74,6 +75,7 @@ export default function Page() {
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
+        tone="clay"
         description={"FROM LivE TO LIBRARY\nCONTENT THAT LASTS"}
       >
         <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
