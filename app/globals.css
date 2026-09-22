@@ -2,80 +2,454 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   LivEstates — Dark Tech / Live Broadcast
+   Ink base with a teal cast, one signal accent (#3DF5C8),
+   on-air red reserved for LIVE indicators only.
+   ============================================================ */
+
 :root {
-  --bg: #0b0f15;
-  --fg: #f1f5f9;
+  --bg: #05090c;
+  --bg-2: #081016;
+  --fg: #eaf2f1;
+  --muted: #93a4a8;
+  --signal: #3df5c8;
+  --signal-rgb: 61, 245, 200;
+  --onair: #ff3b4e;
+  --line: rgba(255, 255, 255, 0.09);
 }
 
-html, body {
-  @apply bg-white text-slate-900 antialiased dark:bg-[#0b0f15] dark:text-slate-100 transition-colors duration-300;
+html,
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: clip;
 }
 
 body.gradient {
-  background-color: transparent;
+  background-color: var(--bg);
 }
 
-html.dark body.gradient {
-  background: radial-gradient(1200px 600px at 20% -10%, rgba(56,189,248,0.12), transparent 60%),
-              radial-gradient(900px 600px at 80% -10%, rgba(250,204,21,0.12), transparent 60%),
-              radial-gradient(1200px 500px at 50% 120%, rgba(16,185,129,0.1), transparent 60%);
-  background-color: #0b0f15;
+main {
+  position: relative;
+  z-index: 1;
 }
+
+::selection {
+  background: rgba(var(--signal-rgb), 0.3);
+  color: #fff;
+}
+
+/* ---------- Fixed atmosphere ---------- */
+
+.fx-aurora {
+  position: fixed;
+  inset: -12vh 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx-blob {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.6;
+  will-change: transform;
+}
+
+.fx-blob-a {
+  width: 60vmax;
+  height: 60vmax;
+  left: -18vmax;
+  top: -22vmax;
+  background: radial-gradient(circle, rgba(61, 245, 200, 0.34) 0%, rgba(61, 245, 200, 0.12) 35%, transparent 68%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+
+.fx-blob-b {
+  width: 55vmax;
+  height: 55vmax;
+  right: -20vmax;
+  top: 18vh;
+  background: radial-gradient(circle, rgba(24, 120, 190, 0.38) 0%, rgba(24, 120, 190, 0.12) 38%, transparent 68%);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+
+.fx-blob-c {
+  width: 45vmax;
+  height: 45vmax;
+  left: 20vw;
+  bottom: -26vmax;
+  background: radial-gradient(circle, rgba(10, 150, 120, 0.3) 0%, rgba(10, 150, 120, 0.1) 38%, transparent 68%);
+  animation: drift-c 38s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(14vw, 12vh, 0) scale(1.15); }
+}
+@keyframes drift-b {
+  0% { transform: translate3d(0, 0, 0) scale(1.05); }
+  100% { transform: translate3d(-16vw, 22vh, 0) scale(0.9); }
+}
+@keyframes drift-c {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-10vw, -18vh, 0) scale(1.2); }
+}
+
+/* Scroll-linked hue drift where supported (Chromium). */
+@supports (animation-timeline: scroll()) {
+  .fx-aurora {
+    animation: aurora-scroll linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes aurora-scroll {
+    0% { transform: translateY(6vh); }
+    100% { transform: translateY(-6vh); }
+  }
+}
+
+.fx-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 85%);
+}
+
+.fx-grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- Layout ---------- */
 
 .section {
-  @apply max-w-7xl mx-auto px-6;
+  @apply max-w-7xl mx-auto px-5 md:px-6;
 }
 
+/* ---------- Type helpers ---------- */
+
+.tag {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.text-glow {
+  text-shadow: 0 0 28px rgba(var(--signal-rgb), 0.35);
+}
+
+.text-sheen {
+  background: linear-gradient(180deg, #ffffff 0%, #dff7f1 55%, #8fe9d3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- LIVE indicator ---------- */
+
+.live-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--onair);
+  box-shadow: 0 0 10px rgba(255, 59, 78, 0.9);
+  flex-shrink: 0;
+}
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--onair);
+  animation: live-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.live-dot.is-signal {
+  background: var(--signal);
+  box-shadow: 0 0 10px rgba(var(--signal-rgb), 0.9);
+}
+.live-dot.is-signal::after {
+  background: var(--signal);
+}
+@keyframes live-ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  80%, 100% { transform: scale(3); opacity: 0; }
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 9999px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #fff;
+  background: rgba(255, 59, 78, 0.14);
+  border: 1px solid rgba(255, 59, 78, 0.5);
+  box-shadow: 0 0 18px rgba(255, 59, 78, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ---------- Glass ---------- */
+
+.glass {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 20px 50px -20px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+/* Bright hairline that lights up on hover */
+.glass-card {
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(var(--signal-rgb), 0.9), transparent 40%, transparent 60%, rgba(var(--signal-rgb), 0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.glass-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 0 40px -8px rgba(var(--signal-rgb), 0.35),
+    0 24px 60px -24px rgba(0, 0, 0, 0.8);
+}
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+/* ---------- Buttons ---------- */
+
 .btn {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 bg-black/10 hover:bg-black/20 text-black backdrop-blur transition dark:bg-white/10 dark:hover:bg-white/20 dark:text-white;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.8rem 1.4rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #eafff9;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(var(--signal-rgb), 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 18px -4px rgba(var(--signal-rgb), 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 20%, rgba(var(--signal-rgb), 0.45) 50%, transparent 80%);
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn:hover {
+  border-color: rgba(var(--signal-rgb), 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 32px -2px rgba(var(--signal-rgb), 0.55);
+  transform: translateY(-1px);
+}
+.btn:hover::after {
+  transform: translateX(120%);
+}
+
+.btn-primary {
+  color: #031511;
+  background: linear-gradient(180deg, #7dfbdc, var(--signal));
+  border-color: rgba(190, 255, 238, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 28px -2px rgba(var(--signal-rgb), 0.6);
+}
+.btn-primary::after {
+  background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.75) 50%, transparent 75%);
+}
+.btn-primary:hover {
+  color: #021210;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 48px 0 rgba(var(--signal-rgb), 0.75);
 }
 
 .kbd {
-  @apply px-2 py-0.5 rounded border border-black/20 text-xs dark:border-white/20;
+  @apply px-2 py-0.5 rounded border border-white/20 text-xs;
 }
 
-/* Phone shell aesthetic */
+/* ---------- Viewfinder corners ---------- */
+
+.viewfinder {
+  position: absolute;
+  inset: 18px;
+  pointer-events: none;
+  --c: rgba(255, 255, 255, 0.55);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 22px 1.5px,
+    linear-gradient(var(--c), var(--c)) top left / 1.5px 22px,
+    linear-gradient(var(--c), var(--c)) top right / 22px 1.5px,
+    linear-gradient(var(--c), var(--c)) top right / 1.5px 22px,
+    linear-gradient(var(--c), var(--c)) bottom left / 22px 1.5px,
+    linear-gradient(var(--c), var(--c)) bottom left / 1.5px 22px,
+    linear-gradient(var(--c), var(--c)) bottom right / 22px 1.5px,
+    linear-gradient(var(--c), var(--c)) bottom right / 1.5px 22px;
+  background-repeat: no-repeat;
+}
+
+.scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.035) 0px,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+/* ---------- Phone shell ---------- */
+
 .phone {
   width: 300px;
   height: 620px;
-  border-radius: 36px;
-  background: linear-gradient(135deg, #0e131b, #151c27);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 30px 60px rgba(0,0,0,.4);
+  border-radius: 42px;
+  background:
+    linear-gradient(160deg, #1c2a31 0%, #0a1116 38%, #0a1014 62%, #16242a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 0 5px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(var(--signal-rgb), 0.12),
+    0 0 50px -12px rgba(var(--signal-rgb), 0.4),
+    0 50px 70px -40px rgba(0, 0, 0, 0.8);
   position: relative;
 }
 
 @media (max-width: 768px) {
   .phone {
-    width: 90vw;
-    height: 75vh;
-    border-radius: 24px;
+    width: min(88vw, 340px);
+    height: min(72vh, 640px);
+    border-radius: 34px;
   }
 }
 
+/* Dynamic-island pill with camera lens */
 .phone::before {
   content: "";
   position: absolute;
-  top: 10px; left: 50%;
+  z-index: 5;
+  top: 22px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 110px; height: 20px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  filter: blur(0.2px);
+  width: 88px;
+  height: 24px;
+  background:
+    radial-gradient(circle at 76px 12px, rgba(var(--signal-rgb), 0.55) 0 2px, #0c1a22 3px 5px, transparent 6px),
+    #000;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Glass glare */
+.phone::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  inset: 14px;
+  border-radius: 30px;
+  pointer-events: none;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.1) 0%, transparent 28%, transparent 70%, rgba(255, 255, 255, 0.04) 100%);
 }
 
 .screen {
   position: absolute;
-  inset: 14px;
-  border-radius: 28px;
+  inset: 12px;
+  border-radius: 31px;
   overflow: hidden;
-  background: linear-gradient(180deg, #0f1520, #0b0f15);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, #0b151b, #060b0f);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 768px) {
+  .screen {
+    border-radius: 24px;
+  }
+  .phone::after {
+    border-radius: 24px;
+  }
 }
 
 .screen-grid {
   display: grid;
-  grid-template-rows: 60px 1fr 70px;
+  grid-template-rows: 74px 1fr 70px;
   height: 100%;
   color: #e5e7eb;
+}
+
+.screen-grid > :first-child {
+  padding-top: 26px;
+}
+
+/* Highlight section: two overlapping phones need to shrink on phones */
+@media (max-width: 768px) {
+  .highlight-phones .phone {
+    width: 62vw;
+    height: 118vw;
+    max-height: 520px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-blob,
+  .live-dot::after,
+  .fx-aurora {
+    animation: none !important;
+  }
 }

@@ -61,9 +61,9 @@ export default function StickyFeatureGallery({
           <div className="relative w-full">
             <motion.div
               style={{ scale: rowScale, filter: rowBlur, opacity: rowOpacity }}
-              className="flex items-center justify-center whitespace-pre-wrap text-center text-[clamp(2.75rem,7vw,6.5rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white"
+              className="flex items-center justify-center whitespace-pre-wrap text-center font-display text-[clamp(1.85rem,8.4vw,5.6rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-white md:text-[clamp(2.5rem,6.2vw,5.6rem)]"
             >
-              <span className="max-w-[14ch] md:max-w-[17ch]">
+              <span className="text-sheen max-w-[15ch] md:max-w-[17ch] [filter:drop-shadow(0_0_30px_rgba(61,245,200,0.18))]">
                 {description}
               </span>
             </motion.div>
@@ -72,6 +72,10 @@ export default function StickyFeatureGallery({
               style={{ y: phoneY, opacity: phoneOpacity, scale: phoneScale }}
               className="pointer-events-none absolute inset-0 flex items-center justify-center"
             >
+              <div
+                aria-hidden
+                className="absolute left-1/2 top-1/2 h-[70%] w-[min(520px,90vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(61,245,200,0.28),transparent)] blur-2xl"
+              />
               <Phone>
                 {children || (
                   <MockChat title="LivEstates" accent={"violet" as any} />

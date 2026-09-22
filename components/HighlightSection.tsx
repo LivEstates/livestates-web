@@ -12,19 +12,24 @@ export default function HighlightSection({
   return (
     <section className="section py-24 md:py-36">
       <div className="grid items-center gap-12 md:grid-cols-[1fr_0.9fr]">
-        <div>
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">
+        <div className="min-w-0">
+          <p className="tag flex items-center gap-3">
+            <span aria-hidden className="live-dot" />
             Dual Camera
           </p>
-          <h2 className="mt-5 text-[clamp(2.75rem,7vw,6.25rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
+          <h2 className="mt-6 font-display text-[clamp(2rem,8.6vw,4.6rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-white md:text-[clamp(2.4rem,4.8vw,4.6rem)]">
             {title}
           </h2>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 md:text-xl">
+          <p className="mt-6 max-w-xl border-l border-signal/50 pl-5 text-lg leading-relaxed text-slate-300 md:text-xl">
             {description}
           </p>
         </div>
 
-        <div className="relative flex min-h-[520px] items-center justify-center">
+        <div className="highlight-phones relative flex min-h-[460px] min-w-0 items-center justify-center md:min-h-[520px]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-[10%] rounded-full bg-[radial-gradient(closest-side,rgba(61,245,200,0.3),rgba(24,120,190,0.15)_55%,transparent)] blur-2xl"
+          />
           <motion.div
             initial={{ rotate: -8, y: 20, opacity: 0 }}
             whileInView={{ rotate: -4, y: 0, opacity: 1 }}
@@ -50,7 +55,7 @@ export default function HighlightSection({
             </Phone>
           </motion.div>
           <motion.div
-            className="-ml-28 mt-16"
+            className="-ml-[30vw] mt-16 md:-ml-28"
             initial={{ rotate: 12, y: 20, opacity: 0 }}
             whileInView={{ rotate: 6, y: 0, opacity: 1 }}
             viewport={{ once: true, amount: 0.4 }}

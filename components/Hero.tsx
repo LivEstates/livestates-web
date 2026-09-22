@@ -46,7 +46,7 @@ export default function Hero({
 }) {
   return (
     <section
-      className={variant === "intro" ? "w-full bg-white p-1 md:p-2" : "w-full"}
+      className={variant === "intro" ? "w-full p-1.5 md:p-3" : "w-full"}
     >
       <VideoScrollGallery items={items} variant={variant} />
     </section>
@@ -127,8 +127,8 @@ function VideoScrollGallery({
       <motion.div
         className={
           isIntro
-            ? "sticky top-1 md:top-2 h-[calc(100vh-0.5rem)] md:h-[calc(100vh-1rem)] w-full overflow-hidden rounded-[28px] md:rounded-[32px] shadow-2xl z-10"
-            : "sticky top-0 h-screen w-full overflow-hidden shadow-2xl z-10"
+            ? "sticky top-1.5 md:top-3 h-[calc(100vh-0.75rem)] md:h-[calc(100vh-1.5rem)] w-full overflow-hidden rounded-[26px] md:rounded-[34px] bg-abyss ring-1 ring-white/10 shadow-[0_0_0_1px_rgba(61,245,200,0.12),0_0_80px_-20px_rgba(61,245,200,0.35),0_40px_100px_-30px_rgba(0,0,0,0.9)] z-10"
+            : "sticky top-0 h-screen w-full overflow-hidden bg-abyss ring-1 ring-white/10 shadow-[0_0_80px_-20px_rgba(61,245,200,0.3)] z-10"
         }
         style={
           isIntro
@@ -153,10 +153,17 @@ function VideoScrollGallery({
             />
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
-            {text ? <div className="absolute inset-0 bg-black/45" /> : null}
+            {text ? (
+              <>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(3,10,12,0.35),rgba(3,10,12,0.75))]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#03080b]/60 via-transparent to-[#03080b]/70" />
+              </>
+            ) : null}
           </motion.div>
         ))}
 
+        <div aria-hidden className="scanlines pointer-events-none absolute inset-0 z-[15] opacity-60" />
+        <div aria-hidden className="viewfinder z-[15] hidden md:block" />
         {isIntro && <IntroChrome />}
 
         <div className="absolute inset-0 z-20 pointer-events-none">
@@ -174,8 +181,8 @@ function VideoScrollGallery({
                 <h2
                   className={
                     isIntro
-                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                      ? "max-w-[min(94vw,1440px)] px-4 text-center font-display text-[clamp(1.6rem,4.6vw,4.5rem)] font-semibold leading-[1.12] tracking-[-0.01em] text-white text-glow whitespace-pre-wrap [text-shadow:0_2px_30px_rgba(0,0,0,0.55),0_0_40px_rgba(61,245,200,0.25)]"
+                      : "max-w-[min(94vw,1440px)] px-4 text-center font-display text-[clamp(2rem,6vw,5.5rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-white whitespace-pre-wrap [text-shadow:0_2px_30px_rgba(0,0,0,0.55),0_0_40px_rgba(61,245,200,0.25)]"
                   }
                 >
                   {text}
@@ -193,7 +200,7 @@ function VideoScrollGallery({
                   <motion.div
                     key={idx}
                     style={{ opacity }}
-                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
+                    className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-signal/50 shadow-[0_0_30px_-4px_rgba(61,245,200,0.45),0_20px_40px_rgba(0,0,0,0.6)] md:bottom-8 md:block lg:right-16 lg:w-44"
                   >
                     <video
                       src={previewSrc}
@@ -218,40 +225,58 @@ function VideoScrollGallery({
 
 function IntroChrome() {
   return (
-    <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-5 text-white md:px-9 md:py-7">
-      <nav className="hidden flex-1 items-center gap-8 text-sm font-semibold md:flex lg:text-base">
-        <a href="#features" className="transition hover:text-white/75">
-          Features
-        </a>
-        <a href="#faq" className="transition hover:text-white/75">
-          FAQs
-        </a>
-        <a
-          href="https://twitter.com"
-          target="_blank"
-          rel="noreferrer"
-          className="transition hover:text-white/75"
-        >
-          Support
-        </a>
-      </nav>
+    <>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-[25] h-40 bg-gradient-to-b from-[#03080b]/90 via-[#03080b]/50 to-transparent md:h-44"
+      />
+      <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-5 text-white md:px-9 md:py-7">
+        <nav className="hidden flex-1 items-center gap-7 font-mono text-[0.8rem] font-medium tracking-[0.08em] text-white/80 md:flex">
+          <a href="#features" className="transition hover:text-signal">
+            Features
+          </a>
+          <a href="#faq" className="transition hover:text-signal">
+            FAQs
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noreferrer"
+            className="transition hover:text-signal"
+          >
+            Support
+          </a>
+        </nav>
 
-      <a
-        href="#"
-        className="absolute left-1/2 -translate-x-1/2 text-xl font-bold tracking-normal md:text-3xl"
-      >
-        LivEstates
-      </a>
-
-      <div className="flex flex-1 justify-end">
         <a
-          href="#download"
-          className="inline-flex items-center rounded-full bg-white px-5 py-3 text-sm font-extrabold text-black shadow-lg transition hover:bg-white/90 md:px-7 md:text-base"
+          href="#"
+          className="absolute left-5 flex items-center gap-2.5 font-display text-lg font-semibold tracking-[-0.02em] md:left-1/2 md:-translate-x-1/2 md:text-2xl"
         >
-          Get the App
+          <span aria-hidden className="live-dot is-signal" />
+          LivEstates
         </a>
+
+        <div className="flex flex-1 justify-end">
+          <a href="#download" className="btn btn-primary !px-5 !py-2.5 md:!px-6 md:!py-3">
+            Get the App
+          </a>
+        </div>
       </div>
-    </div>
+
+      {/* On-air slate */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-5 top-[76px] z-30 flex items-center gap-3 md:left-9 md:top-[100px]"
+      >
+        <span className="live-badge">
+          <span className="live-dot" />
+          LIVE
+        </span>
+        <span className="hidden font-mono text-[0.7rem] tracking-[0.2em] text-white/60 sm:inline">
+          REC&nbsp;&nbsp;CH-01&nbsp;&nbsp;1080p
+        </span>
+      </div>
+    </>
   );
 }
 
@@ -259,8 +284,8 @@ function IntroChrome() {
  *  tile is rendered per slide so it can cross-fade with the stage behind it. */
 function CallControls() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-5 z-30 flex items-end justify-center px-5 md:bottom-7 md:px-9">
-      <div className="flex items-center gap-3">
+    <div className="pointer-events-none absolute inset-x-0 bottom-5 z-30 flex items-end justify-center px-5 md:bottom-8 md:px-9">
+      <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-[#03090c]/50 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl md:gap-3">
         <CallButton label="Mic">
           <path d="M12 4a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V7a3 3 0 0 0-3-3Z" />
           <path d="M19 11a7 7 0 0 1-14 0" />
@@ -300,15 +325,15 @@ function CallButton({
 }) {
   const toneClass =
     tone === "blue"
-      ? "bg-blue-600"
+      ? "bg-signal text-[#03140f] ring-1 ring-white/60 shadow-[0_0_24px_rgba(61,245,200,0.6)]"
       : tone === "red"
-      ? "bg-red-500"
-      : "bg-black/60";
+      ? "bg-onair text-white ring-1 ring-white/30 shadow-[0_0_24px_rgba(255,59,78,0.55)]"
+      : "bg-white/[0.07] text-white ring-1 ring-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]";
 
   return (
     <span
       aria-label={label}
-      className={`${toneClass} inline-flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg backdrop-blur md:h-14 md:w-14`}
+      className={`${toneClass} inline-flex h-11 w-11 items-center justify-center rounded-full backdrop-blur-md md:h-14 md:w-14`}
     >
       <svg
         aria-hidden="true"

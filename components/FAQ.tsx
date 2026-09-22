@@ -28,12 +28,12 @@ const QA = [
 export default function FAQ() {
   return (
     <section id="faq" className="section py-24 md:py-36">
-      <h2 className="max-w-4xl text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
+      <h2 className="max-w-4xl font-display text-[clamp(2.2rem,9vw,5.75rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-sheen">
         In case you missed anything.
       </h2>
-      <div className="mt-10 divide-y divide-black/10 border-y border-black/10 dark:divide-white/10 dark:border-white/10">
+      <div className="mt-12 space-y-3">
         {QA.map((item, i) => (
-          <Disclosure key={i} question={item.q} answer={item.a} />
+          <Disclosure key={i} index={i} question={item.q} answer={item.a} />
         ))}
       </div>
     </section>
@@ -41,23 +41,40 @@ export default function FAQ() {
 }
 
 function Disclosure({
+  index,
   question,
   answer,
 }: {
+  index: number;
   question: string;
   answer: string;
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="py-6">
+    <div
+      className={`glass rounded-2xl px-5 py-5 transition-[border-color,box-shadow] duration-300 md:px-7 md:py-6 ${
+        open ? "!border-signal/40 shadow-[0_0_40px_-12px_rgba(61,245,200,0.45)]" : "hover:!border-white/20"
+      }`}
+    >
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between text-left"
+        className="flex w-full items-center justify-between gap-4 text-left"
       >
-        <span className="pr-6 text-xl font-semibold text-slate-950 dark:text-white md:text-2xl">
-          {question}
+        <span className="flex min-w-0 items-baseline gap-4 md:gap-6">
+          <span aria-hidden className={`font-mono text-xs tracking-[0.2em] ${open ? "text-signal" : "text-white/40"}`}>
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span className="font-display text-base font-medium tracking-[-0.02em] text-white md:text-2xl">
+            {question}
+          </span>
         </span>
-        <span className="text-2xl text-slate-500 dark:text-slate-400">
+        <span
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border font-mono text-lg transition-all duration-300 md:h-10 md:w-10 ${
+            open
+              ? "border-signal bg-signal text-[#03140f] shadow-[0_0_20px_rgba(61,245,200,0.6)]"
+              : "border-white/20 text-white/70"
+          }`}
+        >
           {open ? "—" : "+"}
         </span>
       </button>
@@ -68,9 +85,9 @@ function Disclosure({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="overflow-hidden text-slate-600 dark:text-slate-300"
+            className="overflow-hidden text-slate-300"
           >
-            <div className="max-w-3xl pt-4 pb-2 text-base leading-relaxed md:text-lg">
+            <div className="max-w-3xl pt-4 pb-1 text-base leading-relaxed md:pl-12 md:text-lg">
               {answer}
             </div>
           </motion.div>
