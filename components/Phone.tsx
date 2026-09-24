@@ -31,10 +31,12 @@ export function MockChat({
   title = "Chats",
   accent = "emerald",
   messages,
+  assistantLabel = "Agent",
 }: {
   title?: string;
   accent?: "emerald" | "sky" | "violet" | "amber";
   messages?: ChatMessage[];
+  assistantLabel?: string;
 }) {
   return (
     <div className="screen-grid">
@@ -81,7 +83,7 @@ export function MockChat({
             >
               {msg.role === "assistant" && (
                 <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs text-emerald-300 shrink-0">
-                  Agent
+                  {assistantLabel}
                 </div>
               )}
               <div

@@ -49,26 +49,32 @@ export default function Page() {
       </StickyFeatureGallery>
 
       <StickyFeatureGallery
-        description="Chat LivE, with Verified Real Estate Agents"
+        description={"AI-POWERED\n\nCHAT INSTANTLY\n\nREAL ESTATE, MADE SIMPLE"}
       >
         <MockChat
-          title="Verified Agent"
+          title="LivE AI Assistant"
           accent={"violet" as any}
+          assistantLabel="AI"
           messages={[
             {
               id: "1",
               role: "user",
-              text: "Can you show me the kitchen storage?",
+              text: "Any 3-bed homes near good schools?",
             },
             {
               id: "2",
               role: "assistant",
-              text: "Absolutely. I’ll walk closer and open the pantry.",
+              text: "Found 6 nearby. Two have live showings this Saturday.",
             },
             {
               id: "3",
               role: "user",
-              text: "Great. Is there natural light in the afternoon?",
+              text: "Nice. Is the first one pet friendly?",
+            },
+            {
+              id: "4",
+              role: "assistant",
+              text: "Yes, with a fenced yard. Want me to book a spot?",
             },
           ]}
         />
@@ -82,13 +88,13 @@ export default function Page() {
         items={[
           {
             src: getAssetPath("/videos/commercial.mp4"),
-            text: "More Than Residential.",
+            text: "More ways to see\n\nMore than ever",
           },
         ]}
       />
       <HighlightSection
-        title="Request a showing. Get an agent response."
-        description="Turn interest into action with a single tap, then continue the conversation in the same place."
+        title={"Request a showing-\nSimplified."}
+        description="Know your agent before the showing, connect with a single tap."
       />
 
       <FeatureGrid />
