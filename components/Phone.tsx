@@ -32,12 +32,24 @@ export function MockChat({
   accent = "emerald",
   messages,
   assistantLabel = "Agent",
+  theme = "dark",
 }: {
   title?: string;
   accent?: "emerald" | "sky" | "violet" | "amber";
   messages?: ChatMessage[];
   assistantLabel?: string;
+  /** "violet-light" is the white-and-purple AI assistant skin. */
+  theme?: "dark" | "violet-light";
 }) {
+  if (theme === "violet-light" && messages) {
+    return (
+      <VioletChat
+        title={title}
+        messages={messages}
+        assistantLabel={assistantLabel}
+      />
+    );
+  }
   return (
     <div className="screen-grid">
       <div className="px-5 flex items-center justify-between border-b border-white/10 bg-white/5">
@@ -117,6 +129,91 @@ export function MockChat({
             viewBox="0 0 24 24"
             stroke="currentColor"
             className="text-white/50"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 10l7-7m0 0l7 7m-7-7v18"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** White screen with violet accents for the AI assistant demo. Scoped to its
+ *  own component so the dark agent chats elsewhere keep their look. */
+function VioletChat({
+  title,
+  messages,
+  assistantLabel,
+}: {
+  title: string;
+  messages: ChatMessage[];
+  assistantLabel: string;
+}) {
+  return (
+    <div className="screen-grid bg-gradient-to-b from-white via-white to-violet-50 text-slate-800">
+      <div className="px-5 flex items-center gap-3 border-b border-violet-100 bg-white">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-xs font-bold text-white shadow-md shadow-violet-500/30 shrink-0">
+          {assistantLabel}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-semibold text-slate-900 truncate">
+            {title}
+          </div>
+          <div className="flex items-center gap-1 text-[11px] text-violet-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-violet-500"></span>
+            Online
+          </div>
+        </div>
+      </div>
+      <div className="px-4 py-3 space-y-4 overflow-hidden overflow-y-auto">
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={clsx(
+              "flex gap-2 items-start",
+              msg.role === "user" ? "justify-end" : ""
+            )}
+          >
+            {msg.role === "assistant" && (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-xs font-bold text-white shadow-md shadow-violet-500/30 shrink-0">
+                {assistantLabel}
+              </div>
+            )}
+            <div
+              className={clsx(
+                "p-3 rounded-2xl text-sm max-w-[75%] leading-relaxed",
+                msg.role === "user"
+                  ? "bg-gradient-to-br from-violet-500 to-indigo-500 text-white rounded-tr-sm shadow-md shadow-violet-500/25"
+                  : "bg-violet-50 text-slate-700 ring-1 ring-violet-100 rounded-tl-sm"
+              )}
+            >
+              {msg.text}
+            </div>
+            {msg.role === "user" && (
+              <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center text-xs font-semibold text-violet-600 shrink-0">
+                Me
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="px-5 flex items-center gap-2 border-t border-violet-100 bg-white">
+        <div className="flex-1 my-3 h-9 rounded-full bg-violet-50 ring-1 ring-violet-100 flex items-center px-3 text-xs text-violet-300">
+          Message...
+        </div>
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center shadow-md shadow-violet-500/30">
+          <svg
+            width="20"
+            height="20"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="text-white"
           >
             <path
               strokeLinecap="round"

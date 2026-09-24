@@ -5,12 +5,15 @@ import Phone, { MockChat } from "./Phone";
 
 export default function StickyFeatureGallery({
   id,
-  description = "MEET LivE, YOUR VIRTUAL HOME AGENT",
+  description = "Meet LivE, Your Virtual Home Agent",
+  textSizeClassName = "text-[clamp(2.75rem,7vw,6.5rem)]",
   measureClassName = "max-w-[14ch] md:max-w-[17ch]",
   children,
 }: {
   id?: string;
-  description?: string;
+  description?: React.ReactNode;
+  /** Font-size utility for the headline. */
+  textSizeClassName?: string;
   /** Width cap for the headline block. */
   measureClassName?: string;
   children?: React.ReactNode;
@@ -64,7 +67,7 @@ export default function StickyFeatureGallery({
           <div className="relative w-full">
             <motion.div
               style={{ scale: rowScale, filter: rowBlur, opacity: rowOpacity }}
-              className="flex items-center justify-center whitespace-pre-wrap text-center text-[clamp(2.75rem,7vw,6.5rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white"
+              className={`flex items-center justify-center whitespace-pre-wrap text-center ${textSizeClassName} font-extrabold leading-[1.5] tracking-normal text-slate-950 dark:text-white`}
             >
               <span className={measureClassName}>
                 {description}
