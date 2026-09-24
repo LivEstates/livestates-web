@@ -174,8 +174,8 @@ function VideoScrollGallery({
                 <h2
                   className={
                     isIntro
-                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.5rem,5.6vw,6rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
                   }
                 >
                   {text}

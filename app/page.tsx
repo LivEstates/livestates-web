@@ -18,7 +18,7 @@ export default function Page() {
           {
             // Agent broadcasting -> the tile carries the feed she is sending.
             src: getAssetPath("/videos/01.mp4"),
-            text: "SEE\nFEEL\nCONNECT\nLivE YOUR WAY HOME",
+            text: "See\nFeel\nConnect\nLivE Your Way Home",
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
           },
           {
@@ -27,13 +27,13 @@ export default function Page() {
             // Reversed so it pushes in where slide one's tile pulls back, which
             // keeps the two tiles distinct without needing another shoot.
             src: getAssetPath("/videos/02.mp4"),
-            text: "LivE\nEXPLORE EVERY CORNER\nDETAILED AND INTERACTIVE",
+            text: "LivE\nExplore Every Corner\nDetailed And Interactive",
             previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
           },
           {
             // Someone watching -> the tile carries what is on her phone.
             src: getAssetPath("/videos/03.mp4"),
-            text: "LivE\nANYTIME YOU WANT\nANYWHERE YOU ARE",
+            text: "LivE\nAnytime You Want\nAnywhere You Are",
             portraitSrc: getAssetPath("/videos/user-watch.mp4"),
             previewSrc: getAssetPath("/videos/user-watch.mp4"),
           },
@@ -43,17 +43,30 @@ export default function Page() {
       <AnimatedTitle>Meet LivEstates</AnimatedTitle>
       <StickyFeatureGallery
         id="features"
-        description={"MEET LivE, YOUR\nVIRTUAL HOME AGENT"}
+        description={"Meet LivE, Your\nVirtual Home Agent"}
       >
         <LiveShowingScreen videoSrc={getAssetPath("/videos/02.mp4")} />
       </StickyFeatureGallery>
 
       <StickyFeatureGallery
-        description={"AI-POWERED\n\nCHAT INSTANTLY\n\nREAL ESTATE, MADE SIMPLE"}
+        textSizeClassName="text-[clamp(2.25rem,5.6vw,5.25rem)]"
+        measureClassName="max-w-full"
+        description={
+          <>
+            <span className="block">AI-Powered</span>
+            <span className="block">Chat Instantly</span>
+            {/* Kept on one line wherever it fits; on narrow screens the only
+                allowed break is after "Real Estate,". */}
+            <span className="block">
+              <span className="whitespace-nowrap">Real Estate,</span>{" "}
+              <span className="whitespace-nowrap">Made Simple</span>
+            </span>
+          </>
+        }
       >
         <MockChat
           title="LivE AI Assistant"
-          accent={"violet" as any}
+          theme="violet-light"
           assistantLabel="AI"
           messages={[
             {
@@ -80,7 +93,7 @@ export default function Page() {
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
-        description={"FROM LivE TO LIBRARY\nCONTENT THAT LASTS"}
+        description={"From LivE To Library\nContent That Lasts"}
       >
         <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
       </StickyFeatureGallery>
