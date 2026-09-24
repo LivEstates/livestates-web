@@ -16,7 +16,7 @@ export default function HighlightSection({
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-slate-400">
             Dual Camera
           </p>
-          <h2 className="mt-5 text-[clamp(2.75rem,7vw,6.25rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
+          <h2 className="mt-5 whitespace-pre-line text-[clamp(2.75rem,7vw,6.25rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
             {title}
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 md:text-xl">
