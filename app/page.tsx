@@ -11,7 +11,10 @@ import { getAssetPath } from "@/utils/path";
 
 export default function Page() {
   return (
-    <main>
+    // overflow-x-clip is only a backstop: every section already fits the
+    // viewport on its own, this just stops a future slip from making the
+    // whole page swipe sideways on phones.
+    <main className="overflow-x-clip">
       <Hero
         variant="intro"
         items={[

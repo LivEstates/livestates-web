@@ -79,3 +79,41 @@ html.dark body.gradient {
   height: 100%;
   color: #e5e7eb;
 }
+
+/* "Request a showing" phone pair. The pair is ~540px wide once tilted, which
+   is wider than a phone screen or the tablet column, so below lg it is drawn
+   at its desktop size and scaled down to fit the column. HighlightSection
+   sets --highlight-scale (column width / 540px); 0.6 covers the first paint. */
+.highlight-fit,
+.highlight-cluster {
+  display: contents;
+}
+
+@media (max-width: 1023.98px) {
+  .highlight-stage {
+    min-height: 0;
+  }
+  .highlight-fit {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: calc(700px * var(--highlight-scale, 0.6));
+  }
+  .highlight-cluster {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 540px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: top center;
+    transform: translateX(-50%) scale(var(--highlight-scale, 0.6));
+  }
+  .highlight-cluster .phone {
+    width: 300px;
+    height: 620px;
+    border-radius: 36px;
+  }
+}

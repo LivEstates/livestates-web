@@ -75,14 +75,19 @@ export default function StickyFeatureGallery({
             </motion.div>
 
             <motion.div
-              style={{ y: phoneY, opacity: phoneOpacity, scale: phoneScale }}
+              style={{ y: phoneY, opacity: phoneOpacity }}
               className="pointer-events-none absolute inset-0 flex items-center justify-center"
             >
-              <Phone>
-                {children || (
-                  <MockChat title="LivEstates" accent={"violet" as any} />
-                )}
-              </Phone>
+              {/* Scale only the phone, not this full-width row: growing the
+                  row to 105% pushed it past the viewport on 1024-1279px
+                  screens. Same centre, so the phone moves identically. */}
+              <motion.div style={{ scale: phoneScale }}>
+                <Phone>
+                  {children || (
+                    <MockChat title="LivEstates" accent={"violet" as any} />
+                  )}
+                </Phone>
+              </motion.div>
             </motion.div>
           </div>
         </div>
