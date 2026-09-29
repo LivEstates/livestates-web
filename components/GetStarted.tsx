@@ -13,6 +13,8 @@ export default function GetStarted() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
       >
+        {/* Desktop: buttons sit above the headline (Ivy); mobile keeps them below. */}
+        <DownloadButtons className="mb-12 hidden lg:flex" />
         <h2 className="mx-auto max-w-5xl text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold leading-[1.08] tracking-normal text-slate-950 dark:text-white">
           Download LivEstates App to get started.
         </h2>
@@ -25,7 +27,7 @@ export default function GetStarted() {
           and explore videos of the properties you care about, plus the latest
           real estate news, all in one place.
         </p>
-        <DownloadButtons />
+        <DownloadButtons className="mt-8 lg:hidden" />
       </motion.div>
     </section>
   );
