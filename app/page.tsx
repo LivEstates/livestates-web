@@ -5,6 +5,7 @@ import FeatureGrid from "@/components/FeatureGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import BuiltForEveryone from "@/components/BuiltForEveryone";
+import ProsDiscovered from "@/components/ProsDiscovered";
 import GetStarted from "@/components/GetStarted";
 import Footer from "@/components/Footer";
 import { LiveShowingScreen, MockChat, VideoTourScreen } from "@/components/Phone";
@@ -58,6 +59,7 @@ export default function Page() {
       <GetStarted />
       {/* Page 6: new slide, background clip still to come. */}
       <BuiltForEveryone />
+      <ProsDiscovered />
 
       <StickyFeatureGallery
         textSizeClassName="text-[clamp(2.25rem,5.6vw,5.25rem)]"
