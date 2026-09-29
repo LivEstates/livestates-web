@@ -28,17 +28,15 @@ export default function BuiltForEveryone() {
               </h2>
               {/* One blank line under the headline and between the two
                   paragraphs, per Ivy's layout. */}
-              <div className="mx-auto mt-[1.5em] lg:mt-[3em] max-w-[52rem] lg:max-w-[60rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.25rem,2.1vw,2rem)] font-normal leading-[1.5] text-white drop-shadow-md">
+              <div className="mx-auto mt-[1.5em] lg:mt-[3em] max-w-[52rem] lg:max-w-[64rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.5rem,2.5vw,2.375rem)] font-normal leading-[1.5] text-white drop-shadow-md">
                 <p>
                   <strong className="font-bold">Buyers and renters</strong> can
                   see homes from anywhere, no appointments, no wasted trips.
                 </p>
-                <p className="mt-[1.5em]">
-                  <strong className="font-bold">Agents</strong> get a stage to
-                  grow a video-first brand, get discovered by serious buyers,
-                  and build relationships that last. And with sellers, lenders,
-                  and builders on board, every real estate service you need
-                  lives in one community.
+                <p className="mt-[1.5em] lg:mt-[3em]">
+                  <strong className="font-bold">Sellers</strong> get more eyes
+                  on their home and see how the market really responds,
+                  directly and transparently.
                 </p>
               </div>
             </div>

@@ -1,0 +1,50 @@
+"use client";
+import Hero, { HERO_HEADLINE } from "./Hero";
+import { getAssetPath } from "@/utils/path";
+
+/**
+ * Background clip for the "Where Real Estate Pros Get Discovered" slide.
+ * Waiting on Ivy's footage; while "" it shows the same dark placeholder.
+ * To swap in: put the file in public/videos/ and set e.g.
+ *   const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered.mp4";
+ */
+const PROS_DISCOVERED_VIDEO = "";
+
+/** Same layout as "Built for everyone" (Ivy batch 4). */
+export default function ProsDiscovered() {
+  return (
+    <Hero
+      items={[
+        {
+          src: PROS_DISCOVERED_VIDEO ? getAssetPath(PROS_DISCOVERED_VIDEO) : "",
+          text: (
+            <div className="max-w-[min(94vw,1440px)] px-4 text-center">
+              <h2 className={`${HERO_HEADLINE} lg:text-[clamp(3rem,6.8vw,7.25rem)]`}>
+                Where Real Estate Pros Get Discovered
+              </h2>
+              <div className="mx-auto mt-[1.5em] lg:mt-[2.5em] max-w-[52rem] lg:max-w-[64rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.25rem,2.1vw,2rem)] font-normal leading-[1.5] text-white drop-shadow-md">
+                <h3 className="text-[1.2em] font-bold leading-[1.3]">For Agents</h3>
+                <p className="mt-[0.4em]">
+                  Show homes live to buyers wherever they are, and answer their
+                  questions in the moment. Build a video profile that lets
+                  buyers get to know you before you ever meet. When they&apos;re
+                  ready to talk, they can reach you directly, making every
+                  connection easier for both sides.
+                </p>
+                <h3 className="mt-[1.5em] text-[1.2em] font-bold leading-[1.3]">
+                  More Pros, Coming Soon
+                </h3>
+                <p className="mt-[0.4em]">
+                  We&apos;re bringing lenders, builders, contractors, and other
+                  trusted pros onto LivEstates, so buyers and sellers can find
+                  everything a real estate journey needs, from financing to
+                  renovation, all in one place.
+                </p>
+              </div>
+            </div>
+          ),
+        },
+      ]}
+    />
+  );
+}
