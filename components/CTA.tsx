@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import DownloadButtons from "./DownloadButtons";
 
 export default function CTA() {
   return (
@@ -19,14 +20,7 @@ export default function CTA() {
           Experience live property showings, agent conversations, and saved
           replays from one place.
         </p>
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <a className="btn font-semibold" href="#">
-            Get iOS app
-          </a>
-          <a className="btn font-semibold" href="#">
-            Join the waitlist
-          </a>
-        </div>
+        <DownloadButtons />
       </motion.div>
     </section>
   );
