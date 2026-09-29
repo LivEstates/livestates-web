@@ -23,12 +23,12 @@ export default function BuiltForEveryone() {
             : "",
           text: (
             <div className="max-w-[min(94vw,1440px)] px-4 text-center">
-              <h2 className={HERO_HEADLINE}>
+              <h2 className={`${HERO_HEADLINE} lg:text-[clamp(3rem,6.8vw,7.25rem)]`}>
                 Built for everyone in the real estate journey.
               </h2>
               {/* One blank line under the headline and between the two
                   paragraphs, per Ivy's layout. */}
-              <div className="mx-auto mt-[1.5em] max-w-[52rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] font-normal leading-[1.5] text-white drop-shadow-md">
+              <div className="mx-auto mt-[1.5em] lg:mt-[3em] max-w-[52rem] lg:max-w-[60rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.25rem,2.1vw,2rem)] font-normal leading-[1.5] text-white drop-shadow-md">
                 <p>
                   <strong className="font-bold">Buyers and renters</strong> can
                   see homes from anywhere, no appointments, no wasted trips.
