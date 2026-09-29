@@ -4,6 +4,8 @@ import HighlightSection from "@/components/HighlightSection";
 import FeatureGrid from "@/components/FeatureGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
+import BuiltForEveryone from "@/components/BuiltForEveryone";
+import GetStarted from "@/components/GetStarted";
 import Footer from "@/components/Footer";
 import { LiveShowingScreen, MockChat, VideoTourScreen } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
@@ -50,6 +52,12 @@ export default function Page() {
       >
         <LiveShowingScreen videoSrc={getAssetPath("/videos/02.mp4")} />
       </StickyFeatureGallery>
+
+      {/* Page 5: new download pitch (Ivy batch 3); the closing Download
+          page below is unchanged. */}
+      <GetStarted />
+      {/* Page 6: new slide, background clip still to come. */}
+      <BuiltForEveryone />
 
       <StickyFeatureGallery
         textSizeClassName="text-[clamp(2.25rem,5.6vw,5.25rem)]"

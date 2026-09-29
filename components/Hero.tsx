@@ -6,11 +6,14 @@ import { motion, useScroll, useTransform } from "framer-motion";
 type HeroVariant = "plain" | "intro";
 
 export type HeroItem = {
-  /** Landscape clip filling the stage. */
+  /** Landscape clip filling the stage. Empty string = no clip yet: the stage
+   *  shows a neutral dark placeholder (same scrim on top) until one is dropped
+   *  in. */
   src: string;
   /** Overlay headline. Empty means the clip carries its own type, which also
-   *  suppresses the scrim. */
-  text: string;
+   *  suppresses the scrim. A string renders as one headline (\n = line break);
+   *  pass JSX when the slide needs a headline plus smaller body copy. */
+  text: ReactNode;
   /** Portrait-framed alternate. A 16:9 clip in a phone viewport is cropped to a
    *  narrow centre strip, so slides whose subject matters ship one of these. */
   portraitSrc?: string;
@@ -20,6 +23,11 @@ export type HeroItem = {
    *  are watching. */
   previewSrc?: string;
 };
+
+/** Type used by the plain (full-bleed) slides' overlay headline, e.g.
+ *  "More ways to see". Exported so JSX overlays can match it exactly. */
+export const HERO_HEADLINE =
+  "text-[clamp(2.5rem,5.6vw,6rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md";
 
 /** Tracks `(orientation: portrait)`, defaulting to false so SSR and the first
  *  client render agree. The effect corrects it immediately after hydration. */
@@ -142,15 +150,20 @@ function VideoScrollGallery({
             style={{ opacity, scale }}
             className="absolute inset-0 h-full w-full"
           >
-            <video
-              className="absolute inset-0 h-full w-full object-cover"
-              src={src}
-              playsInline
-              muted
-              autoPlay
-              loop
-              preload="metadata"
-            />
+            {src ? (
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                src={src}
+                playsInline
+                muted
+                autoPlay
+                loop
+                preload="metadata"
+              />
+            ) : (
+              // Placeholder until the real clip arrives.
+              <div className="absolute inset-0 bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900" />
+            )}
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
             {text ? <div className="absolute inset-0 bg-black/45" /> : null}
@@ -171,15 +184,19 @@ function VideoScrollGallery({
                   y: textY,
                 }}
               >
-                <h2
-                  className={
-                    isIntro
-                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.5rem,5.6vw,6rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                  }
-                >
-                  {text}
-                </h2>
+                {typeof text === "string" ? (
+                  <h2
+                    className={
+                      isIntro
+                        ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
+                        : `max-w-[min(94vw,1440px)] px-4 text-center ${HERO_HEADLINE} whitespace-pre-wrap`
+                    }
+                  >
+                    {text}
+                  </h2>
+                ) : (
+                  text
+                )}
               </motion.div>
             ) : null
           )}
