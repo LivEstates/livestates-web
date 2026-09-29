@@ -22,7 +22,7 @@ export default function BuiltForEveryone() {
             ? getAssetPath(BUILT_FOR_EVERYONE_VIDEO)
             : "",
           text: (
-            <div className="max-w-[min(94vw,1440px)] px-4 text-center">
+            <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[3.5rem]">
               <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>
                 Built for everyone in the real estate journey.
               </h2>
