@@ -18,7 +18,7 @@ export default function ProsDiscovered() {
         {
           src: PROS_DISCOVERED_VIDEO ? getAssetPath(PROS_DISCOVERED_VIDEO) : "",
           text: (
-            <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[7rem]">
+            <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[5.25rem]">
               <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>
                 Where Real Estate Pros Get Discovered
               </h2>
