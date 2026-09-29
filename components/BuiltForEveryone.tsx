@@ -23,7 +23,7 @@ export default function BuiltForEveryone() {
             : "",
           text: (
             <div className="max-w-[min(94vw,1440px)] px-4 text-center">
-              <h2 className={`${HERO_HEADLINE} lg:text-[clamp(3rem,6.8vw,7.25rem)]`}>
+              <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>
                 Built for everyone in the real estate journey.
               </h2>
               {/* One blank line under the headline and between the two
