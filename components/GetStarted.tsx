@@ -16,10 +16,11 @@ export default function GetStarted() {
         <h2 className="mx-auto max-w-5xl text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold leading-[1.08] tracking-normal text-slate-950 dark:text-white">
           Download LivEstates App to get started.
         </h2>
-        <p className="mx-auto mt-6 max-w-4xl text-[clamp(1.375rem,2.8vw,2.5rem)] font-bold leading-[1.3] text-slate-950 dark:text-white">
-          LivEstates is an AI-powered social video app for real estate.
+        <p className="mx-auto mt-6 lg:mt-[4.5rem] max-w-4xl text-[clamp(1.375rem,2.8vw,2.5rem)] font-bold leading-[1.3] text-slate-950 dark:text-white">
+          LivEstates is an AI-powered social video app{" "}
+          <span className="lg:block">for real estate.</span>
         </p>
-        <p className="mx-auto mt-4 max-w-3xl text-[clamp(1.0625rem,1.6vw,1.5rem)] font-normal leading-relaxed text-slate-600 dark:text-slate-300">
+        <p className="mx-auto mt-4 max-w-3xl lg:max-w-4xl text-[clamp(1.0625rem,1.6vw,1.5rem)] lg:text-[clamp(1.25rem,1.9vw,1.875rem)] font-normal leading-relaxed text-slate-600 dark:text-slate-300">
           Tour homes through live streams, ask agents questions in real time,
           and explore videos of the properties you care about, plus the latest
           real estate news, all in one place.
