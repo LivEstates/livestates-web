@@ -262,7 +262,7 @@ function IntroChrome() {
 
       <div className="flex flex-1 justify-end">
         <a
-          href="#download"
+          href="#get-started"
           className="inline-flex items-center rounded-full bg-white px-5 py-3 text-sm font-extrabold text-black shadow-lg transition hover:bg-white/90 md:px-7 md:text-base"
         >
           Get the App
