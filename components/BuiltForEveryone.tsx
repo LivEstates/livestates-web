@@ -9,7 +9,7 @@ import { getAssetPath } from "@/utils/path";
  * To swap it in: drop the file in public/videos/ and set, e.g.
  *   const BUILT_FOR_EVERYONE_VIDEO = "/videos/built-for-everyone.mp4";
  */
-const BUILT_FOR_EVERYONE_VIDEO = "";
+const BUILT_FOR_EVERYONE_VIDEO = "/videos/built-for-everyone.mp4";
 
 /** Same full-bleed structure as the "More ways to see" slide: sticky
  *  background clip, dark scrim, overlay copy in the same headline type. */
@@ -21,6 +21,8 @@ export default function BuiltForEveryone() {
           src: BUILT_FOR_EVERYONE_VIDEO
             ? getAssetPath(BUILT_FOR_EVERYONE_VIDEO)
             : "",
+          // Bright aerial footage: a darker scrim keeps the copy readable.
+          scrimClassName: "bg-black/60",
           text: (
             <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[3.5rem]">
               <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>

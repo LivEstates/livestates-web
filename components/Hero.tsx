@@ -22,6 +22,8 @@ export type HeroItem = {
    *  property feed; when the stage shows someone watching, this is what they
    *  are watching. */
   previewSrc?: string;
+  /** Scrim class override for slides whose clip is bright (default bg-black/45). */
+  scrimClassName?: string;
 };
 
 /** Type used by the plain (full-bleed) slides' overlay headline, e.g.
@@ -87,7 +89,7 @@ function VideoScrollGallery({
     [0, 0, 24]
   );
 
-  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc }, i) => {
+  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc, scrimClassName }, i) => {
     const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
@@ -115,6 +117,7 @@ function VideoScrollGallery({
     return {
       src: resolvedSrc,
       text,
+      scrimClassName,
       // Never run the same clip in the stage and the tile at once — side by side
       // at two sizes it reads as a duplication bug, not a picture-in-picture.
       previewSrc: previewSrc === resolvedSrc ? undefined : previewSrc,
@@ -144,7 +147,7 @@ function VideoScrollGallery({
             : { scale: containerScale, borderRadius: containerRadius }
         }
       >
-        {galleryItems.map(({ src, text, opacity, scale }, idx) => (
+        {galleryItems.map(({ src, text, opacity, scale, scrimClassName }, idx) => (
           <motion.div
             key={idx}
             style={{ opacity, scale }}
@@ -166,7 +169,7 @@ function VideoScrollGallery({
             )}
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
-            {text ? <div className="absolute inset-0 bg-black/45" /> : null}
+            {text ? <div className={`absolute inset-0 ${scrimClassName ?? "bg-black/45"}`} /> : null}
           </motion.div>
         ))}
 
