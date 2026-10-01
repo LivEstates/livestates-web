@@ -33,13 +33,33 @@ export default function Page() {
             // Reversed so it pushes in where slide one's tile pulls back, which
             // keeps the two tiles distinct without needing another shoot.
             src: getAssetPath("/videos/02.mp4"),
-            text: "LivE\nExplore Every Corner\nDetailed And Interactive",
+            text: (
+              // Same type as the intro string headline (inlined: server component).
+              // Mobile only: a blank line between lines (Ivy); desktop unchanged.
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+                <span className="block">LivE</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block">Explore Every Corner</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block">Detailed And Interactive</span>
+              </h2>
+            ),
             previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
           },
           {
             // Someone watching -> the tile carries what is on her phone.
             src: getAssetPath("/videos/03.mp4"),
-            text: "LivE\nAnytime You Want\nAnywhere You Are",
+            text: (
+              // Same type as the intro string headline (inlined: server component).
+              // Mobile only: a blank line between lines (Ivy); desktop unchanged.
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+                <span className="block">LivE</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block">Anytime You Want</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block">Anywhere You Are</span>
+              </h2>
+            ),
             portraitSrc: getAssetPath("/videos/user-watch.mp4"),
             previewSrc: getAssetPath("/videos/user-watch.mp4"),
           },
