@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Phone, { MockChat } from "./Phone";
 
@@ -20,6 +20,28 @@ export default function StickyFeatureGallery({
 }) {
   const stickyRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const fitRef = useRef<HTMLDivElement>(null);
+
+  // Below lg the phone is scaled to a realistic phone size (see .phone-fit in
+  // globals.css). Height is read once and only re-read when the width changes
+  // (rotation), so the mobile URL bar showing/hiding mid-scroll does not make
+  // the phone jump.
+  useLayoutEffect(() => {
+    const el = fitRef.current;
+    if (!el) return;
+    let lastW = -1;
+    const update = () => {
+      const w = window.innerWidth;
+      if (w === lastW) return;
+      lastW = w;
+      const h = window.innerHeight;
+      const target = Math.min(0.64 * w, 280, 0.358 * h);
+      el.style.setProperty("--phone-fit-scale", String(Math.min(1, target / 300)));
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: progressRef,
     offset: ["start start", "end start"],
@@ -82,11 +104,13 @@ export default function StickyFeatureGallery({
                   row to 105% pushed it past the viewport on 1024-1279px
                   screens. Same centre, so the phone moves identically. */}
               <motion.div style={{ scale: phoneScale }}>
-                <Phone>
-                  {children || (
-                    <MockChat title="LivEstates" accent={"violet" as any} />
-                  )}
-                </Phone>
+                <div ref={fitRef} className="phone-fit">
+                  <Phone>
+                    {children || (
+                      <MockChat title="LivEstates" accent={"violet" as any} />
+                    )}
+                  </Phone>
+                </div>
               </motion.div>
             </motion.div>
           </div>
