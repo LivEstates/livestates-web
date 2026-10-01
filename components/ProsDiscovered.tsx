@@ -8,7 +8,7 @@ import { getAssetPath } from "@/utils/path";
  * To swap in: put the file in public/videos/ and set e.g.
  *   const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered.mp4";
  */
-const PROS_DISCOVERED_VIDEO = "";
+const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered.mp4";
 
 /** Same layout as "Built for everyone" (Ivy batch 4). */
 export default function ProsDiscovered() {
@@ -17,6 +17,8 @@ export default function ProsDiscovered() {
       items={[
         {
           src: PROS_DISCOVERED_VIDEO ? getAssetPath(PROS_DISCOVERED_VIDEO) : "",
+          // Bright kitchen footage: a darker scrim keeps the copy readable.
+          scrimClassName: "bg-black/65",
           text: (
             <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[5.25rem]">
               <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>
