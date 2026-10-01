@@ -38,7 +38,7 @@ export default function Page() {
               // Mobile only: each phrase on one line (font scales with width) and a
               // blank line between lines (Ivy); desktop unchanged.
               <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
-                <span className="block whitespace-nowrap lg:whitespace-normal">LivE</span>
+                <span className="block whitespace-nowrap text-[1.45em] lg:text-[1em] lg:whitespace-normal">LivE</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
                 <span className="block whitespace-nowrap lg:whitespace-normal">Explore Every Corner</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
@@ -55,7 +55,7 @@ export default function Page() {
               // Mobile only: each phrase on one line (font scales with width) and a
               // blank line between lines (Ivy); desktop unchanged.
               <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
-                <span className="block whitespace-nowrap lg:whitespace-normal">LivE</span>
+                <span className="block whitespace-nowrap text-[1.45em] lg:text-[1em] lg:whitespace-normal">LivE</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
                 <span className="block whitespace-nowrap lg:whitespace-normal">Anytime You Want</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
