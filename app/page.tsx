@@ -114,7 +114,16 @@ export default function Page() {
         items={[
           {
             src: getAssetPath("/videos/commercial.mp4"),
-            text: "More ways to see\n\nMore than ever",
+            // Same type as HERO_HEADLINE (inlined: page.tsx is a server component and
+            // can't read constants exported from a client module). Desktop: shifted
+            // down one headline line (Ivy).
+            text: (
+              <h2
+                className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.5rem,5.6vw,6rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap lg:translate-y-[1.08em]"
+              >
+                {"More Ways to See\n\nMore Than Ever"}
+              </h2>
+            ),
           },
         ]}
       />
