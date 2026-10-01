@@ -35,13 +35,14 @@ export default function Page() {
             src: getAssetPath("/videos/02.mp4"),
             text: (
               // Same type as the intro string headline (inlined: server component).
-              // Mobile only: a blank line between lines (Ivy); desktop unchanged.
-              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
-                <span className="block">LivE</span>
+              // Mobile only: each phrase on one line (font scales with width) and a
+              // blank line between lines (Ivy); desktop unchanged.
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+                <span className="block whitespace-nowrap lg:whitespace-normal">LivE</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
-                <span className="block">Explore Every Corner</span>
+                <span className="block whitespace-nowrap lg:whitespace-normal">Explore Every Corner</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
-                <span className="block">Detailed And Interactive</span>
+                <span className="block whitespace-nowrap lg:whitespace-normal">Detailed And Interactive</span>
               </h2>
             ),
             previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
@@ -51,13 +52,14 @@ export default function Page() {
             src: getAssetPath("/videos/03.mp4"),
             text: (
               // Same type as the intro string headline (inlined: server component).
-              // Mobile only: a blank line between lines (Ivy); desktop unchanged.
-              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
-                <span className="block">LivE</span>
+              // Mobile only: each phrase on one line (font scales with width) and a
+              // blank line between lines (Ivy); desktop unchanged.
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+                <span className="block whitespace-nowrap lg:whitespace-normal">LivE</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
-                <span className="block">Anytime You Want</span>
+                <span className="block whitespace-nowrap lg:whitespace-normal">Anytime You Want</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
-                <span className="block">Anywhere You Are</span>
+                <span className="block whitespace-nowrap lg:whitespace-normal">Anywhere You Are</span>
               </h2>
             ),
             portraitSrc: getAssetPath("/videos/user-watch.mp4"),
@@ -86,11 +88,11 @@ export default function Page() {
         measureClassName="max-w-full"
         description={
           <>
-            <span className="block">AI-Powered</span>
-            <span className="block">Chat Instantly</span>
+            <span className="block whitespace-nowrap lg:whitespace-normal">AI-Powered</span>
+            <span className="block whitespace-nowrap lg:whitespace-normal">Chat Instantly</span>
             {/* Kept on one line wherever it fits; on narrow screens the only
                 allowed break is after "Real Estate,". */}
-            <span className="block">
+            <span className="block whitespace-nowrap lg:whitespace-normal">
               <span className="whitespace-nowrap">Real Estate,</span>{" "}
               <span className="whitespace-nowrap">Made Simple</span>
             </span>
