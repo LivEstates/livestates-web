@@ -42,7 +42,7 @@ export default function Page() {
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
                 <span className="block whitespace-nowrap lg:whitespace-normal">Explore Every Corner</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
-                <span className="block whitespace-nowrap lg:whitespace-normal">Detailed And Interactive</span>
+                <span className="block whitespace-nowrap lg:whitespace-normal">Detailed and Interactive</span>
               </h2>
             ),
             previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
