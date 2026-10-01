@@ -6,9 +6,9 @@ import { getAssetPath } from "@/utils/path";
  * Background clip for the "Where Real Estate Pros Get Discovered" slide.
  * Waiting on Ivy's footage; while "" it shows the same dark placeholder.
  * To swap in: put the file in public/videos/ and set e.g.
- *   const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered.mp4";
+ *   const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered-v2.mp4";
  */
-const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered.mp4";
+const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered-v2.mp4";
 
 /** Same layout as "Built for everyone" (Ivy batch 4). */
 export default function ProsDiscovered() {
