@@ -20,7 +20,7 @@ export default function ProsDiscovered() {
           // Bright kitchen footage: a darker scrim keeps the copy readable.
           scrimClassName: "bg-black/[0.68]",
           text: (
-            <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[3rem]">
+            <div className="max-w-[min(94vw,1440px)] px-4 text-center translate-y-[2.5rem] lg:translate-y-[3rem]">
               <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>
                 Where Real Estate Pros Get Discovered
               </h2>
