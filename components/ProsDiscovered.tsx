@@ -20,11 +20,11 @@ export default function ProsDiscovered() {
           // Bright kitchen footage: a darker scrim keeps the copy readable.
           scrimClassName: "bg-black/[0.68]",
           text: (
-            <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[5.25rem]">
+            <div className="max-w-[min(94vw,1440px)] px-4 text-center lg:translate-y-[3rem]">
               <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>
                 Where Real Estate Pros Get Discovered
               </h2>
-              <div className="mx-auto mt-[1.5em] lg:mt-[2.5em] max-w-[52rem] lg:max-w-[64rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.25rem,2.1vw,2rem)] font-normal leading-[1.5] text-white drop-shadow-md">
+              <div className="mx-auto mt-[1.5em] lg:mt-[2.5em] max-w-[52rem] lg:max-w-[64rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.5rem,2.5vw,2.375rem)] font-normal leading-[1.5] text-white drop-shadow-md">
                 <h3 className="text-[1.2em] font-bold leading-[1.3]">For Agents</h3>
                 <p className="mt-[0.4em]">
                   Show homes live, anywhere, answer questions in real time.
