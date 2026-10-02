@@ -109,22 +109,22 @@ export default function Page() {
             {
               id: "1",
               role: "user",
-              text: "Any 3-bed homes near good schools?",
+              text: "Show me 3-bed homes near top-rated schools.",
             },
             {
               id: "2",
               role: "assistant",
-              text: "Found 6 nearby. Two have live showings this Saturday.",
+              text: "I found 6 homes. 2 have live showings this Saturday.",
             },
             {
               id: "3",
               role: "user",
-              text: "Nice. Is the first one pet friendly?",
+              text: "Can I ask the agent questions during the tour?",
             },
             {
               id: "4",
               role: "assistant",
-              text: "Yes, with a fenced yard. Want me to book a spot?",
+              text: "Yes, you can chat with the agent live. Want me to save you a spot?",
             },
           ]}
         />
