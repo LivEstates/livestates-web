@@ -32,7 +32,7 @@ const items = [
   },
   {
     title: "Agent Profiles",
-    description: "Build trust with live content, verified identity, and clear availability.",
+    description: "Build your own brand. Earn trust with your videos and a verified identity.",
   },
   {
     title: "Market Content",
