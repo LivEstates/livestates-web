@@ -33,6 +33,7 @@ export function MockChat({
   messages,
   assistantLabel = "Agent",
   theme = "dark",
+  rowInsetClassName = "",
 }: {
   title?: string;
   accent?: "emerald" | "sky" | "violet" | "amber";
@@ -40,6 +41,9 @@ export function MockChat({
   assistantLabel?: string;
   /** "violet-light" is the white-and-purple AI assistant skin. */
   theme?: "dark" | "violet-light";
+  /** Extra classes on each message row (dark skin), e.g. right padding where
+   *  another phone overlaps this one's right edge. */
+  rowInsetClassName?: string;
 }) {
   if (theme === "violet-light" && messages) {
     return (
@@ -90,6 +94,7 @@ export function MockChat({
               key={msg.id}
               className={clsx(
                 "flex gap-2 items-start",
+                rowInsetClassName,
                 msg.role === "user" ? "justify-end" : ""
               )}
             >
