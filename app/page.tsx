@@ -90,11 +90,12 @@ export default function Page() {
           <>
             <span className="block whitespace-nowrap lg:whitespace-normal">AI-Powered</span>
             <span className="block whitespace-nowrap lg:whitespace-normal">Chat Instantly</span>
-            {/* Kept on one line wherever it fits; on narrow screens the only
-                allowed break is after "Real Estate,". */}
-            <span className="block whitespace-nowrap lg:whitespace-normal">
-              <span className="whitespace-nowrap">Real Estate,</span>{" "}
-              <span className="whitespace-nowrap">Made Simple</span>
+            {/* Desktop: one line. Mobile: "Made Simple" on its own line under
+                "Real Estate," at the same size (Ivy). */}
+            <span className="block lg:whitespace-normal">
+              <span className="block whitespace-nowrap lg:inline">Real Estate,</span>
+              <span className="hidden lg:inline"> </span>
+              <span className="block whitespace-nowrap lg:inline">Made Simple</span>
             </span>
           </>
         }
