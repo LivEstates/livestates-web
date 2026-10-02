@@ -90,10 +90,11 @@ export default function Page() {
           <>
             <span className="block whitespace-nowrap lg:whitespace-normal">AI-Powered</span>
             <span className="block whitespace-nowrap lg:whitespace-normal">Chat Instantly</span>
-            {/* Desktop: one line. Mobile: "Made Simple" on its own line under
-                "Real Estate," at the same size (Ivy). */}
+            {/* Desktop: "Real Estate, Made Simple" on one line. Mobile (Ivy): blank
+                line above, no comma, "Made Simple" on its own line. */}
+            <span aria-hidden className="block lg:hidden">&nbsp;</span>
             <span className="block lg:whitespace-normal">
-              <span className="block whitespace-nowrap lg:inline">Real Estate,</span>
+              <span className="block whitespace-nowrap lg:inline">Real Estate<span className="hidden lg:inline">,</span></span>
               <span className="hidden lg:inline"> </span>
               <span className="block whitespace-nowrap lg:inline">Made Simple</span>
             </span>
