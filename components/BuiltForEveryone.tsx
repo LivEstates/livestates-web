@@ -30,7 +30,7 @@ export default function BuiltForEveryone() {
               </h2>
               {/* One blank line under the headline and between the two
                   paragraphs, per Ivy's layout. */}
-              <div className="mx-auto mt-[3em] lg:mt-[3em] max-w-[52rem] lg:max-w-[64rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.5rem,2.5vw,2.375rem)] font-normal leading-[1.5] text-white drop-shadow-md">
+              <div className="mx-auto mt-[3em] lg:mt-[3em] max-w-[52rem] lg:max-w-[64rem] text-[1.25rem] lg:text-[clamp(1.5rem,2.5vw,2.375rem)] font-normal leading-[1.5] text-white drop-shadow-md">
                 <p>
                   <strong className="font-bold">Buyers and renters</strong> can
                   see homes from anywhere, no appointments, no wasted trips.
