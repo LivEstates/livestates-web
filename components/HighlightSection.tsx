@@ -62,16 +62,17 @@ export default function HighlightSection({
                   <Phone>
                     <MockChat
                       title="Live Tour"
+                      rowInsetClassName="pr-[26%]"
                       messages={[
                         {
                           id: "1",
                           role: "assistant",
-                          text: "Front camera is on. Want to see the street view next?",
+                          text: "Thank you for your showing request. I'm currently reviewing homes that match your criteria and will share options shortly.",
                         },
                         {
                           id: "2",
                           role: "user",
-                          text: "Yes, and then the primary bedroom.",
+                          text: "Sounds great! I'm open to a private live tour too.",
                         },
                       ]}
                     />
@@ -96,12 +97,12 @@ export default function HighlightSection({
                         {
                           id: "1",
                           role: "assistant",
-                          text: "The showing request is ready to send.",
+                          text: "Thank you for your showing request. I have a few questions about what you're looking for. Would you be available for a quick call?",
                         },
                         {
                           id: "2",
                           role: "user",
-                          text: "Send it for Saturday afternoon.",
+                          text: "Of course! You can reach me at (555) 123‑4567.",
                         },
                       ]}
                     />
