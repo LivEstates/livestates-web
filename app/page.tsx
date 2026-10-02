@@ -109,22 +109,22 @@ export default function Page() {
             {
               id: "1",
               role: "user",
-              text: "Show me 3-bed homes near top-rated schools.",
+              text: "3-bed single-family under $1.5M, good schools, within 20 miles of downtown?",
             },
             {
               id: "2",
               role: "assistant",
-              text: "I found 6 homes. 2 have live showings this Saturday.",
+              text: "Found 8 homes in top-rated districts. 2 have live tours today!",
             },
             {
               id: "3",
               role: "user",
-              text: "Can I ask the agent questions during the tour?",
+              text: "Nice! When's the next one?",
             },
             {
               id: "4",
               role: "assistant",
-              text: "Yes, you can chat with the agent live. Want me to save you a spot?",
+              text: "A 3-bed with a big backyard goes live at 2:00 PM. Reserve a spot?",
             },
           ]}
         />
