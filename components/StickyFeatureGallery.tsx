@@ -1,19 +1,47 @@
 "use client";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Phone, { MockChat } from "./Phone";
 
 export default function StickyFeatureGallery({
   id,
-  description = "MEET LivE, YOUR VIRTUAL HOME AGENT",
+  description = "Meet LivE, Your Virtual Home Agent",
+  textSizeClassName = "text-[clamp(2.75rem,7vw,6.5rem)]",
+  measureClassName = "max-w-[14ch] md:max-w-[17ch]",
   children,
 }: {
   id?: string;
-  description?: string;
+  description?: React.ReactNode;
+  /** Font-size utility for the headline. */
+  textSizeClassName?: string;
+  /** Width cap for the headline block. */
+  measureClassName?: string;
   children?: React.ReactNode;
 }) {
   const stickyRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const fitRef = useRef<HTMLDivElement>(null);
+
+  // Below lg the phone is scaled to a realistic phone size (see .phone-fit in
+  // globals.css). Height is read once and only re-read when the width changes
+  // (rotation), so the mobile URL bar showing/hiding mid-scroll does not make
+  // the phone jump.
+  useLayoutEffect(() => {
+    const el = fitRef.current;
+    if (!el) return;
+    let lastW = -1;
+    const update = () => {
+      const w = window.innerWidth;
+      if (w === lastW) return;
+      lastW = w;
+      const h = window.innerHeight;
+      const target = Math.min(0.64 * w, 280, 0.358 * h);
+      el.style.setProperty("--phone-fit-scale", String(Math.min(1, target / 300)));
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: progressRef,
     offset: ["start start", "end start"],
@@ -61,22 +89,29 @@ export default function StickyFeatureGallery({
           <div className="relative w-full">
             <motion.div
               style={{ scale: rowScale, filter: rowBlur, opacity: rowOpacity }}
-              className="flex items-center justify-center whitespace-pre-wrap text-center text-[clamp(2.75rem,7vw,6.5rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white"
+              className={`flex items-center justify-center whitespace-pre-wrap text-center ${textSizeClassName} font-extrabold leading-[1.5] tracking-normal text-slate-950 dark:text-white`}
             >
-              <span className="max-w-[14ch] md:max-w-[17ch]">
+              <span className={measureClassName}>
                 {description}
               </span>
             </motion.div>
 
             <motion.div
-              style={{ y: phoneY, opacity: phoneOpacity, scale: phoneScale }}
+              style={{ y: phoneY, opacity: phoneOpacity }}
               className="pointer-events-none absolute inset-0 flex items-center justify-center"
             >
-              <Phone>
-                {children || (
-                  <MockChat title="LivEstates" accent={"violet" as any} />
-                )}
-              </Phone>
+              {/* Scale only the phone, not this full-width row: growing the
+                  row to 105% pushed it past the viewport on 1024-1279px
+                  screens. Same centre, so the phone moves identically. */}
+              <motion.div style={{ scale: phoneScale }}>
+                <div ref={fitRef} className="phone-fit">
+                  <Phone>
+                    {children || (
+                      <MockChat title="LivEstates" accent={"violet" as any} />
+                    )}
+                  </Phone>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>

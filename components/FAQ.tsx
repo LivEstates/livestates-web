@@ -5,23 +5,19 @@ import { motion, AnimatePresence } from "framer-motion";
 const QA = [
   {
     q: "What is LivEstates?",
-    a: "LivEstates is a live real estate showing platform for buyers, renters, agents, and property teams. It brings tours, questions, replays, and follow-ups into one experience.",
-  },
-  {
-    q: "Do I need to be at the open house in person?",
-    a: "No. You can join live from anywhere, ask the agent to show specific details, and revisit saved content later.",
-  },
-  {
-    q: "Can I talk to a real agent?",
-    a: "Yes. LivEstates is built around verified agents and real-time conversations, so questions can be answered while the showing is happening.",
-  },
-  {
-    q: "Are live showings saved?",
-    a: "A showing can become a reusable library item, making it easier to compare homes, share details, and keep context after the live session.",
+    a: "LivEstates is a brand new, AI-powered social media platform dedicated to revolutionizing traditional property presenting experience in the real estate industry. We offer an opportunity that allows users to interact with creators to access a variety of properties in real-time via livestreams, which will definitely improve efficiency and convenience on both sides. Moreover, our product aims to connect all individuals related to real estate, including buyers, sellers, agents, lenders, even builders and much more. With the state-of-the-art technology, we provide a seamless experience for our users to obtain all property-related information at their fingertips!",
   },
   {
     q: "Who is LivEstates for?",
-    a: "It is designed for buyers and renters who want more access, and for real estate professionals who want live content to keep working after the appointment ends.",
+    a: "LivEstates redefines the real estate journey by bridging the gap between convenience and expertise. For users, it offers real-time access and immersive videos for property showings, alongside thousands of real estate content videos to explore. For agents, it provides a powerful platform to build their own video branding profiles, receive direct user requests, and establish genuine, lasting connections.",
+  },
+  {
+    q: "Can I talk to a real agent?",
+    a: "Yes. LivEstates is built around verified agents and real-time conversations, so questions can be answered while the showing is happening. Beyond live tours, you can message agents instantly, follow their profiles, and drop comments directly on their videos within the platform.",
+  },
+  {
+    q: "Are live showings saved?",
+    a: "A showing can become a reusable library item for a limited time, making it easier to compare homes, share details, and retain critical context before the live video expires.",
   },
 ];
 
