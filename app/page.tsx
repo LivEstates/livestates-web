@@ -4,6 +4,9 @@ import HighlightSection from "@/components/HighlightSection";
 import FeatureGrid from "@/components/FeatureGrid";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
+import BuiltForEveryone from "@/components/BuiltForEveryone";
+import ProsDiscovered from "@/components/ProsDiscovered";
+import GetStarted from "@/components/GetStarted";
 import Footer from "@/components/Footer";
 import { LiveShowingScreen, MockChat, VideoTourScreen } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
@@ -11,14 +14,17 @@ import { getAssetPath } from "@/utils/path";
 
 export default function Page() {
   return (
-    <main>
+    // overflow-x-clip is only a backstop: every section already fits the
+    // viewport on its own, this just stops a future slip from making the
+    // whole page swipe sideways on phones.
+    <main className="overflow-x-clip">
       <Hero
         variant="intro"
         items={[
           {
             // Agent broadcasting -> the tile carries the feed she is sending.
             src: getAssetPath("/videos/01.mp4"),
-            text: "SEE\nFEEL\nCONNECT\nLivE YOUR WAY HOME",
+            text: "See\nFeel\nConnect\nLivE Your Way Home",
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
           },
           {
@@ -27,13 +33,35 @@ export default function Page() {
             // Reversed so it pushes in where slide one's tile pulls back, which
             // keeps the two tiles distinct without needing another shoot.
             src: getAssetPath("/videos/02.mp4"),
-            text: "LivE\nEXPLORE EVERY CORNER\nDETAILED AND INTERACTIVE",
+            text: (
+              // Same type as the intro string headline (inlined: server component).
+              // Mobile only: each phrase on one line (font scales with width) and a
+              // blank line between lines (Ivy); desktop unchanged.
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+                <span className="block whitespace-nowrap text-[1.45em] lg:text-[1em] lg:whitespace-normal">LivE</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block whitespace-nowrap lg:whitespace-normal">Explore Every Corner</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block whitespace-nowrap lg:whitespace-normal">Detailed and Interactive</span>
+              </h2>
+            ),
             previewSrc: getAssetPath("/videos/first-female-agent-reverse.mp4"),
           },
           {
             // Someone watching -> the tile carries what is on her phone.
             src: getAssetPath("/videos/03.mp4"),
-            text: "LivE\nANYTIME YOU WANT\nANYWHERE YOU ARE",
+            text: (
+              // Same type as the intro string headline (inlined: server component).
+              // Mobile only: each phrase on one line (font scales with width) and a
+              // blank line between lines (Ivy); desktop unchanged.
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+                <span className="block whitespace-nowrap text-[1.45em] lg:text-[1em] lg:whitespace-normal">LivE</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block whitespace-nowrap text-[1.2em] lg:text-[1em] lg:whitespace-normal">Anytime You Want</span>
+                <span aria-hidden className="block lg:hidden">&nbsp;</span>
+                <span className="block whitespace-nowrap text-[1.2em] lg:text-[1em] lg:whitespace-normal">Anywhere You Are</span>
+              </h2>
+            ),
             portraitSrc: getAssetPath("/videos/user-watch.mp4"),
             previewSrc: getAssetPath("/videos/user-watch.mp4"),
           },
@@ -43,38 +71,75 @@ export default function Page() {
       <AnimatedTitle>Meet LivEstates</AnimatedTitle>
       <StickyFeatureGallery
         id="features"
-        description={"MEET LivE, YOUR\nVIRTUAL HOME AGENT"}
+        description={"Meet LivE, Your\nVirtual Home Agent"}
       >
         <LiveShowingScreen videoSrc={getAssetPath("/videos/02.mp4")} />
       </StickyFeatureGallery>
 
+      {/* Page 5: new download pitch (Ivy batch 3); the closing Download
+          page below is unchanged. */}
+      <GetStarted />
+      {/* Page 6: new slide, background clip still to come. */}
+      <BuiltForEveryone />
+      <ProsDiscovered />
+
       <StickyFeatureGallery
-        description="Chat LivE, with Verified Real Estate Agents"
+        textSizeClassName="text-[clamp(2.25rem,5.6vw,5.25rem)]"
+        measureClassName="max-w-full"
+        description={
+          <>
+            <span className="block whitespace-nowrap lg:whitespace-normal">AI-Powered</span>
+            <span className="block whitespace-nowrap lg:whitespace-normal">Chat Instantly</span>
+            {/* Desktop: "Real Estate, Made Simple" on one line. Mobile (Ivy): blank
+                line above, no comma, "Made Simple" on its own line. */}
+            <span aria-hidden className="block lg:hidden">&nbsp;</span>
+            <span className="block lg:whitespace-normal">
+              <span className="block whitespace-nowrap lg:inline">Real Estate<span className="hidden lg:inline">,</span></span>
+              <span className="hidden lg:inline"> </span>
+              <span className="block whitespace-nowrap lg:inline">Made Simple</span>
+            </span>
+          </>
+        }
       >
         <MockChat
-          title="Verified Agent"
-          accent={"violet" as any}
+          title="LivE AI Assistant"
+          theme="violet-light"
+          assistantLabel="AI"
           messages={[
             {
               id: "1",
               role: "user",
-              text: "Can you show me the kitchen storage?",
+              text: "3-bed single-family under $1.5M, good schools, within 20 miles of downtown?",
             },
             {
               id: "2",
               role: "assistant",
-              text: "Absolutely. I’ll walk closer and open the pantry.",
+              text: "Found 8 homes in top-rated districts. 2 have live tours today!",
             },
             {
               id: "3",
               role: "user",
-              text: "Great. Is there natural light in the afternoon?",
+              text: "Nice! When's the next one?",
+            },
+            {
+              id: "4",
+              role: "assistant",
+              text: "A 3-bed with a big backyard goes live at 2:00 PM. Reserve a spot?",
             },
           ]}
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
-        description={"FROM LivE TO LIBRARY\nCONTENT THAT LASTS"}
+        textSizeClassName="text-[min(10vw,2.5rem)] lg:text-[clamp(2.75rem,5.3vw,5.25rem)]"
+        measureClassName="max-w-full"
+        description={
+          <>
+            {/* Ivy (10/6): desktop one size smaller with the second line on one line;
+                mobile larger with the second line split in two. */}
+            <span className="block">More Than Live:</span>
+            <span className="block [text-wrap:balance] lg:whitespace-nowrap">Explore Endless Home Videos</span>
+          </>
+        }
       >
         <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
       </StickyFeatureGallery>
@@ -82,13 +147,22 @@ export default function Page() {
         items={[
           {
             src: getAssetPath("/videos/commercial.mp4"),
-            text: "More Than Residential.",
+            // Same type as HERO_HEADLINE (inlined: page.tsx is a server component and
+            // can't read constants exported from a client module). Desktop: shifted
+            // down one headline line (Ivy).
+            text: (
+              <h2
+                className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.5rem,5.6vw,6rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap lg:translate-y-[1.08em]"
+              >
+                {"More Ways to See\n\nMore Than Ever"}
+              </h2>
+            ),
           },
         ]}
       />
       <HighlightSection
-        title="Request a showing. Get an agent response."
-        description="Turn interest into action with a single tap, then continue the conversation in the same place."
+        title={"Request a showing-\nSimplified."}
+        description="Know your agent before the showing, connect with a single tap."
       />
 
       <FeatureGrid />
