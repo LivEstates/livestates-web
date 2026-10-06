@@ -3,10 +3,26 @@ import { motion } from "framer-motion";
 import DownloadButtons from "./DownloadButtons";
 
 const GET_STARTED_CARDS = [
-  { title: "Card title 1", description: "Card text goes here." },
-  { title: "Card title 2", description: "Card text goes here." },
-  { title: "Card title 3", description: "Card text goes here." },
-  { title: "Card title 4", description: "Card text goes here." },
+  {
+    title: "AI-Powered",
+    description:
+      "Your 24/7 real estate assistant. Get instant answers to your property questions, anytime.",
+  },
+  {
+    title: "Live & Video Tours",
+    description:
+      "Tour homes in real time and ask questions as you go. Missed a live? Catch the replay or explore videos anytime.",
+  },
+  {
+    title: "Simplified Showing Requests",
+    description:
+      "Find your agent and book a showing in one tap. Chat directly and get the details you need, hassle-free.",
+  },
+  {
+    title: "Real Agents, Real Videos",
+    description:
+      "Every tour comes from a verified agent with their own video profile. Get to know them through their videos before you ever meet.",
+  },
 ];
 
 /** Purple family, light to deeper, so the four cards read as one set (Ivy). */
