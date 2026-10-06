@@ -24,7 +24,7 @@ export default function ProsDiscovered() {
               <h2 className={`${HERO_HEADLINE} lg:text-[clamp(2.5rem,6vw,5.5rem)]`}>
                 Where Real Estate Pros Get Discovered
               </h2>
-              <div className="mx-auto mt-[3em] lg:mt-[2.5em] max-w-[52rem] lg:max-w-[64rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.5rem,2.5vw,2.375rem)] font-normal leading-[1.5] text-white drop-shadow-md">
+              <div className="mx-auto mt-[3em] lg:mt-[2.5em] max-w-[52rem] lg:max-w-[76rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.5rem,2.5vw,2.375rem)] font-normal leading-[1.5] text-white drop-shadow-md">
                 <h3 className="text-[1.2em] font-bold leading-[1.3]">For Agents</h3>
                 <p className="mt-[0.4em]">
                   {/* Three lines (Ivy). */}
@@ -41,9 +41,15 @@ export default function ProsDiscovered() {
                   More Pros, Coming Soon
                 </h3>
                 <p className="mt-[0.4em]">
-                  Lenders, builders, contractors, and more are on the way. From
-                  financing to renovation, everything a real estate journey
-                  needs, in one place.
+                  {/* Three lines (Ivy). */}
+                  <span className="block">
+                    Lenders, builders, contractors, and more are on the way.
+                  </span>
+                  <span className="block">
+                    From financing to renovation, everything a real estate
+                    journey needs,
+                  </span>
+                  <span className="block">in one place.</span>
                 </p>
               </div>
             </div>
