@@ -24,7 +24,16 @@ export default function Page() {
           {
             // Agent broadcasting -> the tile carries the feed she is sending.
             src: getAssetPath("/videos/01.mp4"),
-            text: "See\nFeel\nConnect\nLivE Your Way Home",
+            // Ivy (10/6): purple family like the cards. Light tints so the
+            // words still read over the video; inlined intro type (server
+            // component can't import Hero's client constants).
+            text: (
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal whitespace-pre-wrap drop-shadow-[0_2px_8px_rgba(30,10,60,0.55)]">
+                <span className="bg-gradient-to-r from-violet-200 via-fuchsia-200 to-indigo-200 bg-clip-text text-transparent">
+                  {"See\nFeel\nConnect\nLivE Your Way Home"}
+                </span>
+              </h2>
+            ),
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
           },
           {
