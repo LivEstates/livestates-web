@@ -10,7 +10,12 @@ export default function DownloadButtons({
       <a className="btn font-semibold" href="#">
         Get iOS app
       </a>
-      <a className="btn font-semibold" href="#">
+      <a
+        className="btn font-semibold"
+        href="https://tally.so/r/A7Vjke"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Join the waitlist
       </a>
     </div>
