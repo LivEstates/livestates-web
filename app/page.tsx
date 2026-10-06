@@ -28,8 +28,8 @@ export default function Page() {
             // words still read over the video; inlined intro type (server
             // component can't import Hero's client constants).
             text: (
-              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal whitespace-pre-wrap drop-shadow-[0_2px_8px_rgba(30,10,60,0.55)]">
-                <span className="bg-gradient-to-r from-violet-200 via-fuchsia-200 to-indigo-200 bg-clip-text text-transparent">
+              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal whitespace-pre-wrap drop-shadow-[0_2px_10px_rgba(20,5,45,0.7)]">
+                <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
                   {"See\nFeel\nConnect\nLivE Your Way Home"}
                 </span>
               </h2>
