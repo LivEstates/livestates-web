@@ -130,13 +130,14 @@ export default function Page() {
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
-        textSizeClassName="text-[min(6.2vw,2.75rem)] lg:text-[clamp(2.75rem,5.3vw,5.25rem)]"
+        textSizeClassName="text-[min(10vw,2.5rem)] lg:text-[clamp(2.75rem,5.3vw,5.25rem)]"
         measureClassName="max-w-full"
         description={
           <>
-            {/* Ivy (10/6): one size smaller; second line kept on one line. */}
+            {/* Ivy (10/6): desktop one size smaller with the second line on one line;
+                mobile larger with the second line split in two. */}
             <span className="block">More Than Live:</span>
-            <span className="block whitespace-nowrap">Explore Endless Home Videos</span>
+            <span className="block [text-wrap:balance] lg:whitespace-nowrap">Explore Endless Home Videos</span>
           </>
         }
       >
