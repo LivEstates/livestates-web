@@ -130,11 +130,13 @@ export default function Page() {
         />
       </StickyFeatureGallery>
       <StickyFeatureGallery
+        textSizeClassName="text-[min(6.2vw,2.75rem)] lg:text-[clamp(2.75rem,5.3vw,5.25rem)]"
+        measureClassName="max-w-full"
         description={
           <>
-            {/* Ivy (10/6): new headline, split after the colon. */}
+            {/* Ivy (10/6): one size smaller; second line kept on one line. */}
             <span className="block">More Than Live:</span>
-            <span className="block [text-wrap:balance]">Explore Endless Home Videos</span>
+            <span className="block whitespace-nowrap">Explore Endless Home Videos</span>
           </>
         }
       >
