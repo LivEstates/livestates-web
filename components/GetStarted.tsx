@@ -2,6 +2,13 @@
 import { motion } from "framer-motion";
 import DownloadButtons from "./DownloadButtons";
 
+const GET_STARTED_CARDS = [
+  { title: "Card title 1", description: "Card text goes here." },
+  { title: "Card title 2", description: "Card text goes here." },
+  { title: "Card title 3", description: "Card text goes here." },
+  { title: "Card title 4", description: "Card text goes here." },
+];
+
 /** Page 5 (Ivy batch 3): a second, earlier download pitch. Same layout as the
  *  closing Download page, one size down, with a bold lead and a regular body
  *  stepping down again. The closing page stays as it was. */
@@ -19,14 +26,27 @@ export default function GetStarted() {
           Download LivEstates App to get started.
         </h2>
         <p className="mx-auto mt-6 lg:mt-[4.5rem] max-w-4xl text-[clamp(1.375rem,2.8vw,2.5rem)] font-bold leading-[1.3] text-slate-950 dark:text-white">
-          LivEstates is an AI-powered social video app{" "}
-          <span className="lg:block">for real estate.</span>
+          The social video app{" "}
+          <span className="lg:block">made for real estate.</span>
         </p>
-        <p className="mx-auto mt-4 max-w-3xl lg:max-w-4xl text-[clamp(1.0625rem,1.6vw,1.5rem)] lg:text-[clamp(1.25rem,1.9vw,1.875rem)] font-normal leading-relaxed text-slate-600 dark:text-slate-300">
-          Tour homes through live streams, ask agents questions in real time,
-          and explore videos of the properties you care about, plus the latest
-          real estate news, all in one place.
-        </p>
+        {/* Four cards replace the body copy (Ivy). Placeholder text until she
+            sends the real titles and copy. Same card style as "And so much
+            more". */}
+        <div className="mx-auto mt-10 lg:mt-14 grid max-w-6xl grid-cols-1 gap-3 text-left sm:grid-cols-2 lg:grid-cols-4 md:gap-4">
+          {GET_STARTED_CARDS.map((card, i) => (
+            <div
+              key={i}
+              className="min-h-44 rounded-lg border border-black/10 bg-black/[0.03] p-5 dark:border-white/10 dark:bg-white/[0.03]"
+            >
+              <div className="text-xl font-bold text-slate-950 dark:text-white">
+                {card.title}
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+                {card.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </motion.div>
     </section>
   );
