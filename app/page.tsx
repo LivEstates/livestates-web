@@ -132,17 +132,9 @@ export default function Page() {
       <StickyFeatureGallery
         description={
           <>
-            {/* Desktop: "From LivE to Library" / "Content That Lasts".
-                Mobile (Ivy): From LivE / to Library / blank / Content / That Lasts. */}
-            <span className="block">
-              From LivE<span className="hidden lg:inline"> </span>
-              <span className="block lg:inline">to Library</span>
-            </span>
-            <span aria-hidden className="block lg:hidden">&nbsp;</span>
-            <span className="block">
-              Content<span className="hidden lg:inline"> </span>
-              <span className="block lg:inline">That Lasts</span>
-            </span>
+            {/* Ivy (10/6): new headline, split after the colon. */}
+            <span className="block">More Than Live:</span>
+            <span className="block [text-wrap:balance]">Explore Endless Home Videos</span>
           </>
         }
       >
