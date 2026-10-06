@@ -27,9 +27,15 @@ export default function ProsDiscovered() {
               <div className="mx-auto mt-[3em] lg:mt-[2.5em] max-w-[52rem] lg:max-w-[64rem] text-[clamp(1.0625rem,1.8vw,1.625rem)] lg:text-[clamp(1.5rem,2.5vw,2.375rem)] font-normal leading-[1.5] text-white drop-shadow-md">
                 <h3 className="text-[1.2em] font-bold leading-[1.3]">For Agents</h3>
                 <p className="mt-[0.4em]">
-                  Show homes live and connect in real time, anywhere. Build a
-                  video profile, get direct requests, right when it matters.
-                  Easier for both sides.
+                  {/* Three lines (Ivy). */}
+                  <span className="block">
+                    Show homes live and connect in real time, anywhere.
+                  </span>
+                  <span className="block">
+                    Build a video profile, get direct requests, right when it
+                    matters.
+                  </span>
+                  <span className="block">Easier for both sides.</span>
                 </p>
                 <h3 className="mt-[1.5em] text-[1.2em] font-bold leading-[1.3]">
                   More Pros, Coming Soon
