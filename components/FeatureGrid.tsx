@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { CARD_TINTS } from "./cardTints";
 
 const items = [
   {
@@ -60,19 +61,19 @@ export default function FeatureGrid() {
           visible: { transition: { staggerChildren: 0.06 } },
         }}
       >
-        {items.map((item) => (
+        {items.map((item, i) => (
           <motion.div
             key={item.title}
             variants={{
               hidden: { opacity: 0, y: 18 },
               visible: { opacity: 1, y: 0 },
             }}
-            className="min-h-44 rounded-lg border border-black/10 bg-black/[0.03] p-5 dark:border-white/10 dark:bg-white/[0.03]"
+            className={`min-h-44 rounded-2xl border p-5 ${CARD_TINTS[i % CARD_TINTS.length]}`}
           >
-            <div className="text-xl font-bold text-slate-950 dark:text-white">
+            <div className="text-xl font-bold text-violet-950">
               {item.title}
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+            <p className="mt-3 text-sm leading-relaxed text-violet-900/75 md:text-base">
               {item.description}
             </p>
           </motion.div>

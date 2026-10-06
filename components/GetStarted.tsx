@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import DownloadButtons from "./DownloadButtons";
+import { CARD_TINTS } from "./cardTints";
 
 const GET_STARTED_CARDS = [
   {
@@ -79,13 +80,6 @@ function CardIcon({ name }: { name: string }) {
   );
 }
 
-/** Purple family, light to deeper, so the four cards read as one set (Ivy). */
-const CARD_TINTS = [
-  "border-violet-300/60 bg-gradient-to-br from-violet-100 to-violet-200",
-  "border-purple-300/60 bg-gradient-to-br from-purple-100 to-purple-200",
-  "border-fuchsia-300/60 bg-gradient-to-br from-fuchsia-100 to-violet-200",
-  "border-indigo-300/60 bg-gradient-to-br from-indigo-100 to-violet-200",
-];
 
 /** Page 5 (Ivy batch 3): a second, earlier download pitch. Same layout as the
  *  closing Download page, one size down, with a bold lead and a regular body
