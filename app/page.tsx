@@ -8,7 +8,7 @@ import BuiltForEveryone from "@/components/BuiltForEveryone";
 import ProsDiscovered from "@/components/ProsDiscovered";
 import GetStarted from "@/components/GetStarted";
 import Footer from "@/components/Footer";
-import { LiveShowingScreen, MockChat, VideoTourScreen } from "@/components/Phone";
+import { LiveShowingScreen, MockChat } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
 import { getAssetPath } from "@/utils/path";
 
@@ -146,7 +146,12 @@ export default function Page() {
           </>
         }
       >
-        <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
+        {/* Ivy (10/13): real app screenshot (City List feed), used as-is. */}
+        <img
+          src={getAssetPath("/images/app-city-list-v1.jpg")}
+          alt="LivEstates app City List feed"
+          className="h-full w-full bg-white object-cover object-top"
+        />
       </StickyFeatureGallery>
       <Hero
         items={[
