@@ -1,7 +1,8 @@
 "use client";
 import { useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Phone, { MockChat } from "./Phone";
+import Phone from "./Phone";
+import { getAssetPath } from "@/utils/path";
 
 export default function HighlightSection({
   title,
@@ -56,22 +57,13 @@ export default function HighlightSection({
                   viewport={{ once: true, amount: 0.4 }}
                   transition={{ type: "spring", stiffness: 120, damping: 14 }}
                 >
+                  {/* Ivy (10/13): back phone = buyer's User Request form,
+                      partly covered by the front phone. Used as-is. */}
                   <Phone>
-                    <MockChat
-                      title="Live Tour"
-                      rowInsetClassName="pr-[26%]"
-                      messages={[
-                        {
-                          id: "1",
-                          role: "assistant",
-                          text: "Thank you for your showing request. I'm currently reviewing homes that match your criteria and will share options shortly.",
-                        },
-                        {
-                          id: "2",
-                          role: "user",
-                          text: "Sounds great! I'm open to a private live tour too.",
-                        },
-                      ]}
+                    <img
+                      src={getAssetPath("/images/app-user-request-v1.jpg")}
+                      alt="LivEstates app showing request form"
+                      className="h-full w-full bg-white object-cover object-top"
                     />
                   </Phone>
                 </motion.div>
@@ -87,21 +79,12 @@ export default function HighlightSection({
                     delay: 0.05,
                   }}
                 >
+                  {/* Ivy (10/13): front phone = agent's Showing Requests list. */}
                   <Phone className="scale-90">
-                    <MockChat
-                      title="Agent"
-                      messages={[
-                        {
-                          id: "1",
-                          role: "assistant",
-                          text: "Thank you for your showing request. I have a few questions about what you're looking for. Would you be available for a quick call?",
-                        },
-                        {
-                          id: "2",
-                          role: "user",
-                          text: "Of course! You can reach me at (555) 123‑4567.",
-                        },
-                      ]}
+                    <img
+                      src={getAssetPath("/images/app-showing-requests-v1.jpg")}
+                      alt="LivEstates app agent showing requests"
+                      className="h-full w-full bg-white object-cover object-top"
                     />
                   </Phone>
                 </motion.div>
