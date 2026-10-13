@@ -4,12 +4,28 @@ import { motion } from "framer-motion";
 import Phone from "./Phone";
 import { getAssetPath } from "@/utils/path";
 
+const DEFAULT_BACK = {
+  src: "/images/app-user-request-v1.jpg",
+  alt: "LivEstates app showing request form",
+};
+const DEFAULT_FRONT = {
+  src: "/images/app-showing-requests-v1.jpg",
+  alt: "LivEstates app agent showing requests",
+};
+
 export default function HighlightSection({
   title,
   description,
+  reverse = false,
+  backImage = DEFAULT_BACK,
+  frontImage = DEFAULT_FRONT,
 }: {
   title?: string;
   description?: string;
+  /** Phones on the left, text on the right (md and up). */
+  reverse?: boolean;
+  backImage?: { src: string; alt: string };
+  frontImage?: { src: string; alt: string };
 }) {
   const fitRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +51,7 @@ export default function HighlightSection({
     // tilted second phone pokes a few px out around 1024px wide).
     <div className="overflow-x-clip">
       <section className="section py-24 md:py-36">
-        <div className="grid items-center gap-12 md:grid-cols-[1fr_0.9fr]">
+        <div className={`grid items-center gap-12 ${reverse ? "md:grid-cols-[0.9fr_1fr]" : "md:grid-cols-[1fr_0.9fr]"}`}>
           <div>
             <h2 className="whitespace-pre-line text-[clamp(2.75rem,7vw,6.25rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white">
               {title}
@@ -45,7 +61,7 @@ export default function HighlightSection({
             </p>
           </div>
 
-          <div className="highlight-stage relative flex min-h-[520px] items-center justify-center">
+          <div className={`highlight-stage relative flex min-h-[520px] items-center justify-center ${reverse ? "md:order-first" : ""}`}>
             {/* Below lg these two wrappers scale the phone pair down as one
                 unit so it fits narrow screens; at lg and up they are
                 display: contents and the layout is exactly as before. */}
@@ -61,8 +77,8 @@ export default function HighlightSection({
                       partly covered by the front phone. Used as-is. */}
                   <Phone>
                     <img
-                      src={getAssetPath("/images/app-user-request-v1.jpg")}
-                      alt="LivEstates app showing request form"
+                      src={getAssetPath(backImage.src)}
+                      alt={backImage.alt}
                       className="h-full w-full bg-white object-cover object-top"
                     />
                   </Phone>
@@ -82,8 +98,8 @@ export default function HighlightSection({
                   {/* Ivy (10/13): front phone = agent's Showing Requests list. */}
                   <Phone className="scale-90">
                     <img
-                      src={getAssetPath("/images/app-showing-requests-v1.jpg")}
-                      alt="LivEstates app agent showing requests"
+                      src={getAssetPath(frontImage.src)}
+                      alt={frontImage.alt}
                       className="h-full w-full bg-white object-cover object-top"
                     />
                   </Phone>

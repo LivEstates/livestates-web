@@ -174,6 +174,15 @@ export default function Page() {
         title={"Request a showing-\nSimplified."}
         description="Know your agent before the showing, connect with a single tap."
       />
+      {/* Ivy (10/13): new page, same design as Request a showing with the
+          sides swapped (phones left, text right). Screenshots used as-is. */}
+      <HighlightSection
+        reverse
+        title={"Totally Transparent\nNetworking"}
+        description="See, share, and connect with everyone instantly in a single, completely open ecosystem."
+        backImage={{ src: "/images/app-followings-v1.jpg", alt: "LivEstates app followings list" }}
+        frontImage={{ src: "/images/app-inbox-v1.jpg", alt: "LivEstates app inbox" }}
+      />
 
       <FeatureGrid />
       <FAQ />
