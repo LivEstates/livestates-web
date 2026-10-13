@@ -119,4 +119,7 @@ html.dark body.gradient {
     height: 620px;
     border-radius: 36px;
   }
+  .highlight-fit--tight .highlight-cluster {
+    width: 460px;
+  }
 }

@@ -28,6 +28,9 @@ export default function HighlightSection({
   frontImage?: { src: string; alt: string };
 }) {
   const fitRef = useRef<HTMLDivElement>(null);
+  // Ivy (10/13): on phones both phone pairs are tighter and both
+  // phones are the same size, so the pair renders larger. Desktop unchanged.
+  const designW = 460;
 
   // Below lg the phone pair is scaled to the column width (see
   // .highlight-fit in globals.css). Scale = column width / 540px design width.
@@ -37,14 +40,14 @@ export default function HighlightSection({
     const update = () => {
       const w = el.getBoundingClientRect().width;
       if (w > 0) {
-        el.style.setProperty("--highlight-scale", String(Math.min(1, w / 540)));
+        el.style.setProperty("--highlight-scale", String(Math.min(1, w / designW)));
       }
     };
     update();
     const ro = new ResizeObserver(update);
     ro.observe(el);
     return () => ro.disconnect();
-  }, []);
+  }, [designW]);
 
   return (
     // The clip only trims what already falls past the viewport edge (the
@@ -65,7 +68,7 @@ export default function HighlightSection({
             {/* Below lg these two wrappers scale the phone pair down as one
                 unit so it fits narrow screens; at lg and up they are
                 display: contents and the layout is exactly as before. */}
-            <div ref={fitRef} className="highlight-fit">
+            <div ref={fitRef} className="highlight-fit highlight-fit--tight">
               <div className="highlight-cluster">
                 <motion.div
                   initial={{ rotate: -8, y: 20, opacity: 0 }}
@@ -84,7 +87,7 @@ export default function HighlightSection({
                   </Phone>
                 </motion.div>
                 <motion.div
-                  className="-ml-28 mt-16"
+                  className="-ml-44 mt-16 lg:-ml-28"
                   initial={{ rotate: 12, y: 20, opacity: 0 }}
                   whileInView={{ rotate: 6, y: 0, opacity: 1 }}
                   viewport={{ once: true, amount: 0.4 }}
@@ -96,7 +99,7 @@ export default function HighlightSection({
                   }}
                 >
                   {/* Ivy (10/13): front phone = agent's Showing Requests list. */}
-                  <Phone className="scale-90">
+                  <Phone className="lg:scale-90">
                     <img
                       src={getAssetPath(frontImage.src)}
                       alt={frontImage.alt}
