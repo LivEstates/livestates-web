@@ -103,29 +103,34 @@ export default function Page() {
         }
       >
         <MockChat
-          title="LivE AI Assistant"
+          title="LivEstates AI"
           theme="violet-light"
-          assistantLabel="AI"
           messages={[
             {
               id: "1",
-              role: "user",
-              text: "3-bed single-family under $1.5M, good schools, within 20 miles of downtown?",
+              role: "assistant",
+              text: "Hi there! I'm LivEstates AI. I can help you find properties, answer questions, or connect you with an agent. What can I help you with today?",
+              quickReplies: [
+                "Find a property",
+                "Ask about a listing",
+                "Connect with agent",
+                "Schedule a tour",
+              ],
             },
             {
               id: "2",
-              role: "assistant",
-              text: "Found 8 homes in top-rated districts. 2 have live tours today!",
+              role: "user",
+              text: "Find a property",
             },
             {
               id: "3",
-              role: "user",
-              text: "Nice! When's the next one?",
+              role: "assistant",
+              text: "Sure thing, let's get started! What kind of property are you looking for, and what's your budget?",
             },
             {
               id: "4",
-              role: "assistant",
-              text: "A 3-bed with a big backyard goes live at 2:00 PM. Reserve a spot?",
+              role: "user",
+              text: "3-bed under 1.5M, good school district, within 20 miles of downtown",
             },
           ]}
         />
