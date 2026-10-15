@@ -75,7 +75,7 @@ export default function Page() {
       >
         {/* Ivy (10/15): real app live-showing screen recording (8s), used as-is. */}
         <video
-          src={getAssetPath("/videos/live-showing-app-v1.mp4")}
+          src={getAssetPath("/videos/live-showing-app-v2.mp4")}
           autoPlay
           loop
           muted
