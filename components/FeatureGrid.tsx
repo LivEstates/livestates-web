@@ -1,18 +1,19 @@
 "use client";
 import { motion } from "framer-motion";
+import { CARD_TINTS } from "./cardTints";
 
 const items = [
   {
     title: "Live Open Houses",
-    description: "Join real-time property tours without losing the live agent experience.",
+    description: "This is a seamless real estate platform designed to empower both sides, allowing users to access properties through the App in real-time, while real estate agents can comfortably live show houses anytime, anywhere.",
   },
   {
     title: "Verified Agents",
     description: "Talk to real professionals who can answer questions while you tour.",
   },
   {
-    title: "Interactive Replays",
-    description: "Rewatch saved showings and compare homes after the live session ends.",
+    title: "AI Powered",
+    description: "Powered by advanced intelligence, the LivEstates AI chatbot serves as your around-the-clock real estate assistant and advisor. Get instant answers to your property questions 24/7, making your real estate journey simpler and faster than ever.",
   },
   {
     title: "Room-by-Room Details",
@@ -32,7 +33,7 @@ const items = [
   },
   {
     title: "Agent Profiles",
-    description: "Build trust with live content, verified identity, and clear availability.",
+    description: "Build your own brand. Earn trust with your videos and a verified identity.",
   },
   {
     title: "Market Content",
@@ -47,8 +48,7 @@ export default function FeatureGrid() {
         And so much more.
       </h2>
       <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 md:text-xl">
-        LivEstates is packed with tools for live property discovery, but the
-        showing always comes first.
+        For users, it&apos;s an experience. For agents, it&apos;s a powerhouse.
       </p>
 
       <motion.div
@@ -61,19 +61,19 @@ export default function FeatureGrid() {
           visible: { transition: { staggerChildren: 0.06 } },
         }}
       >
-        {items.map((item) => (
+        {items.map((item, i) => (
           <motion.div
             key={item.title}
             variants={{
               hidden: { opacity: 0, y: 18 },
               visible: { opacity: 1, y: 0 },
             }}
-            className="min-h-44 rounded-lg border border-black/10 bg-black/[0.03] p-5 dark:border-white/10 dark:bg-white/[0.03]"
+            className={`min-h-44 rounded-2xl border p-5 ${CARD_TINTS[i % CARD_TINTS.length]}`}
           >
-            <div className="text-xl font-bold text-slate-950 dark:text-white">
+            <div className="text-xl font-bold text-violet-950">
               {item.title}
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+            <p className="mt-3 text-sm leading-relaxed text-violet-900/75 md:text-base">
               {item.description}
             </p>
           </motion.div>
