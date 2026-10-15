@@ -8,7 +8,7 @@ import BuiltForEveryone from "@/components/BuiltForEveryone";
 import ProsDiscovered from "@/components/ProsDiscovered";
 import GetStarted from "@/components/GetStarted";
 import Footer from "@/components/Footer";
-import { LiveShowingScreen, MockChat } from "@/components/Phone";
+import { MockChat } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
 import { getAssetPath } from "@/utils/path";
 
@@ -73,7 +73,15 @@ export default function Page() {
         id="features"
         description={"Meet LivE, Your\nVirtual Home Agent"}
       >
-        <LiveShowingScreen videoSrc={getAssetPath("/videos/02.mp4")} />
+        {/* Ivy (10/15): real app live-showing screen recording (8s), used as-is. */}
+        <video
+          src={getAssetPath("/videos/live-showing-app-v1.mp4")}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full bg-black object-cover object-top"
+        />
       </StickyFeatureGallery>
 
       {/* Page 5: new download pitch (Ivy batch 3); the closing Download
