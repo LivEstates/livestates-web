@@ -6,10 +6,13 @@ import Phone, { MockChat } from "./Phone";
 export default function StickyFeatureGallery({
   id,
   description = "MEET LivE, YOUR VIRTUAL HOME AGENT",
+  measureClassName = "max-w-[14ch] md:max-w-[17ch]",
   children,
 }: {
   id?: string;
   description?: string;
+  /** Width cap for the headline block. */
+  measureClassName?: string;
   children?: React.ReactNode;
 }) {
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -63,7 +66,7 @@ export default function StickyFeatureGallery({
               style={{ scale: rowScale, filter: rowBlur, opacity: rowOpacity }}
               className="flex items-center justify-center whitespace-pre-wrap text-center text-[clamp(2.75rem,7vw,6.5rem)] font-extrabold leading-[1] tracking-normal text-slate-950 dark:text-white"
             >
-              <span className="max-w-[14ch] md:max-w-[17ch]">
+              <span className={measureClassName}>
                 {description}
               </span>
             </motion.div>

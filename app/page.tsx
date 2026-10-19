@@ -44,6 +44,7 @@ export default function Page() {
       <StickyFeatureGallery
         id="features"
         description={"MEET LivE, YOUR\nVIRTUAL HOME AGENT"}
+        measureClassName="max-w-full"
       >
         <LiveShowingScreen videoSrc={getAssetPath("/videos/02.mp4")} />
       </StickyFeatureGallery>
@@ -75,6 +76,7 @@ export default function Page() {
       </StickyFeatureGallery>
       <StickyFeatureGallery
         description={"FROM LivE TO LIBRARY\nCONTENT THAT LASTS"}
+        measureClassName="max-w-full"
       >
         <VideoTourScreen videoSrc={getAssetPath("/videos/03.mp4")} />
       </StickyFeatureGallery>
