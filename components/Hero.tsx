@@ -7,9 +7,7 @@ import { HEADLINE_BOX, HERO_HEADLINE, INTRO_HEADLINE } from "./headlineType";
 type HeroVariant = "plain" | "intro";
 
 export type HeroItem = {
-  /** Landscape clip filling the stage. Empty string = no clip yet: the stage
-   *  shows a neutral dark placeholder (same scrim on top) until one is dropped
-   *  in. */
+  /** Landscape clip filling the stage. */
   src: string;
   /** Overlay headline. Empty means the clip carries its own type, which also
    *  suppresses the scrim. A string renders as one headline (\n = line break);
@@ -149,20 +147,15 @@ function VideoScrollGallery({
             style={{ opacity, scale }}
             className="absolute inset-0 h-full w-full"
           >
-            {src ? (
-              <video
-                className="absolute inset-0 h-full w-full object-cover"
-                src={src}
-                playsInline
-                muted
-                autoPlay
-                loop
-                preload="metadata"
-              />
-            ) : (
-              // Placeholder until the real clip arrives.
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900" />
-            )}
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              src={src}
+              playsInline
+              muted
+              autoPlay
+              loop
+              preload="metadata"
+            />
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
             {text ? <div className={`absolute inset-0 ${scrimClassName ?? "bg-black/45"}`} /> : null}

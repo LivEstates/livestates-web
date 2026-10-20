@@ -6,7 +6,7 @@ import { CARD_TINTS } from "./cardTints";
 const GET_STARTED_CARDS = [
   {
     icon: "sparkles",
-    title: "AI-Powered",
+    title: "AI-Powered, Coming Soon",
     description:
       "Your 24/7 real estate assistant. Get instant answers to your property questions, anytime.",
   },
@@ -14,13 +14,13 @@ const GET_STARTED_CARDS = [
     icon: "video",
     title: "Live & Video Tours",
     description:
-      "Tour homes in real time and ask questions as you go. Missed a live? Catch the replay or explore videos anytime.",
+      "Tour homes in real time and ask questions as you go. Missed a live? Explore the agent's videos anytime.",
   },
   {
     icon: "calendar",
     title: "Simplified Showing Requests",
     description:
-      "Find your agent and book a showing in one tap. Chat directly and get the details you need, hassle-free.",
+      "Find your agent and request a showing in one tap. Chat directly and get the details you need, hassle-free.",
   },
   {
     icon: "userCheck",

@@ -12,7 +12,7 @@ const items = [
     description: "Talk to real professionals who can answer questions while you tour.",
   },
   {
-    title: "AI Powered",
+    title: "AI-Powered, Coming Soon",
     description: "Powered by advanced intelligence, the LivEstates AI chatbot serves as your around-the-clock real estate assistant and advisor. Get instant answers to your property questions 24/7, making your real estate journey simpler and faster than ever.",
   },
   {

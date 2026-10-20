@@ -77,7 +77,7 @@ export default function Page() {
         description={"Meet LivE, Your\nVirtual Home Agent"}
         measureClassName="max-w-full"
       >
-        {/* Ivy (10/15): real app live-showing screen recording (8s), used as-is. */}
+        {/* Ivy (10/15): real app live-showing screen recording (7.13s), used as-is. */}
         <video
           src={getAssetPath("/videos/live-showing-app-v2.mp4")}
           autoPlay
@@ -94,6 +94,7 @@ export default function Page() {
       <BuiltForEveryone />
       <ProsDiscovered />
 
+      <AnimatedTitle>LivEstates AI, Coming Soon</AnimatedTitle>
       <StickyFeatureGallery
         textSizeClassName="text-[clamp(2.25rem,5.6vw,5.25rem)]"
         measureClassName="max-w-full"

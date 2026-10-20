@@ -17,8 +17,8 @@ export default function CTA() {
           LivEstates to get started.
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 md:text-xl">
-          Experience live property showings, agent conversations, and saved
-          replays from one place.
+          Experience live property showings, agent conversations, and agent
+          tour videos from one place.
         </p>
         <DownloadButtons />
       </motion.div>

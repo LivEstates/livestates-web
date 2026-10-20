@@ -114,9 +114,4 @@ html.dark body.gradient {
     transform-origin: top center;
     transform: translateX(-50%) scale(var(--highlight-scale, 0.6));
   }
-  .highlight-cluster .phone {
-    width: 300px;
-    height: 620px;
-    border-radius: 36px;
-  }
 }

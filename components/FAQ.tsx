@@ -17,7 +17,7 @@ const QA = [
   },
   {
     q: "Are live showings saved?",
-    a: "A showing can become a reusable library item for a limited time, making it easier to compare homes, share details, and retain critical context before the live video expires.",
+    a: "Not yet. Live replays are on our roadmap. Until then, agents' tour videos stay on their profiles, so you can watch those anytime.",
   },
 ];
 
