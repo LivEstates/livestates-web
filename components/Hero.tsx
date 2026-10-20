@@ -233,12 +233,7 @@ function IntroChrome() {
         <a href="#faq" className="transition hover:text-white/75">
           FAQs
         </a>
-        <a
-          href="https://twitter.com"
-          target="_blank"
-          rel="noreferrer"
-          className="transition hover:text-white/75"
-        >
+        <a href="mailto:info@livestates.tech" className="transition hover:text-white/75">
           Support
         </a>
       </nav>
