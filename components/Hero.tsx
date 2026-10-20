@@ -243,9 +243,12 @@ function IntroChrome() {
         </a>
       </nav>
 
+      {/* Phones: logo on the left. Centered, it runs into "Get the App"
+          below ~410px wide. From md up it sits centered between the nav and
+          the button. */}
       <a
         href="#"
-        className="absolute left-1/2 -translate-x-1/2 text-xl font-bold tracking-normal md:text-3xl"
+        className="text-xl font-bold tracking-normal md:absolute md:left-1/2 md:-translate-x-1/2 md:text-3xl"
       >
         LivEstates
       </a>

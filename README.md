@@ -23,8 +23,8 @@ app/
   layout.tsx          # Root layout with theme provider and smooth scroll
   page.tsx            # Main landing page
 components/
-  Header.tsx          # Site header / navigation
-  Hero.tsx            # Video carousel hero sections
+  Header.tsx          # Unused (the live header is IntroChrome in Hero.tsx)
+  Hero.tsx            # Video carousel hero sections + intro header bar
   AnimatedTitle.tsx   # Scroll-triggered animated titles
   StickyFeatureGallery.tsx  # Sticky phone preview + feature step sections
   Phone.tsx           # Phone mockup frame and MockChat component
