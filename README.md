@@ -71,4 +71,6 @@ pnpm start
 
 ## Deployment
 
-Deploy to [Vercel](https://vercel.com/) for the best Next.js experience, or any platform that supports Node.js.
+Pushes to `main` run `.github/workflows/nextjs.yml`, which builds the static export (`out/`) and publishes it to GitHub Pages at `livestates.github.io/livestates-web/`. The public site is [livestates.tech](https://livestates.tech): nginx on the LivEstates ops server reverse-proxies `/` to that Pages URL, so production builds use no `basePath` and the bare github.io URL doesn't render on its own. Don't set a custom domain in the repo's Pages settings (see `CLAUDE.md`).
+
+For a review build hosted under a sub-path, set the base path explicitly: `PREVIEW_BASE_PATH=/<repo>/<dir> npm run build`.
