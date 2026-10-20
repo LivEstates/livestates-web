@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 export const metadata: Metadata = {
   title: "LivEstates – Live Real Estate Showings",
   description:
-    "LivEstates brings live property tours, verified agents, and saved showing replays into one real estate platform.",
+    "LivEstates brings live property tours, verified agents, and agent tour videos into one real estate platform.",
 };
 
 export default function RootLayout({

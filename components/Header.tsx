@@ -33,7 +33,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#download" className="btn text-sm">Get the App</a>
+          <a href="#get-started" className="btn text-sm">Get the App</a>
           <button onClick={toggle} className="btn text-sm">{theme === 'dark' ? 'Light' : 'Dark'}</button>
         </div>
       </div>

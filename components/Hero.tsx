@@ -2,6 +2,7 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { HEADLINE_BOX, HERO_HEADLINE, INTRO_HEADLINE } from "./headlineType";
 
 type HeroVariant = "plain" | "intro";
 
@@ -9,8 +10,9 @@ export type HeroItem = {
   /** Landscape clip filling the stage. */
   src: string;
   /** Overlay headline. Empty means the clip carries its own type, which also
-   *  suppresses the scrim. */
-  text: string;
+   *  suppresses the scrim. A string renders as one headline (\n = line break);
+   *  pass JSX when the slide needs a headline plus smaller body copy. */
+  text: ReactNode;
   /** Portrait-framed alternate. A 16:9 clip in a phone viewport is cropped to a
    *  narrow centre strip, so slides whose subject matters ship one of these. */
   portraitSrc?: string;
@@ -19,6 +21,8 @@ export type HeroItem = {
    *  property feed; when the stage shows someone watching, this is what they
    *  are watching. */
   previewSrc?: string;
+  /** Scrim class override for slides whose clip is bright (default bg-black/45). */
+  scrimClassName?: string;
 };
 
 /** Tracks `(orientation: portrait)`, defaulting to false so SSR and the first
@@ -79,7 +83,7 @@ function VideoScrollGallery({
     [0, 0, 24]
   );
 
-  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc }, i) => {
+  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc, scrimClassName }, i) => {
     const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
@@ -107,6 +111,7 @@ function VideoScrollGallery({
     return {
       src: resolvedSrc,
       text,
+      scrimClassName,
       // Never run the same clip in the stage and the tile at once — side by side
       // at two sizes it reads as a duplication bug, not a picture-in-picture.
       previewSrc: previewSrc === resolvedSrc ? undefined : previewSrc,
@@ -136,7 +141,7 @@ function VideoScrollGallery({
             : { scale: containerScale, borderRadius: containerRadius }
         }
       >
-        {galleryItems.map(({ src, text, opacity, scale }, idx) => (
+        {galleryItems.map(({ src, text, opacity, scale, scrimClassName }, idx) => (
           <motion.div
             key={idx}
             style={{ opacity, scale }}
@@ -153,7 +158,7 @@ function VideoScrollGallery({
             />
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
-            {text ? <div className="absolute inset-0 bg-black/45" /> : null}
+            {text ? <div className={`absolute inset-0 ${scrimClassName ?? "bg-black/45"}`} /> : null}
           </motion.div>
         ))}
 
@@ -171,15 +176,17 @@ function VideoScrollGallery({
                   y: textY,
                 }}
               >
-                <h2
-                  className={
-                    isIntro
-                      ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                      : "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                  }
-                >
-                  {text}
-                </h2>
+                {typeof text === "string" ? (
+                  <h2
+                    className={
+                      `${HEADLINE_BOX} ${isIntro ? INTRO_HEADLINE : HERO_HEADLINE} whitespace-pre-wrap`
+                    }
+                  >
+                    {text}
+                  </h2>
+                ) : (
+                  text
+                )}
               </motion.div>
             ) : null
           )}
@@ -245,7 +252,7 @@ function IntroChrome() {
 
       <div className="flex flex-1 justify-end">
         <a
-          href="#download"
+          href="#get-started"
           className="inline-flex items-center rounded-full bg-white px-5 py-3 text-sm font-extrabold text-black shadow-lg transition hover:bg-white/90 md:px-7 md:text-base"
         >
           Get the App

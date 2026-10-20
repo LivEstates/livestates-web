@@ -20,8 +20,21 @@ export default function Footer() {
           >
             Instagram
           </a>
-          <a href="#" className="hover:text-black dark:hover:text-white">
+          <a
+            href="https://livestates.tech/policy/terms-and-conditions.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-black dark:hover:text-white"
+          >
             Terms of Service
+          </a>
+          <a
+            href="https://livestates.tech/policy/privacy-policy.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-black dark:hover:text-white"
+          >
+            Privacy Policy
           </a>
         </div>
       </div>
