@@ -154,7 +154,6 @@ export default function Page() {
             <span className="block [text-wrap:balance] lg:whitespace-nowrap">Explore Endless Home Videos</span>
           </>
         }
-        measureClassName="max-w-full"
       >
         {/* Ivy (10/13): real app screenshot (City List feed), used as-is. */}
         <img
