@@ -9,7 +9,7 @@ const QA = [
   },
   {
     q: "Who is LivEstates for?",
-    a: "LivEstates redefines the real estate journey by bridging the gap between convenience and expertise. For users, it offers real-time access and immersive videos for property showings, alongside thousands of real estate content videos to explore. For agents, it provides a powerful platform to build their own video branding profiles, receive direct user requests, and establish genuine, lasting connections.",
+    a: "LivEstates redefines the real estate journey by bridging the gap between convenience and expertise. For users, it's built to offer real-time access and immersive videos for property showings, alongside a growing library of real estate content videos to explore. For agents, it provides a powerful platform to build their own video branding profiles, receive direct user requests, and establish genuine, lasting connections.",
   },
   {
     q: "Can I talk to a real agent?",
