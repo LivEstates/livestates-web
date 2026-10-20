@@ -50,6 +50,7 @@ components/
 utils/
   path.ts                    # getAssetPath: prefixes a preview build's base path onto public assets
 public/
+  policy/                    # Legal pages the mobile app links to (see Known Pitfalls)
   videos/                    # Marketing video assets
 ```
 
@@ -69,6 +70,7 @@ npm run lint      # Prompts for ESLint setup until a config is added
 - **GitHub Pages deployment**: The production deploy path is the GitHub Pages workflow, not Vercel. GitHub Actions runs Node 20, `npm ci`, `next build`, uploads `./out`, then deploys with `actions/deploy-pages`.
 - **Domain routing**: `livestates.tech` belongs to nginx on the ops server, not to GitHub Pages. nginx reverse-proxies `/` to this repo's Pages URL (`https://livestates.github.io/livestates-web/`) and keeps `/api`, `/images/uploads`, `/videos/uploads` and `/password` for the backend and the app's uploaded media. So production builds have no `basePath`, and no public file may live under those paths. Never set a custom domain in this repo's Pages settings — github.io would 301 to livestates.tech and nginx would proxy it straight back, a redirect loop. The bare github.io URL doesn't load assets on its own; review on livestates.tech or with `npm run dev`.
 - **Preview builds**: To host a review build under a sub-path, build with `PREVIEW_BASE_PATH=/<repo>/<dir> npm run build`. Next.js prefixes its own assets, but files from `public/` referenced in code must go through `getAssetPath` (`utils/path.ts`), or they 404 in previews.
+- **Policy pages**: `public/policy/*.html` (terms, privacy policy, and the live-streaming rules for streamers and viewers) are standalone HTML, copied verbatim from the legacy `LivEstates.github.io` site. The mobile app opens these exact URLs, which the backend's `/api/misc/configs` returns, so never rename or move them, and treat their content as legal text, not marketing copy.
 - **Images**: `images.unoptimized` is enabled for static export. Do not rely on Next.js image optimization.
 - **Video assets**: Keep video files compressed and purposeful. Large autoplay assets can hurt mobile load time quickly.
 - **ESLint**: `package.json` has a `lint` script, but no ESLint config is currently committed. Running `npm run lint` opens Next.js' initial setup prompt; do not add lint config as a drive-by change unless that is the requested scope.

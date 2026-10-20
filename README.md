@@ -38,6 +38,7 @@ components/
 utils/
   path.ts             # Asset path helper (getAssetPath)
 public/
+  policy/             # Terms, privacy policy, and live rules linked from the app (keep URLs stable)
   videos/             # Marketing videos for hero and feature sections
 ```
 
