@@ -101,9 +101,8 @@ export default function GetStarted() {
         <p className="mx-auto mt-6 lg:mt-[4.5rem] max-w-4xl lg:max-w-none lg:whitespace-nowrap text-[clamp(1.375rem,2.8vw,2.5rem)] lg:text-[clamp(1.75rem,2.6vw,2.5rem)] font-bold leading-[1.3] text-slate-950 dark:text-white">
           A new way to see homes: live, social, and on video.
         </p>
-        {/* Four cards replace the body copy (Ivy). Placeholder text until she
-            sends the real titles and copy. Same card style as "And so much
-            more". */}
+        {/* Four cards replace the body copy (Ivy's titles and copy). Same
+            card style as "And so much more". */}
         <div className="mx-auto mt-10 lg:mt-14 grid max-w-6xl grid-cols-1 gap-3 text-center sm:grid-cols-2 lg:grid-cols-4 md:gap-4">
           {GET_STARTED_CARDS.map((card, i) => (
             <div

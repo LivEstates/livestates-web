@@ -2,6 +2,7 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { HEADLINE_BOX, HERO_HEADLINE, INTRO_HEADLINE } from "./headlineType";
 
 type HeroVariant = "plain" | "intro";
 
@@ -25,11 +26,6 @@ export type HeroItem = {
   /** Scrim class override for slides whose clip is bright (default bg-black/45). */
   scrimClassName?: string;
 };
-
-/** Type used by the plain (full-bleed) slides' overlay headline, e.g.
- *  "More ways to see". Exported so JSX overlays can match it exactly. */
-export const HERO_HEADLINE =
-  "text-[clamp(2.5rem,5.6vw,6rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md";
 
 /** Tracks `(orientation: portrait)`, defaulting to false so SSR and the first
  *  client render agree. The effect corrects it immediately after hydration. */
@@ -190,9 +186,7 @@ function VideoScrollGallery({
                 {typeof text === "string" ? (
                   <h2
                     className={
-                      isIntro
-                        ? "max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md whitespace-pre-wrap"
-                        : `max-w-[min(94vw,1440px)] px-4 text-center ${HERO_HEADLINE} whitespace-pre-wrap`
+                      `${HEADLINE_BOX} ${isIntro ? INTRO_HEADLINE : HERO_HEADLINE} whitespace-pre-wrap`
                     }
                   >
                     {text}

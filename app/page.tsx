@@ -11,6 +11,11 @@ import Footer from "@/components/Footer";
 import { MockChat } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
 import { getAssetPath } from "@/utils/path";
+import {
+  HEADLINE_BOX,
+  HERO_HEADLINE,
+  INTRO_HEADLINE_FIT,
+} from "@/components/headlineType";
 
 export default function Page() {
   return (
@@ -34,10 +39,9 @@ export default function Page() {
             // keeps the two tiles distinct without needing another shoot.
             src: getAssetPath("/videos/02.mp4"),
             text: (
-              // Same type as the intro string headline (inlined: server component).
               // Mobile only: each phrase on one line (font scales with width) and a
-              // blank line between lines (Ivy); desktop unchanged.
-              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+              // blank line between lines (Ivy); desktop matches slide 1.
+              <h2 className={`${HEADLINE_BOX} ${INTRO_HEADLINE_FIT}`}>
                 <span className="block whitespace-nowrap text-[1.45em] lg:text-[1em] lg:whitespace-normal">LivE</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
                 <span className="block whitespace-nowrap lg:whitespace-normal">Explore Every Corner</span>
@@ -51,10 +55,9 @@ export default function Page() {
             // Someone watching -> the tile carries what is on her phone.
             src: getAssetPath("/videos/03.mp4"),
             text: (
-              // Same type as the intro string headline (inlined: server component).
               // Mobile only: each phrase on one line (font scales with width) and a
-              // blank line between lines (Ivy); desktop unchanged.
-              <h2 className="max-w-[min(94vw,1440px)] px-4 text-center text-[min(6.4vw,2.25rem)] lg:text-[clamp(2.25rem,4.5vw,4.75rem)] font-bold leading-[1.5] tracking-normal text-white drop-shadow-md">
+              // blank line between lines (Ivy); desktop matches slide 1.
+              <h2 className={`${HEADLINE_BOX} ${INTRO_HEADLINE_FIT}`}>
                 <span className="block whitespace-nowrap text-[1.45em] lg:text-[1em] lg:whitespace-normal">LivE</span>
                 <span aria-hidden className="block lg:hidden">&nbsp;</span>
                 <span className="block whitespace-nowrap text-[1.2em] lg:text-[1em] lg:whitespace-normal">Anytime You Want</span>
@@ -88,7 +91,6 @@ export default function Page() {
       {/* Page 5: new download pitch (Ivy batch 3); the closing Download
           page below is unchanged. */}
       <GetStarted />
-      {/* Page 6: new slide, background clip still to come. */}
       <BuiltForEveryone />
       <ProsDiscovered />
 
@@ -159,6 +161,8 @@ export default function Page() {
         <img
           src={getAssetPath("/images/app-city-list-v1.jpg")}
           alt="LivEstates app City List feed"
+          loading="lazy"
+          decoding="async"
           className="h-full w-full bg-white object-cover object-top"
         />
       </StickyFeatureGallery>
@@ -166,12 +170,11 @@ export default function Page() {
         items={[
           {
             src: getAssetPath("/videos/commercial.mp4"),
-            // Same type as HERO_HEADLINE (inlined: page.tsx is a server component and
-            // can't read constants exported from a client module). Desktop: shifted
-            // down one headline line (Ivy); mobile too (Ivy 10/15).
+            // Shifted down one headline line on desktop (Ivy) and on mobile
+            // (Ivy 10/15).
             text: (
               <h2
-                className="max-w-[min(94vw,1440px)] px-4 text-center text-[clamp(2.5rem,5.6vw,6rem)] font-bold leading-[1.08] tracking-normal text-white drop-shadow-md whitespace-pre-wrap translate-y-[1.08em]"
+                className={`${HEADLINE_BOX} ${HERO_HEADLINE} whitespace-pre-wrap translate-y-[1.08em]`}
               >
                 {"More Ways to See\n\nMore Than Ever"}
               </h2>

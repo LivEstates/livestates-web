@@ -33,7 +33,7 @@ export default function HighlightSection({
   const designW = 460;
 
   // Below lg the phone pair is scaled to the column width (see
-  // .highlight-fit in globals.css). Scale = column width / 540px design width.
+  // .highlight-fit in globals.css). Scale = column width / designW.
   useLayoutEffect(() => {
     const el = fitRef.current;
     if (!el) return;
@@ -68,7 +68,7 @@ export default function HighlightSection({
             {/* Below lg these two wrappers scale the phone pair down as one
                 unit so it fits narrow screens; at lg and up they are
                 display: contents and the layout is exactly as before. */}
-            <div ref={fitRef} className="highlight-fit highlight-fit--tight">
+            <div ref={fitRef} className="highlight-fit">
               <div className="highlight-cluster">
                 <motion.div
                   initial={{ rotate: -8, y: 20, opacity: 0 }}
@@ -82,6 +82,8 @@ export default function HighlightSection({
                     <img
                       src={getAssetPath(backImage.src)}
                       alt={backImage.alt}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full bg-white object-cover object-top"
                     />
                   </Phone>
@@ -103,6 +105,8 @@ export default function HighlightSection({
                     <img
                       src={getAssetPath(frontImage.src)}
                       alt={frontImage.alt}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full bg-white object-cover object-top"
                     />
                   </Phone>

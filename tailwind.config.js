@@ -9,7 +9,9 @@ module.exports = {
     extend: {
       fontFamily: {
         display: ['ui-sans-serif','system-ui','Inter','-apple-system','Segoe UI','Roboto','Noto Sans','Ubuntu','Cantarell'],
-        sans: ['ui-sans-serif','system-ui','Inter','-apple-system','Segoe UI','Roboto','Noto Sans','Ubuntu','Cantarell']
+        sans: ['ui-sans-serif','system-ui','Inter','-apple-system','Segoe UI','Roboto','Noto Sans','Ubuntu','Cantarell'],
+        // The app's own UI stack, for the in-phone LivEstates AI chat replica.
+        app: ['-apple-system','BlinkMacSystemFont','SF Pro Text','Segoe UI','Roboto','Helvetica Neue','Arial','sans-serif']
       },
       colors: {
         ink: "#0B0F15"
