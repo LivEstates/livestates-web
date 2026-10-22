@@ -35,8 +35,8 @@ app/
   page.tsx                   # Main landing page composition
   globals.css                # Global Tailwind styles
 components/
-  Header.tsx                 # Site header and navigation
-  Hero.tsx                   # Video carousel hero sections
+  Header.tsx                 # Unused; the visible header bar is IntroChrome in Hero.tsx
+  Hero.tsx                   # Video carousel hero sections and the intro header bar
   AnimatedTitle.tsx          # Scroll-triggered animated titles
   StickyFeatureGallery.tsx   # Sticky phone preview and feature steps
   Phone.tsx                  # Phone mockup frame and chat mockup
