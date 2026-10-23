@@ -71,7 +71,19 @@ npm run lint      # Prompts for ESLint setup until a config is added
 - **Preview builds**: To host a review build under a sub-path, build with `PREVIEW_BASE_PATH=/<repo>/<dir> npm run build`. Next.js prefixes its own assets, but files from `public/` referenced in code must go through `getAssetPath` (`utils/path.ts`), or they 404 in previews.
 - **Policy pages**: `public/policy/*.html` (terms, privacy policy, and the live-streaming rules for streamers and viewers) are standalone HTML, copied verbatim from the legacy `LivEstates.github.io` site. The mobile app opens these exact URLs, which the backend's `/api/misc/configs` returns, so never rename or move them, and treat their content as legal text, not marketing copy.
 - **Images**: `images.unoptimized` is enabled for static export. Do not rely on Next.js image optimization.
-- **Video assets**: Keep video files compressed and purposeful. Large autoplay assets can hurt mobile load time quickly. Encode background loops as H.264 High, at most 1080p, CRF ~24, no audio track, index at the front: `ffmpeg -i in.mp4 -an -map_metadata -1 -vf "scale=-2:1080:flags=lanczos:out_range=tv,format=yuv420p" -c:v libx264 -preset slow -crf 24 -profile:v high -movflags +faststart out.mp4` (portrait: `scale=1080:-2`). Picture-in-picture tiles only need 720p. Never ship HEVC/H.265: most Chrome and Firefox setups can't play it.
+- **Video assets**: Keep video files compressed and purposeful. Large autoplay assets can hurt mobile load time quickly. Encode background loops as H.264 High, at most 1080p, CRF ~24, no audio track, index at the front:
+  ```bash
+  AIGC=$(ffprobe -v error -show_entries format_tags=AIGC -of default=nw=1:nk=1 in.mp4)
+  ffmpeg -i in.mp4 -an -map_metadata -1 -metadata AIGC="$AIGC" \
+    -vf "scale=-2:'min(1080,ih)':flags=lanczos:out_range=tv,format=yuv420p" \
+    -c:v libx264 -preset slow -crf 24 -profile:v high \
+    -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
+    -movflags +faststart+use_metadata_tags out.mp4
+  ```
+  - **Size**: the scale caps the height and never upscales. For portrait clips use `scale='min(1080,iw)':-2`. Picture-in-picture tiles only need 720p.
+  - **AI provenance label**: AI-generated sources carry an `AIGC` label, the implicit label defined by China's GB 45438-2025 (`ffprobe -show_format` shows it); `02`–`04.mp4` have one. The first line and `-metadata AIGC` carry it over byte for byte, and `use_metadata_tags` is what makes the mp4 muxer write it. A source without the label gets none. Removing a label must be an explicit, recorded decision, never a side effect of an encode. All other metadata is dropped on purpose: `-map_metadata 0` would also publish a phone clip's GPS location, device model and capture date.
+  - **Color**: the BT.709 flags keep the output tagged on any FFmpeg build (FFmpeg 7.0 dropped the matrix tag when it converted the full-range `02`/`03` sources). They assume an SDR source; tone-map HDR footage, such as iPhone HLG, first.
+  - **Codec**: never ship HEVC/H.265 as the only source. Browsers decode it only where the device has a hardware decoder, so the clip renders blank everywhere else. H.264 plays everywhere.
 - **ESLint**: `package.json` has a `lint` script, but no ESLint config is currently committed. Running `npm run lint` opens Next.js' initial setup prompt; do not add lint config as a drive-by change unless that is the requested scope.
 - **Theme behavior**: Tailwind dark mode is class-based, and `ThemeProvider` currently initializes the site to light mode.
 - **Frontend/docs sync**: If marketing copy, product behavior, or API-facing claims change, check whether `livestates-product-docs` needs a companion update.
