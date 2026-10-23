@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import { MockChat } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
 import BackgroundVideo from "@/components/BackgroundVideo";
+import { INTRO_SLIDE_1_PLACEHOLDER } from "@/components/heroPlaceholders";
 import { getAssetPath } from "@/utils/path";
 import {
   HEADLINE_BOX,
@@ -32,6 +33,7 @@ export default function Page() {
             src: getAssetPath("/videos/01.mp4"),
             text: "See\nFeel\nConnect\nLivE Your Way Home",
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
+            placeholder: INTRO_SLIDE_1_PLACEHOLDER,
           },
           {
             // "Every corner" -> the tile carries a second angle on the property
