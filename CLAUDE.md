@@ -36,6 +36,9 @@ app/
   globals.css                # Global Tailwind styles
 components/
   Hero.tsx                   # Video carousel hero sections and the intro header bar
+  BackgroundVideo.tsx        # Every background clip: load order, poster, play only while visible
+  videoQueue.ts              # Holds deferred clips until the first hero clip is buffered
+  heroPlaceholders.ts        # Inline blurred thumbnail painted before slide 1's poster arrives
   AnimatedTitle.tsx          # Scroll-triggered animated titles
   StickyFeatureGallery.tsx   # Sticky phone preview and feature steps
   Phone.tsx                  # Phone mockup frame and chat mockup
@@ -47,10 +50,11 @@ components/
   SmoothScroll.tsx           # Lenis smooth scroll wrapper
   ThemeProvider.tsx          # Theme context provider
 utils/
-  path.ts                    # getAssetPath: prefixes a preview build's base path onto public assets
+  path.ts                    # getAssetPath / getPosterPath for public assets
 public/
   policy/                    # Legal pages the mobile app links to (see Known Pitfalls)
   videos/                    # Marketing video assets
+    posters/                 # First-frame poster for every clip on the page (<name>.webp)
 ```
 
 ## Build & Run Commands
@@ -84,6 +88,19 @@ npm run lint      # Prompts for ESLint setup until a config is added
   - **AI provenance label**: AI-generated sources carry an `AIGC` label, the implicit label defined by China's GB 45438-2025 (`ffprobe -show_format` shows it); `02`–`04.mp4` have one. The first line and `-metadata AIGC` carry it over byte for byte, and `use_metadata_tags` is what makes the mp4 muxer write it. A source without the label gets none. Removing a label must be an explicit, recorded decision, never a side effect of an encode. All other metadata is dropped on purpose: `-map_metadata 0` would also publish a phone clip's GPS location, device model and capture date.
   - **Color**: the BT.709 flags keep the output tagged on any FFmpeg build (FFmpeg 7.0 dropped the matrix tag when it converted the full-range `02`/`03` sources). They assume an SDR source; tone-map HDR footage, such as iPhone HLG, first.
   - **Codec**: never ship HEVC/H.265 as the only source. Browsers decode it only where the device has a hardware decoder, so the clip renders blank everywhere else. H.264 plays everywhere.
+- **Video loading order**: Every clip on the page goes through `BackgroundVideo`, never a raw `<video autoPlay>`: a `src` in the server HTML starts downloading while the page parses and takes bandwidth from the first slide. Pick the mode by where the clip sits:
+  - `eager`: the intro's first slide only. It ships `src`, poster and `autoplay` in the HTML.
+  - `queued`: the intro's other slides and its picture-in-picture tiles. They wait in `videoQueue.ts` until slide 1 is fully buffered, the visitor first interacts, or 4 s pass, then load one at a time, playing hidden while they buffer (a paused clip buffers slowly, and iOS Safari doesn't buffer it at all).
+  - `near`: everything further down. It loads when it comes within one screen of the viewport.
+
+  Every clip plays only while it is on screen and its layer is visible, and pauses otherwise. `minWidth` keeps CSS-hidden elements, such as the tiles below `md`, from loading at all.
+- **Posters**: every clip needs `public/videos/posters/<name>.webp`. It must be the clip's first frame at the clip's own size (720p is enough for tiles), so the switch from poster to video is seamless. `getPosterPath` derives the poster path from the clip path. Decode with the explicit BT.709 matrix, or the colors jump when the video starts:
+  ```bash
+  ffmpeg -i in.mp4 -frames:v 1 -vf "scale=in_color_matrix=bt709:in_range=tv,format=rgb24" -c:v libwebp -quality 78 public/videos/posters/<name>.webp
+  ```
+  Posters carry no AIGC label. That was the site owner's decision on 2026-10-23.
+
+  Slide 1 additionally gets an inline 32×18 blurred thumbnail (`heroPlaceholders.ts`), so the first paint shows the scene before the poster arrives. Regenerate it whenever `01.mp4` changes.
 - **ESLint**: `package.json` has a `lint` script, but no ESLint config is currently committed. Running `npm run lint` opens Next.js' initial setup prompt; do not add lint config as a drive-by change unless that is the requested scope.
 - **Theme behavior**: Tailwind dark mode is class-based, and `ThemeProvider` currently initializes the site to light mode.
 - **Frontend/docs sync**: If marketing copy, product behavior, or API-facing claims change, check whether `livestates-product-docs` needs a companion update.
