@@ -10,6 +10,7 @@ import GetStarted from "@/components/GetStarted";
 import Footer from "@/components/Footer";
 import { MockChat } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
+import BackgroundVideo from "@/components/BackgroundVideo";
 import { getAssetPath } from "@/utils/path";
 import {
   HEADLINE_BOX,
@@ -78,12 +79,9 @@ export default function Page() {
         measureClassName="max-w-full"
       >
         {/* Ivy (10/15): real app live-showing screen recording (7.13s), used as-is. */}
-        <video
+        <BackgroundVideo
           src={getAssetPath("/videos/live-showing-app-v2.mp4")}
-          autoPlay
-          loop
-          muted
-          playsInline
+          load="near"
           className="h-full w-full bg-black object-cover object-top"
         />
       </StickyFeatureGallery>

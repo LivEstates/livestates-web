@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { HEADLINE_BOX, HERO_HEADLINE, INTRO_HEADLINE } from "./headlineType";
+import BackgroundVideo from "./BackgroundVideo";
 
 type HeroVariant = "plain" | "intro";
 
@@ -147,14 +148,14 @@ function VideoScrollGallery({
             style={{ opacity, scale }}
             className="absolute inset-0 h-full w-full"
           >
-            <video
-              className="absolute inset-0 h-full w-full object-cover"
+            {/* The intro's first slide loads with the page; its other slides
+                queue behind it. Heroes further down load as they come near. */}
+            <BackgroundVideo
               src={src}
-              playsInline
-              muted
-              autoPlay
-              loop
-              preload="metadata"
+              load={isIntro ? (idx === 0 ? "eager" : "queued") : "near"}
+              priority={idx}
+              visibility={opacity}
+              className="absolute inset-0 h-full w-full object-cover"
             />
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
@@ -202,13 +203,14 @@ function VideoScrollGallery({
                     style={{ opacity }}
                     className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
                   >
-                    <video
+                    {/* Tiles are hidden below md, so phones never load them. */}
+                    <BackgroundVideo
                       src={previewSrc}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
+                      load="queued"
+                      priority={10 + idx}
+                      visibility={opacity}
+                      minWidth={768}
+                      eagerPoster={idx === 0}
                       className="h-full w-full object-cover"
                     />
                   </motion.div>
