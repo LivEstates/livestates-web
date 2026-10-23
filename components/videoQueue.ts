@@ -1,5 +1,5 @@
 // Orders background-video downloads so the first hero clip gets the whole
-// connection. Queued clips wait until that clip can play through, the visitor
+// connection. Queued clips wait until that clip is fully buffered, the visitor
 // starts interacting, or a short fallback expires; then they load one at a
 // time in priority order.
 
@@ -18,6 +18,11 @@ export function releaseVideoQueue() {
   if (released) return;
   released = true;
   void pump();
+}
+
+/** True once the first hero clip no longer needs the whole connection. */
+export function isVideoQueueReleased() {
+  return released;
 }
 
 /** Queues `run`. Returns a function that drops the job if it hasn't started. */
@@ -45,6 +50,12 @@ function arm() {
 async function pump() {
   if (!released || running) return;
   running = true;
-  while (jobs.length) await jobs.shift()!.run();
+  while (jobs.length) {
+    try {
+      await jobs.shift()!.run();
+    } catch {
+      // A clip that fails must not hold up the ones behind it.
+    }
+  }
   running = false;
 }

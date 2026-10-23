@@ -215,14 +215,17 @@ function VideoScrollGallery({
                     style={{ opacity }}
                     className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
                   >
-                    {/* Tiles are hidden below md, so phones never load them. */}
+                    {/* Tiles are hidden below md, so phones never load their
+                        videos. Slide 1's tile is on the first screen, so it
+                        takes the queue's first slot; the others follow the
+                        slides. */}
                     <BackgroundVideo
                       src={previewSrc}
                       load="queued"
-                      priority={10 + idx}
+                      priority={idx === 0 ? 0 : 10 + idx}
                       visibility={opacity}
                       minWidth={768}
-                      eagerPoster={idx === 0}
+                      firstScreen={idx === 0}
                       className="h-full w-full object-cover"
                     />
                   </motion.div>

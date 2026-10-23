@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import type { MotionValue } from "framer-motion";
-import { enqueueVideo, releaseVideoQueue } from "./videoQueue";
+import { enqueueVideo, isVideoQueueReleased, releaseVideoQueue } from "./videoQueue";
 import { getPosterPath } from "@/utils/path";
 
 /**
@@ -66,7 +66,7 @@ export default function BackgroundVideo({
   priority = 0,
   visibility,
   minWidth,
-  eagerPoster = false,
+  firstScreen = false,
   className,
 }: {
   src: string;
@@ -78,8 +78,11 @@ export default function BackgroundVideo({
   visibility?: MotionValue<number>;
   /** Never load below this viewport width (for elements CSS hides there). */
   minWidth?: number;
-  /** Put the poster in the HTML even though the clip itself is deferred. */
-  eagerPoster?: boolean;
+  /** A queued clip on the first screen alongside the eager one, such as slide
+   *  1's tile. Its poster ships in the HTML, and it waits for the queue even
+   *  while visible, so it doesn't split the eager clip's connection. Give it
+   *  the queue's first slot. */
+  firstScreen?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -163,12 +166,17 @@ export default function BackgroundVideo({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    let onScreen = false;
+    // Unknown until the observer first reports. Until then sync() leaves the
+    // clip alone: at hydration the eager clip may already be playing.
+    let onScreen: boolean | undefined;
     let shown = visibility ? visibility.get() > 0.01 : true;
     const sync = () => {
-      // A hidden (display: none) element never intersects, so this also
-      // keeps CSS-hidden tiles from loading.
-      if (shown && onScreen && load === "queued") arm();
+      if (onScreen === undefined) return;
+      // A queued clip that comes into view loads at once, except a first-screen
+      // one: it is in view from the start, so it waits for the queue. A hidden
+      // (display: none) element never intersects, so this also keeps
+      // CSS-hidden tiles from loading.
+      if (shown && onScreen && load === "queued" && (!firstScreen || isVideoQueueReleased())) arm();
       if (armedRef.current && ((onScreen && shown) || warmingRef.current)) {
         if (el.paused) el.play().catch(() => {});
       } else if (!el.paused) {
@@ -191,19 +199,21 @@ export default function BackgroundVideo({
       io.disconnect();
       unsubscribe?.();
     };
-  }, [visibility, load]);
+  }, [visibility, load, firstScreen]);
 
-  // A clip that just got its src may already be visible.
+  // A clip that just got its src may already be visible. A new src (slide 3
+  // follows the orientation) pauses the clip, and only the eager one has
+  // autoplay to restart it.
   useEffect(() => {
     if (armed) syncRef.current();
-  }, [armed]);
+  }, [armed, src]);
 
   return (
     <video
       ref={ref}
       className={className}
       src={armed ? src : undefined}
-      poster={armed || eagerPoster ? getPosterPath(src) : undefined}
+      poster={armed || firstScreen ? getPosterPath(src) : undefined}
       preload={armed ? "auto" : "none"}
       autoPlay={load === "eager"}
       muted

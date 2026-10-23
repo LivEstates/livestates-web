@@ -90,17 +90,20 @@ npm run lint      # Prompts for ESLint setup until a config is added
   - **Codec**: never ship HEVC/H.265 as the only source. Browsers decode it only where the device has a hardware decoder, so the clip renders blank everywhere else. H.264 plays everywhere.
 - **Video loading order**: Every clip on the page goes through `BackgroundVideo`, never a raw `<video autoPlay>`: a `src` in the server HTML starts downloading while the page parses and takes bandwidth from the first slide. Pick the mode by where the clip sits:
   - `eager`: the intro's first slide only. It ships `src`, poster and `autoplay` in the HTML.
-  - `queued`: the intro's other slides and its picture-in-picture tiles. They wait in `videoQueue.ts` until slide 1 is fully buffered, the visitor first interacts, or 4 s pass, then load one at a time, playing hidden while they buffer (a paused clip buffers slowly, and iOS Safari doesn't buffer it at all).
+  - `queued`: the intro's other slides and its picture-in-picture tiles. They wait in `videoQueue.ts` until slide 1 is fully buffered, the visitor first interacts, or 4 s pass, then load one at a time, playing hidden while they buffer (a paused clip buffers slowly, and iOS Safari doesn't buffer it at all). A queued clip that comes into view before its turn loads at once, except slide 1's tile (`firstScreen`): it is in view from the start, so it waits anyway, showing its poster from the HTML, and takes the queue's first slot.
   - `near`: everything further down. It loads when it comes within one screen of the viewport.
 
-  Every clip plays only while it is on screen and its layer is visible, and pauses otherwise. `minWidth` keeps CSS-hidden elements, such as the tiles below `md`, from loading at all.
-- **Posters**: every clip needs `public/videos/posters/<name>.webp`. It must be the clip's first frame at the clip's own size (720p is enough for tiles), so the switch from poster to video is seamless. `getPosterPath` derives the poster path from the clip path. Decode with the explicit BT.709 matrix, or the colors jump when the video starts:
+  Every clip plays only while it is on screen and its layer is visible, and pauses otherwise. `minWidth` keeps the videos of CSS-hidden elements, such as the tiles below `md`, from loading. It can't stop a poster that is in the HTML: phones still fetch slide 1's tile poster (Firefox does, though the tile is hidden).
+- **Posters**: every clip needs `public/videos/posters/<name>.webp`. It must be the clip's first frame at the clip's own size, which is what the command below makes, so the switch from poster to video is seamless. `getPosterPath` derives the poster path from the clip path. Decode with the explicit BT.709 matrix, or the colors jump when the video starts:
   ```bash
   ffmpeg -i in.mp4 -frames:v 1 -vf "scale=in_color_matrix=bt709:in_range=tv,format=rgb24" -c:v libwebp -quality 78 public/videos/posters/<name>.webp
   ```
   Posters carry no AIGC label. That was the site owner's decision on 2026-10-23.
 
-  Slide 1 additionally gets an inline 32×18 blurred thumbnail (`heroPlaceholders.ts`), so the first paint shows the scene before the poster arrives. Regenerate it whenever `01.mp4` changes.
+  Slide 1 additionally gets an inline 32×18 blurred thumbnail (`heroPlaceholders.ts`), so the first paint shows the scene before the poster arrives. Whenever `01.mp4` changes, remake its poster first, then paste this command's output into `INTRO_SLIDE_1_PLACEHOLDER`:
+  ```bash
+  echo "data:image/webp;base64,$(ffmpeg -v error -i public/videos/posters/01.webp -vf scale=32:18 -c:v libwebp -quality 50 -f webp - | base64 -w0)"
+  ```
 - **ESLint**: `package.json` has a `lint` script, but no ESLint config is currently committed. Running `npm run lint` opens Next.js' initial setup prompt; do not add lint config as a drive-by change unless that is the requested scope.
 - **Theme behavior**: Tailwind dark mode is class-based, and `ThemeProvider` currently initializes the site to light mode.
 - **Frontend/docs sync**: If marketing copy, product behavior, or API-facing claims change, check whether `livestates-product-docs` needs a companion update.
