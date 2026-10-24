@@ -10,6 +10,8 @@ import GetStarted from "@/components/GetStarted";
 import Footer from "@/components/Footer";
 import { MockChat } from "@/components/Phone";
 import AnimatedTitle from "@/components/AnimatedTitle";
+import BackgroundVideo from "@/components/BackgroundVideo";
+import { INTRO_SLIDE_1_PLACEHOLDER } from "@/components/heroPlaceholders";
 import { getAssetPath } from "@/utils/path";
 import {
   HEADLINE_BOX,
@@ -31,6 +33,7 @@ export default function Page() {
             src: getAssetPath("/videos/01.mp4"),
             text: "See\nFeel\nConnect\nLivE Your Way Home",
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
+            placeholder: INTRO_SLIDE_1_PLACEHOLDER,
           },
           {
             // "Every corner" -> the tile carries a second angle on the property
@@ -78,12 +81,9 @@ export default function Page() {
         measureClassName="max-w-full"
       >
         {/* Ivy (10/15): real app live-showing screen recording (7.13s), used as-is. */}
-        <video
+        <BackgroundVideo
           src={getAssetPath("/videos/live-showing-app-v2.mp4")}
-          autoPlay
-          loop
-          muted
-          playsInline
+          load="near"
           className="h-full w-full bg-black object-cover object-top"
         />
       </StickyFeatureGallery>

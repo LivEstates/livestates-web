@@ -24,6 +24,9 @@ app/
   page.tsx            # Main landing page
 components/
   Hero.tsx            # Video carousel hero sections + intro header bar
+  BackgroundVideo.tsx # Background clips: load order, poster, play only while visible
+  videoQueue.ts       # Defers non-critical clips until the first hero clip is buffered
+  heroPlaceholders.ts # Inline blurred thumbnail for slide 1's first paint
   AnimatedTitle.tsx   # Scroll-triggered animated titles
   StickyFeatureGallery.tsx  # Sticky phone preview + feature step sections
   Phone.tsx           # Phone mockup frame and MockChat component
@@ -35,10 +38,11 @@ components/
   SmoothScroll.tsx    # Lenis smooth scroll wrapper
   ThemeProvider.tsx   # Theme context provider
 utils/
-  path.ts             # Asset path helper (getAssetPath)
+  path.ts             # Asset path helpers (getAssetPath, getPosterPath)
 public/
   policy/             # Terms, privacy policy, and live rules linked from the app (keep URLs stable)
   videos/             # Marketing videos for hero and feature sections
+    posters/          # First-frame poster per clip (see CLAUDE.md)
 ```
 
 ## Getting Started

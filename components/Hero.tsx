@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { HEADLINE_BOX, HERO_HEADLINE, INTRO_HEADLINE } from "./headlineType";
+import BackgroundVideo from "./BackgroundVideo";
 
 type HeroVariant = "plain" | "intro";
 
@@ -23,6 +24,10 @@ export type HeroItem = {
   previewSrc?: string;
   /** Scrim class override for slides whose clip is bright (default bg-black/45). */
   scrimClassName?: string;
+  /** Inline data-URI thumbnail drawn blurred behind the clip until its poster
+   *  arrives (see heroPlaceholders.ts). Ships in the HTML, so only worth it on
+   *  the first slide. */
+  placeholder?: string;
 };
 
 /** Tracks `(orientation: portrait)`, defaulting to false so SSR and the first
@@ -83,7 +88,7 @@ function VideoScrollGallery({
     [0, 0, 24]
   );
 
-  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc, scrimClassName }, i) => {
+  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc, scrimClassName, placeholder }, i) => {
     const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
@@ -112,6 +117,7 @@ function VideoScrollGallery({
       src: resolvedSrc,
       text,
       scrimClassName,
+      placeholder,
       // Never run the same clip in the stage and the tile at once — side by side
       // at two sizes it reads as a duplication bug, not a picture-in-picture.
       previewSrc: previewSrc === resolvedSrc ? undefined : previewSrc,
@@ -141,20 +147,27 @@ function VideoScrollGallery({
             : { scale: containerScale, borderRadius: containerRadius }
         }
       >
-        {galleryItems.map(({ src, text, opacity, scale, scrimClassName }, idx) => (
+        {galleryItems.map(({ src, text, opacity, scale, scrimClassName, placeholder }, idx) => (
           <motion.div
             key={idx}
             style={{ opacity, scale }}
             className="absolute inset-0 h-full w-full"
           >
-            <video
-              className="absolute inset-0 h-full w-full object-cover"
+            {placeholder ? (
+              <div
+                aria-hidden
+                className="absolute inset-0 scale-110 bg-cover bg-center blur-xl"
+                style={{ backgroundImage: `url("${placeholder}")` }}
+              />
+            ) : null}
+            {/* The intro's first slide loads with the page; its other slides
+                queue behind it. Heroes further down load as they come near. */}
+            <BackgroundVideo
               src={src}
-              playsInline
-              muted
-              autoPlay
-              loop
-              preload="metadata"
+              load={isIntro ? (idx === 0 ? "eager" : "queued") : "near"}
+              priority={idx}
+              visibility={opacity}
+              className="absolute inset-0 h-full w-full object-cover"
             />
             {/* Scrim only where overlay copy sits on top — slides that carry
                 their own artwork are shown untinted. */}
@@ -202,13 +215,17 @@ function VideoScrollGallery({
                     style={{ opacity }}
                     className="absolute right-5 bottom-5 hidden aspect-[3/4] w-32 overflow-hidden rounded-2xl bg-white/10 shadow-2xl ring-1 ring-white/20 md:bottom-7 md:block lg:right-20 lg:w-44"
                   >
-                    <video
+                    {/* Tiles are hidden below md, so phones never load their
+                        videos. Slide 1's tile is on the first screen, so it
+                        takes the queue's first slot; the others follow the
+                        slides. */}
+                    <BackgroundVideo
                       src={previewSrc}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
+                      load="queued"
+                      priority={idx === 0 ? 0 : 10 + idx}
+                      visibility={opacity}
+                      minWidth={768}
+                      firstScreen={idx === 0}
                       className="h-full w-full object-cover"
                     />
                   </motion.div>
