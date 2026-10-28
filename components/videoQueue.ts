@@ -2,6 +2,10 @@
 // connection. Queued clips wait until that clip is fully buffered, the visitor
 // starts interacting, or a short fallback expires; then they load one at a
 // time in priority order.
+//
+// Their posters don't wait that long. They all load as soon as the first clip
+// is playing: they are small, and a visitor who scrolls ahead of the queue
+// sees the slide's first frame instead of an empty slide.
 
 type Job = { priority: number; run: () => Promise<void> };
 
@@ -13,11 +17,35 @@ const jobs: Job[] = [];
 let released = false;
 let running = false;
 let armed = false;
+let postersReleased = false;
+const posterWaiters = new Set<() => void>();
 
 export function releaseVideoQueue() {
   if (released) return;
   released = true;
+  releasePosters();
   void pump();
+}
+
+/** Lets queued clips show their posters. The first hero clip calls this once
+ *  it is playing; releasing the queue does too. */
+export function releasePosters() {
+  if (postersReleased) return;
+  postersReleased = true;
+  posterWaiters.forEach((show) => show());
+  posterWaiters.clear();
+}
+
+/** Calls `show` once posters are released. Returns a function that cancels it. */
+export function whenPostersReleased(show: () => void) {
+  if (postersReleased) {
+    show();
+    return () => {};
+  }
+  posterWaiters.add(show);
+  return () => {
+    posterWaiters.delete(show);
+  };
 }
 
 /** True once the first hero clip no longer needs the whole connection. */

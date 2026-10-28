@@ -1,13 +1,20 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import type { MotionValue } from "framer-motion";
-import { enqueueVideo, isVideoQueueReleased, releaseVideoQueue } from "./videoQueue";
+import {
+  enqueueVideo,
+  isVideoQueueReleased,
+  releasePosters,
+  releaseVideoQueue,
+  whenPostersReleased,
+} from "./videoQueue";
 import { getPosterPath } from "@/utils/path";
 
 /**
  * - `eager`: the first hero slide. src, poster and autoplay are in the HTML,
  *   so the download starts while the page is still parsing.
  * - `queued`: waits in the video queue (videoQueue.ts), lowest priority first.
+ *   Its poster loads earlier, as soon as the first slide is playing.
  * - `near`: loads once it is within a screen of the viewport.
  */
 export type VideoLoad = "eager" | "queued" | "near";
@@ -87,6 +94,7 @@ export default function BackgroundVideo({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [armed, setArmed] = useState(load === "eager");
+  const [posterReleased, setPosterReleased] = useState(false);
   const armedRef = useRef(armed);
   // True while a queued clip takes its turn: it plays hidden, because browsers
   // buffer a playing clip at full speed but a paused one slowly or, in iOS
@@ -100,15 +108,19 @@ export default function BackgroundVideo({
     setArmed(true);
   };
 
-  // The first slide frees the queue once it is fully buffered (its download
-  // starts before hydration, so it may already be done by now).
+  // The first slide frees the other clips' posters once it is playing, and the
+  // queue once it is fully buffered. Its download starts before hydration, so
+  // either may already have happened by now.
   useEffect(() => {
     const el = ref.current;
     if (load !== "eager" || !el) return;
     let live = true;
+    if (!el.paused && el.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) releasePosters();
+    else el.addEventListener("playing", releasePosters, { once: true });
     whenBuffered(el, BUFFER_TIMEOUT_MS).then(() => live && releaseVideoQueue());
     return () => {
       live = false;
+      el.removeEventListener("playing", releasePosters);
     };
   }, [load]);
 
@@ -132,6 +144,7 @@ export default function BackgroundVideo({
         cleanups.push(() => io.disconnect());
         return;
       }
+      cleanups.push(whenPostersReleased(() => setPosterReleased(true)));
       cleanups.push(
         enqueueVideo(priority, async () => {
           if (armedRef.current) return;
@@ -213,7 +226,7 @@ export default function BackgroundVideo({
       ref={ref}
       className={className}
       src={armed ? src : undefined}
-      poster={armed || firstScreen ? getPosterPath(src) : undefined}
+      poster={armed || firstScreen || posterReleased ? getPosterPath(src) : undefined}
       preload={armed ? "auto" : "none"}
       autoPlay={load === "eager"}
       muted
