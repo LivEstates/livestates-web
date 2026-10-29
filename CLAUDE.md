@@ -91,6 +91,8 @@ npm run lint      # Prompts for ESLint setup until a config is added
 - **Video loading order**: Every clip on the page goes through `BackgroundVideo`, never a raw `<video autoPlay>`: a `src` in the server HTML starts downloading while the page parses and takes bandwidth from the first slide. Pick the mode by where the clip sits:
   - `eager`: the intro's first slide only. It ships `src`, poster and `autoplay` in the HTML.
   - `queued`: the intro's other slides and its picture-in-picture tiles. They wait in `videoQueue.ts` until slide 1 is fully buffered, the visitor first interacts, or 4 s pass, then load one at a time, playing hidden while they buffer (a paused clip buffers slowly, and iOS Safari doesn't buffer it at all). A queued clip that comes into view before its turn loads at once, except slide 1's tile (`firstScreen`): it is in view from the start, so it waits anyway, showing its poster from the HTML, and takes the queue's first slot.
+
+    Their posters don't wait for the queue. They all load once slide 1 starts playing, or when the queue is released, if that comes first. So a visitor who scrolls ahead of the queue sees the slide's first frame. Without a poster, a slide shows only its `bg-black/45` scrim over the white section, which reads as a gray screen.
   - `near`: everything further down. It loads when it comes within one screen of the viewport.
 
   Every clip plays only while it is on screen and its layer is visible, and pauses otherwise. `minWidth` keeps the videos of CSS-hidden elements, such as the tiles below `md`, from loading. It can't stop a poster that is in the HTML: phones still fetch slide 1's tile poster (Firefox does, though the tile is hidden).
@@ -100,7 +102,7 @@ npm run lint      # Prompts for ESLint setup until a config is added
   ```
   Posters carry no AIGC label. That was the site owner's decision on 2026-10-23.
 
-  Slide 1 additionally gets an inline 32×18 blurred thumbnail (`heroPlaceholders.ts`), so the first paint shows the scene before the poster arrives. Whenever `01.mp4` changes, remake its poster first, then paste this command's output into `INTRO_SLIDE_1_PLACEHOLDER`:
+  Slide 1 additionally gets an inline 32×18 blurred thumbnail (`heroPlaceholders.ts`), so the first paint shows the scene before the poster arrives. It is blurred because it is tiny: only an image of a few hundred bytes can ship inside the HTML for free. The other intro clips get no thumbnail. They show their real first frame, which usually arrives before a visitor scrolls to them. On a slow link (~4 Mbit/s), a visitor who scrolls within the first two seconds can still see slide 2's gray scrim for about a second. The site owner chose that over blurred thumbnails on 2026-10-28. Whenever `01.mp4` changes, remake its poster first, then paste this command's output into `INTRO_SLIDE_1_PLACEHOLDER`:
   ```bash
   echo "data:image/webp;base64,$(ffmpeg -v error -i public/videos/posters/01.webp -vf scale=32:18 -c:v libwebp -quality 50 -f webp - | base64 -w0)"
   ```
