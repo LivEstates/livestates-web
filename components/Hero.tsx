@@ -17,6 +17,10 @@ export type HeroItem = {
   /** Portrait-framed alternate. A 16:9 clip in a phone viewport is cropped to a
    *  narrow centre strip, so slides whose subject matters ship one of these. */
   portraitSrc?: string;
+  /** Centre 2:3 cut of `src`. Narrow viewports, such as phones held upright,
+   *  download it instead and see the same picture (see BackgroundVideo).
+   *  Worth it on the first slide, which loads with the page. */
+  narrowSrc?: string;
   /** Clip for the call overlay's picture-in-picture tile. The tile is the other
    *  end of the call: when the stage shows an agent broadcasting, this is the
    *  property feed; when the stage shows someone watching, this is what they
@@ -88,7 +92,7 @@ function VideoScrollGallery({
     [0, 0, 24]
   );
 
-  const galleryItems = items.map(({ src, text, portraitSrc, previewSrc, scrimClassName, placeholder }, i) => {
+  const galleryItems = items.map(({ src, text, portraitSrc, narrowSrc, previewSrc, scrimClassName, placeholder }, i) => {
     const n = items.length || 1;
     const start = i / n;
     const end = (i + 1) / n;
@@ -115,6 +119,8 @@ function VideoScrollGallery({
 
     return {
       src: resolvedSrc,
+      // A cut of the landscape clip, so not for the portrait alternate.
+      narrowSrc: resolvedSrc === src ? narrowSrc : undefined,
       text,
       scrimClassName,
       placeholder,
@@ -147,7 +153,7 @@ function VideoScrollGallery({
             : { scale: containerScale, borderRadius: containerRadius }
         }
       >
-        {galleryItems.map(({ src, text, opacity, scale, scrimClassName, placeholder }, idx) => (
+        {galleryItems.map(({ src, narrowSrc, text, opacity, scale, scrimClassName, placeholder }, idx) => (
           <motion.div
             key={idx}
             style={{ opacity, scale }}
@@ -164,6 +170,7 @@ function VideoScrollGallery({
                 queue behind it. Heroes further down load as they come near. */}
             <BackgroundVideo
               src={src}
+              narrowSrc={narrowSrc}
               load={isIntro ? (idx === 0 ? "eager" : "queued") : "near"}
               priority={idx}
               visibility={opacity}

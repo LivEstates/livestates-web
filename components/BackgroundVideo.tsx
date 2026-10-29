@@ -23,6 +23,12 @@ export type VideoLoad = "eager" | "queued" | "near";
 // parallel downloads instead of stalling.
 const BUFFER_TIMEOUT_MS = 4000;
 
+// Viewports at least this wide get a clip's full frame. Narrower ones get its
+// narrow cut, the centre 2:3 of the frame: a stage that fills such a viewport
+// shows no more than that centre under `object-cover`, so the cut looks the
+// same for ~40% of the bytes.
+const WIDE_MEDIA = "(min-aspect-ratio: 2/3)";
+
 /** Resolves once `el` has buffered to its end, fails, or `ms` pass. The first
  *  slide waits for this rather than `canplaythrough`, which fires on an early
  *  estimate and would let the queue start sharing its connection. */
@@ -69,6 +75,7 @@ function whenPlayable(el: HTMLVideoElement, ms: number) {
  *  while it is on screen and its layer is visible. */
 export default function BackgroundVideo({
   src,
+  narrowSrc,
   load,
   priority = 0,
   visibility,
@@ -77,6 +84,10 @@ export default function BackgroundVideo({
   className,
 }: {
   src: string;
+  /** Centre 2:3 cut of `src` for narrow viewports (see WIDE_MEDIA). Both go
+   *  in the HTML as `<source>`s, so the browser picks one before any script
+   *  runs and downloads only that one. */
+  narrowSrc?: string;
   load: VideoLoad;
   /** Position in the queue; lower loads first. */
   priority?: number;
@@ -123,6 +134,25 @@ export default function BackgroundVideo({
       el.removeEventListener("playing", releasePosters);
     };
   }, [load]);
+
+  // `<source media>` is read only when the clip loads. A viewport that turns
+  // wide later, such as a phone turned sideways, would show the narrow cut
+  // zoomed to fill it, so it switches to the full frame.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !narrowSrc) return;
+    const wide = window.matchMedia(WIDE_MEDIA);
+    const onChange = () => {
+      if (!wide.matches || !el.currentSrc.endsWith(narrowSrc)) return;
+      // Reloading picks the source again. It pauses the clip, and autoplay
+      // restarts it even out of view, so sync once more when it plays.
+      el.load();
+      el.addEventListener("play", () => syncRef.current(), { once: true });
+      syncRef.current();
+    };
+    wide.addEventListener("change", onChange);
+    return () => wide.removeEventListener("change", onChange);
+  }, [narrowSrc]);
 
   // Deferred loading.
   useEffect(() => {
@@ -225,13 +255,21 @@ export default function BackgroundVideo({
     <video
       ref={ref}
       className={className}
-      src={armed ? src : undefined}
+      src={armed && !narrowSrc ? src : undefined}
       poster={armed || firstScreen || posterReleased ? getPosterPath(src) : undefined}
       preload={armed ? "auto" : "none"}
       autoPlay={load === "eager"}
       muted
       loop
       playsInline
-    />
+    >
+      {armed && narrowSrc ? (
+        <>
+          {/* Full frame first: a browser that ignores `media` takes the first source. */}
+          <source src={src} media={WIDE_MEDIA} type="video/mp4" />
+          <source src={narrowSrc} type="video/mp4" />
+        </>
+      ) : null}
+    </video>
   );
 }
