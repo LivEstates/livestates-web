@@ -31,6 +31,9 @@ export default function Page() {
           {
             // Agent broadcasting -> the tile carries the feed she is sending.
             src: getAssetPath("/videos/01.mp4"),
+            // Phones held upright see only the middle of the frame, so they
+            // load just that.
+            narrowSrc: getAssetPath("/videos/01-narrow.mp4"),
             text: "See\nFeel\nConnect\nLivE Your Way Home",
             previewSrc: getAssetPath("/videos/first-female-agent.mp4"),
             placeholder: INTRO_SLIDE_1_PLACEHOLDER,
