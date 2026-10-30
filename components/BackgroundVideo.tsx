@@ -99,8 +99,10 @@ export default function BackgroundVideo({
   src: string;
   /** Centre 2:3 cut of `src` for narrow viewports (see WIDE_MEDIA). Both go
    *  in as `<source>`s, in the HTML for an eager clip, so the browser picks
-   *  one before it starts loading and downloads only that one. With it, `src`
-   *  must not change: a changed `<source>` doesn't reload the clip. */
+   *  one before it starts loading and downloads only that one. Narrow
+   *  viewports also get the cut's own poster, a third of the size, except
+   *  for an eager clip, whose poster is in the HTML. With it, `src` must not
+   *  change: a changed `<source>` doesn't reload the clip. */
   narrowSrc?: string;
   load: VideoLoad;
   /** Position in the queue; lower loads first. */
@@ -120,6 +122,7 @@ export default function BackgroundVideo({
   const ref = useRef<HTMLVideoElement>(null);
   const [armed, setArmed] = useState(load === "eager");
   const [posterReleased, setPosterReleased] = useState(false);
+  const [narrowPoster, setNarrowPoster] = useState(false);
   const armedRef = useRef(armed);
   // True while a queued clip takes its turn: it plays hidden, because browsers
   // buffer a playing clip at full speed but a paused one slowly or, in iOS
@@ -143,8 +146,12 @@ export default function BackgroundVideo({
     const el = ref.current;
     if (!el || !narrowSrc) return;
     const wide = window.matchMedia(WIDE_MEDIA);
+    // The poster follows the clip, if it isn't in the HTML.
+    if (load !== "eager") setNarrowPoster(!wide.matches);
     const onChange = () => {
-      if (!wide.matches || !el.currentSrc.endsWith(narrowSrc)) return;
+      if (!wide.matches) return;
+      setNarrowPoster(false);
+      if (!el.currentSrc.endsWith(narrowSrc)) return;
       // Reloading picks the source again. It pauses the clip, and autoplay
       // restarts it even out of view, so sync once more when it plays.
       el.load();
@@ -154,7 +161,7 @@ export default function BackgroundVideo({
     wide.addEventListener("change", onChange);
     onChange();
     return () => wide.removeEventListener("change", onChange);
-  }, [narrowSrc]);
+  }, [narrowSrc, load]);
 
   // The first slide frees the other clips' posters once it is playing, and the
   // queue once it is fully buffered. Its download starts before hydration, so
@@ -274,7 +281,7 @@ export default function BackgroundVideo({
       ref={ref}
       className={className}
       src={armed && !narrowSrc ? src : undefined}
-      poster={armed || firstScreen || posterReleased ? getPosterPath(src) : undefined}
+      poster={armed || firstScreen || posterReleased ? getPosterPath(narrowPoster && narrowSrc ? narrowSrc : src) : undefined}
       preload={armed ? "auto" : "none"}
       autoPlay={load === "eager"}
       muted
