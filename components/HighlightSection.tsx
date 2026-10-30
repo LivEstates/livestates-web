@@ -5,11 +5,11 @@ import Phone from "./Phone";
 import { getAssetPath } from "@/utils/path";
 
 const DEFAULT_BACK = {
-  src: "/images/app-user-request-v1.jpg",
+  src: "/images/app-user-request-v1.webp",
   alt: "LivEstates app showing request form",
 };
 const DEFAULT_FRONT = {
-  src: "/images/app-showing-requests-v1.jpg",
+  src: "/images/app-showing-requests-v1.webp",
   alt: "LivEstates app agent showing requests",
 };
 

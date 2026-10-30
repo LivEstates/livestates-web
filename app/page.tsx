@@ -163,7 +163,7 @@ export default function Page() {
       >
         {/* Ivy (10/13): real app screenshot (City List feed), used as-is. */}
         <img
-          src={getAssetPath("/images/app-city-list-v1.jpg")}
+          src={getAssetPath("/images/app-city-list-v1.webp")}
           alt="LivEstates app City List feed"
           loading="lazy"
           decoding="async"
@@ -196,8 +196,8 @@ export default function Page() {
         reverse
         title={"Totally Transparent\nNetworking"}
         description="See, share, and connect with everyone instantly in a single, completely open ecosystem."
-        backImage={{ src: "/images/app-followings-v1.jpg", alt: "LivEstates app followings list" }}
-        frontImage={{ src: "/images/app-inbox-v1.jpg", alt: "LivEstates app inbox" }}
+        backImage={{ src: "/images/app-followings-v1.webp", alt: "LivEstates app followings list" }}
+        frontImage={{ src: "/images/app-inbox-v1.webp", alt: "LivEstates app inbox" }}
       />
 
       <FeatureGrid />
