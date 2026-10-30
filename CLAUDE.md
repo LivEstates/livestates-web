@@ -79,15 +79,14 @@ npm run lint      # Prompts for ESLint setup until a config is added
   ```bash
   AIGC=$(ffprobe -v error -show_entries format_tags=AIGC -of default=nw=1:nk=1 in.mp4)
   ffmpeg -i in.mp4 -an -map_metadata -1 -metadata AIGC="$AIGC" \
-    -vf "scale=-2:'min(1080,ih)':flags=lanczos:out_range=tv,format=yuv420p" \
+    -vf "scale=-2:'min(1080,ih)':flags=lanczos:out_range=tv,format=yuv420p,setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709" \
     -c:v libx264 -preset slow -crf 24 -profile:v high \
-    -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
     -movflags +faststart+use_metadata_tags out.mp4
   ```
   - **Size**: the scale caps the height and never upscales. For portrait clips use `scale='min(1080,iw)':-2`. Picture-in-picture tiles only need 720p.
   - **Narrow cut**: `01-narrow.mp4` is the centre 720×1080 (2:3) of `01.mp4`, for phones held upright (see `eager` below). Whenever `01.mp4` changes, make it from the same source with the same command, adding `,crop=720:1080` at the end of `-vf`. That keeps it the exact middle of `01.mp4`, so it can share `01.webp` as its poster.
   - **AI provenance label**: AI-generated sources carry an `AIGC` label, the implicit label defined by China's GB 45438-2025 (`ffprobe -show_format` shows it); `02` and `03.mp4` have one. The first line and `-metadata AIGC` carry it over byte for byte, and `use_metadata_tags` is what makes the mp4 muxer write it. A source without the label gets none. Removing a label must be an explicit, recorded decision, never a side effect of an encode. All other metadata is dropped on purpose: `-map_metadata 0` would also publish a phone clip's GPS location, device model and capture date.
-  - **Color**: the BT.709 flags keep the output tagged on any FFmpeg build (FFmpeg 7.0 dropped the matrix tag when it converted the full-range `02`/`03` sources). They assume an SDR source; tone-map HDR footage, such as iPhone HLG, first.
+  - **Color**: `setparams` tags every frame BT.709 after the scale, so the output is tagged on any FFmpeg build and its pixels are left as they are. Encoder flags such as `-colorspace bt709` are not enough. FFmpeg 7.0 dropped the matrix tag when it converted the full-range `02`/`03` sources. Given an untagged source, FFmpeg 9.0 tagged only the matrix, and to get there it converted the pixels as if the source were BT.601, which shifts the colours. All this assumes an SDR source; tone-map HDR footage, such as iPhone HLG, first.
   - **Codec**: never ship HEVC/H.265 as the only source. Browsers decode it only where the device has a hardware decoder, so the clip renders blank everywhere else. H.264 plays everywhere.
 - **Video loading order**: Every clip on the page goes through `BackgroundVideo`, never a raw `<video autoPlay>`: a `src` in the server HTML starts downloading while the page parses and takes bandwidth from the first slide. Pick the mode by where the clip sits:
   - `eager`: the intro's first slide only. It ships its video, poster and `autoplay` in the HTML. Viewports narrower than 2:3, such as phones held upright, get its narrow cut instead, which shows them the same picture in ~40% of the bytes. Both files go in the HTML as `<source media>`, so the browser picks one before any script runs; a script swap would come after the full frame had started downloading. If the viewport turns wide later, such as a phone turned sideways, the clip switches to the full frame.
