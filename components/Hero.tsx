@@ -18,8 +18,8 @@ export type HeroItem = {
    *  narrow centre strip, so slides whose subject matters ship one of these. */
   portraitSrc?: string;
   /** Centre 2:3 cut of `src`. Narrow viewports, such as phones held upright,
-   *  download it instead and see the same picture (see BackgroundVideo).
-   *  Worth it on the first slide, which loads with the page. Not together
+   *  download it instead and see the same picture (see BackgroundVideo), so
+   *  every landscape clip without `portraitSrc` should have one. Not together
    *  with `portraitSrc`: switching between the two doesn't reload the clip,
    *  and a viewport narrower than 2:3 is portrait, so it would get the
    *  alternate anyway. */

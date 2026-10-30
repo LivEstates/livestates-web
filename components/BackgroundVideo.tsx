@@ -26,7 +26,7 @@ const BUFFER_TIMEOUT_MS = 4000;
 // Viewports at least this wide get a clip's full frame. Narrower ones get its
 // narrow cut, the centre 2:3 of the frame: a stage that fills such a viewport
 // shows no more than that centre under `object-cover`, so the cut looks the
-// same for ~40% of the bytes.
+// same for a quarter to a half of the bytes.
 const WIDE_MEDIA = "(min-aspect-ratio: 2/3)";
 
 /** Calls `fail` once `el` can't load its clip, and returns a function that
@@ -98,9 +98,9 @@ export default function BackgroundVideo({
 }: {
   src: string;
   /** Centre 2:3 cut of `src` for narrow viewports (see WIDE_MEDIA). Both go
-   *  in the HTML as `<source>`s, so the browser picks one before any script
-   *  runs and downloads only that one. With it, `src` must not change: a
-   *  changed `<source>` doesn't reload the clip. */
+   *  in as `<source>`s, in the HTML for an eager clip, so the browser picks
+   *  one before it starts loading and downloads only that one. With it, `src`
+   *  must not change: a changed `<source>` doesn't reload the clip. */
   narrowSrc?: string;
   load: VideoLoad;
   /** Position in the queue; lower loads first. */
@@ -135,10 +135,10 @@ export default function BackgroundVideo({
 
   // `<source media>` is read only when the clip loads. A viewport that turns
   // wide later, such as a phone turned sideways, would show the narrow cut
-  // zoomed to fill it, so it switches to the full frame. The clip loads before
-  // hydration, so the viewport may already have turned: check once now too.
-  // This runs before the next effect, so a clip reloaded here holds the queue
-  // until the full frame is buffered, like any first load.
+  // zoomed to fill it, so it switches to the full frame. An eager clip loads
+  // before hydration, so the viewport may already have turned: check once
+  // now too. This runs before the next effect, so a clip reloaded here holds
+  // the queue until the full frame is buffered, like any first load.
   useEffect(() => {
     const el = ref.current;
     if (!el || !narrowSrc) return;
