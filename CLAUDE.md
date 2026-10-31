@@ -52,6 +52,7 @@ components/
 utils/
   path.ts                    # getAssetPath / getPosterPath for public assets
 public/
+  images/                    # App screenshots shown in the phone frames (see Known Pitfalls)
   policy/                    # Legal pages the mobile app links to (see Known Pitfalls)
   videos/                    # Marketing video assets
     posters/                 # First-frame poster for every clip on the page (<name>.webp)
@@ -75,6 +76,22 @@ npm run lint      # Prompts for ESLint setup until a config is added
 - **Preview builds**: To host a review build under a sub-path, build with `PREVIEW_BASE_PATH=/<repo>/<dir> npm run build`. Next.js prefixes its own assets, but files from `public/` referenced in code must go through `getAssetPath` (`utils/path.ts`), or they 404 in previews.
 - **Policy pages**: `public/policy/*.html` (terms, privacy policy, and the live-streaming rules for streamers and viewers) are standalone HTML, originally copied from the legacy `LivEstates.github.io` site. The mobile app opens these exact URLs, which the backend's `/api/misc/configs` returns, so never rename or move them, and treat their content as legal text, not marketing copy. The legal entity is Virtual Hybrid Inc. (doing business as LivEstates), as on the Apple developer account; the privacy policy said LLC until 2026-10-26.
 - **Images**: `images.unoptimized` is enabled for static export. Do not rely on Next.js image optimization.
+  - **App screenshots** (`public/images/app-*.webp`) fill `Phone`'s 272×592 CSS px screen. They ship as WebP at quality 85, 644 px wide, about what a 2× desktop or a 3× phone draws them at. That is a third of the size of a quality-95 JPEG and looks the same at 2× zoom. iPhone screenshots are Display P3. The command converts them to sRGB, which browsers assume for an image without a profile, and it writes no metadata. It needs Pillow:
+    ```bash
+    python3 - in.png public/images/<name>.webp <<'EOF'
+    import io, sys
+    from PIL import Image, ImageCms
+    im = Image.open(sys.argv[1])
+    icc = im.info.get("icc_profile")
+    im = im.convert("RGB")
+    if icc:
+        im = ImageCms.profileToProfile(im, ImageCms.ImageCmsProfile(io.BytesIO(icc)),
+                                       ImageCms.createProfile("sRGB"), outputMode="RGB")
+    if im.width > 644:
+        im = im.resize((644, round(im.height * 644 / im.width)), Image.LANCZOS)
+    im.save(sys.argv[2], "WEBP", quality=85, method=6)
+    EOF
+    ```
 - **Video assets**: Keep video files compressed and purposeful. Large autoplay assets can hurt mobile load time quickly. Encode background loops as H.264 High, at most 1080p, CRF ~24, no audio track, index at the front:
   ```bash
   AIGC=$(ffprobe -v error -show_entries format_tags=AIGC -of default=nw=1:nk=1 in.mp4)
