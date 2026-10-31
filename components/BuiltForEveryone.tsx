@@ -3,8 +3,10 @@ import Hero from "./Hero";
 import { HEADLINE_BOX, HERO_HEADLINE } from "./headlineType";
 import { getAssetPath } from "@/utils/path";
 
-/** Background clip for the "Built for everyone" slide. */
+/** Background clip for the "Built for everyone" slide, and its centre for
+ *  phones held upright. */
 const BUILT_FOR_EVERYONE_VIDEO = "/videos/built-for-everyone.mp4";
+const BUILT_FOR_EVERYONE_NARROW = "/videos/built-for-everyone-narrow.mp4";
 
 /** Same full-bleed structure as the "More ways to see" slide: sticky
  *  background clip, dark scrim, overlay copy in the same headline type.
@@ -16,6 +18,7 @@ export default function BuiltForEveryone() {
       items={[
         {
           src: getAssetPath(BUILT_FOR_EVERYONE_VIDEO),
+          narrowSrc: getAssetPath(BUILT_FOR_EVERYONE_NARROW),
           // Bright aerial footage: a darker scrim keeps the copy readable.
           scrimClassName: "bg-black/60",
           text: (

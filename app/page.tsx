@@ -44,6 +44,7 @@ export default function Page() {
             // Reversed so it pushes in where slide one's tile pulls back, which
             // keeps the two tiles distinct without needing another shoot.
             src: getAssetPath("/videos/02.mp4"),
+            narrowSrc: getAssetPath("/videos/02-narrow.mp4"),
             text: (
               // Mobile only: each phrase on one line (font scales with width) and a
               // blank line between lines (Ivy); desktop matches slide 1.
@@ -174,6 +175,7 @@ export default function Page() {
         items={[
           {
             src: getAssetPath("/videos/commercial.mp4"),
+            narrowSrc: getAssetPath("/videos/commercial-narrow.mp4"),
             // Shifted down one headline line on desktop (Ivy) and on mobile
             // (Ivy 10/15).
             text: (

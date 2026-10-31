@@ -3,8 +3,10 @@ import Hero from "./Hero";
 import { HEADLINE_BOX, HERO_HEADLINE } from "./headlineType";
 import { getAssetPath } from "@/utils/path";
 
-/** Background clip for the "Where Real Estate Pros Get Discovered" slide. */
+/** Background clip for the "Where Real Estate Pros Get Discovered" slide,
+ *  and its centre for phones held upright. */
 const PROS_DISCOVERED_VIDEO = "/videos/pros-discovered-v2.mp4";
+const PROS_DISCOVERED_NARROW = "/videos/pros-discovered-v2-narrow.mp4";
 
 /** Same layout as "Built for everyone" (Ivy batch 4). Desktop type follows
  *  the viewport height as well as its width (min(vw, vh)), so the whole
@@ -15,6 +17,7 @@ export default function ProsDiscovered() {
       items={[
         {
           src: getAssetPath(PROS_DISCOVERED_VIDEO),
+          narrowSrc: getAssetPath(PROS_DISCOVERED_NARROW),
           // Bright kitchen footage: a darker scrim keeps the copy readable.
           scrimClassName: "bg-black/[0.68]",
           text: (
