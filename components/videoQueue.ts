@@ -6,6 +6,9 @@
 // Their posters don't wait that long. They all load as soon as the first clip
 // is playing: they are small, and a visitor who scrolls ahead of the queue
 // sees the slide's first frame instead of an empty slide.
+//
+// The posters further down also load all at once, as soon as the visitor
+// heads down the page, before the videos down there start splitting the link.
 
 type Job = { priority: number; run: () => Promise<void> };
 
@@ -17,8 +20,34 @@ const jobs: Job[] = [];
 let released = false;
 let running = false;
 let armed = false;
-let postersReleased = false;
-const posterWaiters = new Set<() => void>();
+
+/** Turns on once. `when(show)` calls `show` then, or at once if it already
+ *  has, and returns a function that cancels it. */
+function latch() {
+  let on = false;
+  const waiters = new Set<() => void>();
+  return {
+    release() {
+      if (on) return;
+      on = true;
+      waiters.forEach((show) => show());
+      waiters.clear();
+    },
+    when(show: () => void) {
+      if (on) {
+        show();
+        return () => {};
+      }
+      waiters.add(show);
+      return () => {
+        waiters.delete(show);
+      };
+    },
+  };
+}
+
+const queuedPosters = latch();
+const nearPosters = latch();
 
 export function releaseVideoQueue() {
   if (released) return;
@@ -30,22 +59,24 @@ export function releaseVideoQueue() {
 /** Lets queued clips show their posters. The first hero clip calls this once
  *  it is playing; releasing the queue does too. */
 export function releasePosters() {
-  if (postersReleased) return;
-  postersReleased = true;
-  posterWaiters.forEach((show) => show());
-  posterWaiters.clear();
+  queuedPosters.release();
 }
 
 /** Calls `show` once posters are released. Returns a function that cancels it. */
 export function whenPostersReleased(show: () => void) {
-  if (postersReleased) {
-    show();
-    return () => {};
-  }
-  posterWaiters.add(show);
-  return () => {
-    posterWaiters.delete(show);
-  };
+  return queuedPosters.when(show);
+}
+
+/** Lets every `near` clip show its poster. The first of them to start loading
+ *  calls this. */
+export function releaseNearPosters() {
+  nearPosters.release();
+}
+
+/** Calls `show` once `near` posters are released. Returns a function that
+ *  cancels it. */
+export function whenNearPostersReleased(show: () => void) {
+  return nearPosters.when(show);
 }
 
 /** True once the first hero clip no longer needs the whole connection. */

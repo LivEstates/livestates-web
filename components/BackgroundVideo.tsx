@@ -4,8 +4,10 @@ import type { MotionValue } from "framer-motion";
 import {
   enqueueVideo,
   isVideoQueueReleased,
+  releaseNearPosters,
   releasePosters,
   releaseVideoQueue,
+  whenNearPostersReleased,
   whenPostersReleased,
 } from "./videoQueue";
 import { getPosterPath } from "@/utils/path";
@@ -15,7 +17,9 @@ import { getPosterPath } from "@/utils/path";
  *   HTML, so the download starts while the page is still parsing.
  * - `queued`: waits in the video queue (videoQueue.ts), lowest priority first.
  *   Its poster loads earlier, as soon as the first slide is playing.
- * - `near`: loads once it is within a screen of the viewport.
+ * - `near`: loads once it is within a screen of the viewport. Its poster
+ *   loads earlier, with all the others, as soon as the first `near` clip
+ *   starts loading.
  */
 export type VideoLoad = "eager" | "queued" | "near";
 
@@ -179,9 +183,15 @@ export default function BackgroundVideo({
     const cleanups: (() => void)[] = [];
     const start = () => {
       if (load === "near") {
+        // A poster loaded only with its own clip shares the link with the
+        // videos loading by then, and on a fast scroll it can arrive after
+        // its empty scrim is on screen. So the first clip down here to start
+        // loading starts every poster down here, before those videos.
+        cleanups.push(whenNearPostersReleased(() => setPosterReleased(true)));
         const io = new IntersectionObserver(
           (entries) => {
             if (entries.some((e) => e.isIntersecting)) {
+              releaseNearPosters();
               arm();
               io.disconnect();
             }
